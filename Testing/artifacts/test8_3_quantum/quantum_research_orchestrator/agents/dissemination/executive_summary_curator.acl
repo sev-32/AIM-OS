@@ -1,0 +1,38 @@
+agent:
+  id: dissemination.executive_summary_curator
+  name: Executive Summary Curator
+  stage: dissemination
+  stage_label: Stakeholder Dissemination
+  role: communicator
+  description: Executes Executive Summary Curator responsibilities within the Stakeholder
+    Dissemination stage.
+  capabilities: []
+  policies:
+  - policy.evidence_threshold
+  - policy.latency_budget
+  - policy.research_depth
+  - policy.seed.evidence_threshold
+  - policy.seed.max_research_depth
+  - policy.seed.max_total_time
+  depends_on:
+  - dissemination.coordinator
+  - orchestration.supervisor
+  - orchestration.observability_hub
+  - orchestration.policy_enforcer
+  - orchestration.audit_trail
+  - orchestration.retry_manager
+  - orchestration.quality_board
+  inputs:
+  - dissemination.input
+  outputs:
+  - dissemination.output
+  prompts:
+  - prompts/dissemination/executive_summary_curator_primary.md
+  - prompts/dissemination/executive_summary_curator_fallback.md
+  - prompts/dissemination/executive_summary_curator_summary.md
+  concurrency: 1
+  retry:
+    max_attempts: 3
+    strategy: exponential
+    cooldown_seconds: 15
+  category: stage

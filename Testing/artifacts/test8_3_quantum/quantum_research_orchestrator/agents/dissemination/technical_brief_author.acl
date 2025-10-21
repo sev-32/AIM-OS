@@ -1,0 +1,38 @@
+agent:
+  id: dissemination.technical_brief_author
+  name: Technical Brief Author
+  stage: dissemination
+  stage_label: Stakeholder Dissemination
+  role: communicator
+  description: Executes Technical Brief Author responsibilities within the Stakeholder
+    Dissemination stage.
+  capabilities: []
+  policies:
+  - policy.evidence_threshold
+  - policy.latency_budget
+  - policy.research_depth
+  - policy.seed.evidence_threshold
+  - policy.seed.max_research_depth
+  - policy.seed.max_total_time
+  depends_on:
+  - dissemination.coordinator
+  - orchestration.supervisor
+  - orchestration.observability_hub
+  - orchestration.policy_enforcer
+  - orchestration.audit_trail
+  - orchestration.retry_manager
+  - orchestration.quality_board
+  inputs:
+  - dissemination.input
+  outputs:
+  - dissemination.output
+  prompts:
+  - prompts/dissemination/technical_brief_author_primary.md
+  - prompts/dissemination/technical_brief_author_fallback.md
+  - prompts/dissemination/technical_brief_author_summary.md
+  concurrency: 1
+  retry:
+    max_attempts: 3
+    strategy: exponential
+    cooldown_seconds: 15
+  category: stage

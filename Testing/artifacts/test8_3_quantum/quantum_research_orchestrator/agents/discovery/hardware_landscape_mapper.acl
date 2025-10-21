@@ -1,0 +1,38 @@
+agent:
+  id: discovery.hardware_landscape_mapper
+  name: Hardware Landscape Mapper
+  stage: discovery
+  stage_label: Quantum Discovery
+  role: analyst
+  description: Executes Hardware Landscape Mapper responsibilities within the Quantum
+    Discovery stage.
+  capabilities: []
+  policies:
+  - policy.evidence_threshold
+  - policy.latency_budget
+  - policy.research_depth
+  - policy.seed.evidence_threshold
+  - policy.seed.max_research_depth
+  - policy.seed.max_total_time
+  depends_on:
+  - discovery.coordinator
+  - orchestration.supervisor
+  - orchestration.observability_hub
+  - orchestration.policy_enforcer
+  - orchestration.audit_trail
+  - orchestration.retry_manager
+  - orchestration.quality_board
+  inputs:
+  - discovery.input
+  outputs:
+  - discovery.output
+  prompts:
+  - prompts/discovery/hardware_landscape_mapper_primary.md
+  - prompts/discovery/hardware_landscape_mapper_fallback.md
+  - prompts/discovery/hardware_landscape_mapper_summary.md
+  concurrency: 1
+  retry:
+    max_attempts: 3
+    strategy: exponential
+    cooldown_seconds: 15
+  category: stage

@@ -1,0 +1,87 @@
+id: branch_to_specs
+description: Expand trunk nodes into blueprint variants and capture constraint proofs.
+inputs:
+  trunk_nodes_path:
+    required: true
+  branch_template:
+    default: "Blueprint variant derived from trunk vision."
+  parity_threshold:
+    default: 0.82
+  constraint_proof_path:
+    default: "evidence/mige/constraint_proofs_p1.md"
+outputs:
+  branch_specs_path:
+    default: "branch_specs.json"
+participants:
+  - name: trunk_nodes
+    module: packages.apoe_runner.helpers
+    call: read_json
+    args:
+      path: "@input.trunk_nodes_path"
+    result: trunk_nodes
+  - name: blueprint_tensor
+    module: packages.meta_optimizer.vision_tensor
+    call: compute_tensor
+    args:
+      seed_capsule:
+        vision: "@input.branch_template"
+    result: blueprint_tensor
+gates:
+  - id: g_variant_parity
+    module: packages.meta_optimizer.vision_tensor
+    call: g_vision_fit
+    args:
+      result: "@result.blueprint_tensor"
+      threshold: "@input.parity_threshold"
+    on_fail:
+      - action: log
+        params:
+          level: error
+          message: "Branch blueprint VisionFit @gate.score < @gate.threshold"
+      - action: abort
+steps:
+  - action: python
+    params:
+      code: |
+        branches = []
+        for node in context["result"]["trunk_nodes"]:
+            branches.append({
+                "mpd_id": node["mpd_id"],
+                "variant_id": f"{node['mpd_id']}::variant-a",
+                "summary": context["input"]["branch_template"],
+                "max_dependency_degree": node.get("max_dependency_degree", 0),
+            })
+        context["result"]["branch_specs"] = {"branches": branches}
+      result: branch_specs
+  - action: python
+    params:
+      code: |
+        import hashlib
+        proof_path = context["input"].get("constraint_proof_path")
+        if proof_path:
+            with open(proof_path, "rb") as handle:
+                payload = handle.read()
+            context["result"]["constraint_proof_hash"] = hashlib.sha256(payload).hexdigest()
+        else:
+            context["result"]["constraint_proof_hash"] = None
+  - action: write_json
+    params:
+      path: "@output.branch_specs_path"
+      payload: "@result.branch_specs"
+  - action: write_witness
+    params:
+      payload:
+        event: "plan.branch_to_specs"
+        plan_id: "@plan.id"
+        correlation_id: "@result.blueprint_tensor.correlation_id"
+        constraint_proof_path: "@input.constraint_proof_path"
+        constraint_proof_hash: "@result.constraint_proof_hash"
+      filename: "plan_branch_to_specs.jsonl"
+  - action: log
+    params:
+      level: info
+      message: "Constraint proof hash: @result.constraint_proof_hash"
+  - action: log
+    params:
+      level: info
+      message: "Constraint proof source: @input.constraint_proof_path"

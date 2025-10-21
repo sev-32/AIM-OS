@@ -1,0 +1,27 @@
+groups:
+- name: discovery_parallel
+  members:
+  - discovery.qubit_literature_miner
+  - discovery.hardware_landscape_mapper
+  - discovery.quantum_standards_tracker
+  concurrency: 3
+- name: analysis_parallel
+  members:
+  - analysis.algorithm_benchmark_analyst
+  - analysis.error_mitigation_specialist
+  - analysis.quantum_advantage_evaluator
+  - analysis.risk_compliance_reviewer
+  concurrency: 4
+- name: dissemination_parallel
+  members:
+  - dissemination.technical_brief_author
+  - dissemination.executive_summary_curator
+  - dissemination.adoption_strategy_advisor
+  concurrency: 3
+supervisors:
+- orchestration.supervisor
+- orchestration.observability_hub
+- orchestration.policy_enforcer
+- orchestration.audit_trail
+- orchestration.retry_manager
+- orchestration.quality_board

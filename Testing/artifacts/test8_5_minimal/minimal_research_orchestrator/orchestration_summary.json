@@ -1,0 +1,897 @@
+{
+  "name": "Minimal Research Orchestrator",
+  "description": "Minimal viable orchestration with five agents.",
+  "nodes": [
+    {
+      "id": "gather.source_collector",
+      "name": "Source Collector",
+      "stage": "gather",
+      "role": "retriever",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time"
+      ],
+      "max_dependency_degree": 16,
+      "depends_on": [
+        "gather.coordinator",
+        "orchestration.supervisor",
+        "orchestration.observability_hub",
+        "orchestration.policy_enforcer",
+        "orchestration.audit_trail",
+        "orchestration.retry_manager",
+        "orchestration.quality_board"
+      ],
+      "category": "stage"
+    },
+    {
+      "id": "gather.fact_extractor",
+      "name": "Fact Extractor",
+      "stage": "gather",
+      "role": "parser",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time"
+      ],
+      "max_dependency_degree": 16,
+      "depends_on": [
+        "gather.coordinator",
+        "orchestration.supervisor",
+        "orchestration.observability_hub",
+        "orchestration.policy_enforcer",
+        "orchestration.audit_trail",
+        "orchestration.retry_manager",
+        "orchestration.quality_board"
+      ],
+      "category": "stage"
+    },
+    {
+      "id": "gather.coordinator",
+      "name": "Gather Coordinator",
+      "stage": "gather",
+      "role": "coordinator",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time",
+        "policy.stage_alignment"
+      ],
+      "max_dependency_degree": 32,
+      "depends_on": [
+        "orchestration.supervisor",
+        "orchestration.observability_hub",
+        "orchestration.policy_enforcer",
+        "orchestration.audit_trail",
+        "orchestration.retry_manager",
+        "orchestration.quality_board"
+      ],
+      "category": "coordinator"
+    },
+    {
+      "id": "produce.insight_synthesizer",
+      "name": "Insight Synthesizer",
+      "stage": "produce",
+      "role": "analyst",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time"
+      ],
+      "max_dependency_degree": 16,
+      "depends_on": [
+        "produce.coordinator",
+        "orchestration.supervisor",
+        "orchestration.observability_hub",
+        "orchestration.policy_enforcer",
+        "orchestration.audit_trail",
+        "orchestration.retry_manager",
+        "orchestration.quality_board"
+      ],
+      "category": "stage"
+    },
+    {
+      "id": "produce.summary_writer",
+      "name": "Summary Writer",
+      "stage": "produce",
+      "role": "communicator",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time"
+      ],
+      "max_dependency_degree": 16,
+      "depends_on": [
+        "produce.coordinator",
+        "orchestration.supervisor",
+        "orchestration.observability_hub",
+        "orchestration.policy_enforcer",
+        "orchestration.audit_trail",
+        "orchestration.retry_manager",
+        "orchestration.quality_board"
+      ],
+      "category": "stage"
+    },
+    {
+      "id": "produce.quality_checker",
+      "name": "Quality Checker",
+      "stage": "produce",
+      "role": "validator",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time"
+      ],
+      "max_dependency_degree": 16,
+      "depends_on": [
+        "produce.coordinator",
+        "orchestration.supervisor",
+        "orchestration.observability_hub",
+        "orchestration.policy_enforcer",
+        "orchestration.audit_trail",
+        "orchestration.retry_manager",
+        "orchestration.quality_board"
+      ],
+      "category": "stage"
+    },
+    {
+      "id": "produce.coordinator",
+      "name": "Produce Coordinator",
+      "stage": "produce",
+      "role": "coordinator",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time",
+        "policy.stage_alignment"
+      ],
+      "max_dependency_degree": 32,
+      "depends_on": [
+        "orchestration.supervisor",
+        "orchestration.observability_hub",
+        "orchestration.policy_enforcer",
+        "orchestration.audit_trail",
+        "orchestration.retry_manager",
+        "orchestration.quality_board"
+      ],
+      "category": "coordinator"
+    },
+    {
+      "id": "orchestration.supervisor",
+      "name": "Orchestration Supervisor",
+      "stage": "orchestration",
+      "role": "executive",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time",
+        "policy.stage_alignment",
+        "policy.system_observability",
+        "policy.system_fallbacks"
+      ],
+      "max_dependency_degree": 24,
+      "depends_on": [
+        "gather.coordinator",
+        "produce.coordinator"
+      ],
+      "category": "supervisor"
+    },
+    {
+      "id": "orchestration.observability_hub",
+      "name": "Observability Hub",
+      "stage": "orchestration",
+      "role": "telemetry",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time",
+        "policy.stage_alignment",
+        "policy.system_observability",
+        "policy.system_fallbacks"
+      ],
+      "max_dependency_degree": 24,
+      "depends_on": [
+        "gather.coordinator",
+        "produce.coordinator"
+      ],
+      "category": "observer"
+    },
+    {
+      "id": "orchestration.policy_enforcer",
+      "name": "Policy Enforcer",
+      "stage": "orchestration",
+      "role": "governance",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time",
+        "policy.stage_alignment",
+        "policy.system_observability",
+        "policy.system_fallbacks"
+      ],
+      "max_dependency_degree": 24,
+      "depends_on": [
+        "gather.coordinator",
+        "produce.coordinator"
+      ],
+      "category": "governance"
+    },
+    {
+      "id": "orchestration.audit_trail",
+      "name": "Audit Trail Emitter",
+      "stage": "orchestration",
+      "role": "provenance",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time",
+        "policy.stage_alignment",
+        "policy.system_observability",
+        "policy.system_fallbacks"
+      ],
+      "max_dependency_degree": 24,
+      "depends_on": [
+        "gather.coordinator",
+        "produce.coordinator"
+      ],
+      "category": "observer"
+    },
+    {
+      "id": "orchestration.retry_manager",
+      "name": "Retry Manager",
+      "stage": "orchestration",
+      "role": "resilience",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time",
+        "policy.stage_alignment",
+        "policy.system_observability",
+        "policy.system_fallbacks"
+      ],
+      "max_dependency_degree": 24,
+      "depends_on": [
+        "gather.coordinator",
+        "produce.coordinator"
+      ],
+      "category": "resilience"
+    },
+    {
+      "id": "orchestration.quality_board",
+      "name": "Quality Board",
+      "stage": "orchestration",
+      "role": "analysis",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time",
+        "policy.stage_alignment",
+        "policy.system_observability",
+        "policy.system_fallbacks"
+      ],
+      "max_dependency_degree": 24,
+      "depends_on": [
+        "gather.coordinator",
+        "produce.coordinator"
+      ],
+      "category": "analysis"
+    }
+  ],
+  "edges": [
+    {
+      "source": "gather.source_collector",
+      "target": "gather.coordinator",
+      "relation": "depends_on"
+    },
+    {
+      "source": "gather.source_collector",
+      "target": "orchestration.supervisor",
+      "relation": "depends_on"
+    },
+    {
+      "source": "gather.source_collector",
+      "target": "orchestration.observability_hub",
+      "relation": "depends_on"
+    },
+    {
+      "source": "gather.source_collector",
+      "target": "orchestration.policy_enforcer",
+      "relation": "depends_on"
+    },
+    {
+      "source": "gather.source_collector",
+      "target": "orchestration.audit_trail",
+      "relation": "depends_on"
+    },
+    {
+      "source": "gather.source_collector",
+      "target": "orchestration.retry_manager",
+      "relation": "depends_on"
+    },
+    {
+      "source": "gather.source_collector",
+      "target": "orchestration.quality_board",
+      "relation": "depends_on"
+    },
+    {
+      "source": "gather.fact_extractor",
+      "target": "gather.coordinator",
+      "relation": "depends_on"
+    },
+    {
+      "source": "gather.fact_extractor",
+      "target": "orchestration.supervisor",
+      "relation": "depends_on"
+    },
+    {
+      "source": "gather.fact_extractor",
+      "target": "orchestration.observability_hub",
+      "relation": "depends_on"
+    },
+    {
+      "source": "gather.fact_extractor",
+      "target": "orchestration.policy_enforcer",
+      "relation": "depends_on"
+    },
+    {
+      "source": "gather.fact_extractor",
+      "target": "orchestration.audit_trail",
+      "relation": "depends_on"
+    },
+    {
+      "source": "gather.fact_extractor",
+      "target": "orchestration.retry_manager",
+      "relation": "depends_on"
+    },
+    {
+      "source": "gather.fact_extractor",
+      "target": "orchestration.quality_board",
+      "relation": "depends_on"
+    },
+    {
+      "source": "gather.coordinator",
+      "target": "orchestration.supervisor",
+      "relation": "depends_on"
+    },
+    {
+      "source": "gather.coordinator",
+      "target": "orchestration.observability_hub",
+      "relation": "depends_on"
+    },
+    {
+      "source": "gather.coordinator",
+      "target": "orchestration.policy_enforcer",
+      "relation": "depends_on"
+    },
+    {
+      "source": "gather.coordinator",
+      "target": "orchestration.audit_trail",
+      "relation": "depends_on"
+    },
+    {
+      "source": "gather.coordinator",
+      "target": "orchestration.retry_manager",
+      "relation": "depends_on"
+    },
+    {
+      "source": "gather.coordinator",
+      "target": "orchestration.quality_board",
+      "relation": "depends_on"
+    },
+    {
+      "source": "produce.insight_synthesizer",
+      "target": "produce.coordinator",
+      "relation": "depends_on"
+    },
+    {
+      "source": "produce.insight_synthesizer",
+      "target": "orchestration.supervisor",
+      "relation": "depends_on"
+    },
+    {
+      "source": "produce.insight_synthesizer",
+      "target": "orchestration.observability_hub",
+      "relation": "depends_on"
+    },
+    {
+      "source": "produce.insight_synthesizer",
+      "target": "orchestration.policy_enforcer",
+      "relation": "depends_on"
+    },
+    {
+      "source": "produce.insight_synthesizer",
+      "target": "orchestration.audit_trail",
+      "relation": "depends_on"
+    },
+    {
+      "source": "produce.insight_synthesizer",
+      "target": "orchestration.retry_manager",
+      "relation": "depends_on"
+    },
+    {
+      "source": "produce.insight_synthesizer",
+      "target": "orchestration.quality_board",
+      "relation": "depends_on"
+    },
+    {
+      "source": "produce.summary_writer",
+      "target": "produce.coordinator",
+      "relation": "depends_on"
+    },
+    {
+      "source": "produce.summary_writer",
+      "target": "orchestration.supervisor",
+      "relation": "depends_on"
+    },
+    {
+      "source": "produce.summary_writer",
+      "target": "orchestration.observability_hub",
+      "relation": "depends_on"
+    },
+    {
+      "source": "produce.summary_writer",
+      "target": "orchestration.policy_enforcer",
+      "relation": "depends_on"
+    },
+    {
+      "source": "produce.summary_writer",
+      "target": "orchestration.audit_trail",
+      "relation": "depends_on"
+    },
+    {
+      "source": "produce.summary_writer",
+      "target": "orchestration.retry_manager",
+      "relation": "depends_on"
+    },
+    {
+      "source": "produce.summary_writer",
+      "target": "orchestration.quality_board",
+      "relation": "depends_on"
+    },
+    {
+      "source": "produce.quality_checker",
+      "target": "produce.coordinator",
+      "relation": "depends_on"
+    },
+    {
+      "source": "produce.quality_checker",
+      "target": "orchestration.supervisor",
+      "relation": "depends_on"
+    },
+    {
+      "source": "produce.quality_checker",
+      "target": "orchestration.observability_hub",
+      "relation": "depends_on"
+    },
+    {
+      "source": "produce.quality_checker",
+      "target": "orchestration.policy_enforcer",
+      "relation": "depends_on"
+    },
+    {
+      "source": "produce.quality_checker",
+      "target": "orchestration.audit_trail",
+      "relation": "depends_on"
+    },
+    {
+      "source": "produce.quality_checker",
+      "target": "orchestration.retry_manager",
+      "relation": "depends_on"
+    },
+    {
+      "source": "produce.quality_checker",
+      "target": "orchestration.quality_board",
+      "relation": "depends_on"
+    },
+    {
+      "source": "produce.coordinator",
+      "target": "orchestration.supervisor",
+      "relation": "depends_on"
+    },
+    {
+      "source": "produce.coordinator",
+      "target": "orchestration.observability_hub",
+      "relation": "depends_on"
+    },
+    {
+      "source": "produce.coordinator",
+      "target": "orchestration.policy_enforcer",
+      "relation": "depends_on"
+    },
+    {
+      "source": "produce.coordinator",
+      "target": "orchestration.audit_trail",
+      "relation": "depends_on"
+    },
+    {
+      "source": "produce.coordinator",
+      "target": "orchestration.retry_manager",
+      "relation": "depends_on"
+    },
+    {
+      "source": "produce.coordinator",
+      "target": "orchestration.quality_board",
+      "relation": "depends_on"
+    },
+    {
+      "source": "orchestration.supervisor",
+      "target": "gather.coordinator",
+      "relation": "monitors"
+    },
+    {
+      "source": "orchestration.supervisor",
+      "target": "produce.coordinator",
+      "relation": "monitors"
+    },
+    {
+      "source": "orchestration.observability_hub",
+      "target": "gather.coordinator",
+      "relation": "monitors"
+    },
+    {
+      "source": "orchestration.observability_hub",
+      "target": "produce.coordinator",
+      "relation": "monitors"
+    },
+    {
+      "source": "orchestration.policy_enforcer",
+      "target": "gather.coordinator",
+      "relation": "monitors"
+    },
+    {
+      "source": "orchestration.policy_enforcer",
+      "target": "produce.coordinator",
+      "relation": "monitors"
+    },
+    {
+      "source": "orchestration.audit_trail",
+      "target": "gather.coordinator",
+      "relation": "monitors"
+    },
+    {
+      "source": "orchestration.audit_trail",
+      "target": "produce.coordinator",
+      "relation": "monitors"
+    },
+    {
+      "source": "orchestration.retry_manager",
+      "target": "gather.coordinator",
+      "relation": "monitors"
+    },
+    {
+      "source": "orchestration.retry_manager",
+      "target": "produce.coordinator",
+      "relation": "monitors"
+    },
+    {
+      "source": "orchestration.quality_board",
+      "target": "gather.coordinator",
+      "relation": "monitors"
+    },
+    {
+      "source": "orchestration.quality_board",
+      "target": "produce.coordinator",
+      "relation": "monitors"
+    },
+    {
+      "source": "gather.source_collector",
+      "target": "produce.insight_synthesizer",
+      "relation": "feeds"
+    },
+    {
+      "source": "gather.source_collector",
+      "target": "produce.summary_writer",
+      "relation": "feeds"
+    },
+    {
+      "source": "gather.source_collector",
+      "target": "produce.quality_checker",
+      "relation": "feeds"
+    },
+    {
+      "source": "gather.fact_extractor",
+      "target": "produce.insight_synthesizer",
+      "relation": "feeds"
+    },
+    {
+      "source": "gather.fact_extractor",
+      "target": "produce.summary_writer",
+      "relation": "feeds"
+    },
+    {
+      "source": "gather.fact_extractor",
+      "target": "produce.quality_checker",
+      "relation": "feeds"
+    },
+    {
+      "source": "gather.coordinator",
+      "target": "produce.coordinator",
+      "relation": "handoff"
+    },
+    {
+      "source": "gather.coordinator",
+      "target": "gather.source_collector",
+      "relation": "controls"
+    },
+    {
+      "source": "gather.source_collector",
+      "target": "gather.coordinator",
+      "relation": "reports"
+    },
+    {
+      "source": "gather.source_collector",
+      "target": "orchestration.retry_manager",
+      "relation": "retry_signal"
+    },
+    {
+      "source": "orchestration.retry_manager",
+      "target": "gather.source_collector",
+      "relation": "retry_dispatch"
+    },
+    {
+      "source": "gather.coordinator",
+      "target": "gather.fact_extractor",
+      "relation": "controls"
+    },
+    {
+      "source": "gather.fact_extractor",
+      "target": "gather.coordinator",
+      "relation": "reports"
+    },
+    {
+      "source": "gather.fact_extractor",
+      "target": "orchestration.retry_manager",
+      "relation": "retry_signal"
+    },
+    {
+      "source": "orchestration.retry_manager",
+      "target": "gather.fact_extractor",
+      "relation": "retry_dispatch"
+    },
+    {
+      "source": "gather.coordinator",
+      "target": "orchestration.supervisor",
+      "relation": "reports"
+    },
+    {
+      "source": "orchestration.supervisor",
+      "target": "gather.coordinator",
+      "relation": "oversees"
+    },
+    {
+      "source": "gather.coordinator",
+      "target": "orchestration.observability_hub",
+      "relation": "reports"
+    },
+    {
+      "source": "orchestration.observability_hub",
+      "target": "gather.coordinator",
+      "relation": "oversees"
+    },
+    {
+      "source": "gather.coordinator",
+      "target": "orchestration.policy_enforcer",
+      "relation": "reports"
+    },
+    {
+      "source": "orchestration.policy_enforcer",
+      "target": "gather.coordinator",
+      "relation": "oversees"
+    },
+    {
+      "source": "gather.coordinator",
+      "target": "orchestration.audit_trail",
+      "relation": "reports"
+    },
+    {
+      "source": "orchestration.audit_trail",
+      "target": "gather.coordinator",
+      "relation": "oversees"
+    },
+    {
+      "source": "gather.coordinator",
+      "target": "orchestration.retry_manager",
+      "relation": "reports"
+    },
+    {
+      "source": "orchestration.retry_manager",
+      "target": "gather.coordinator",
+      "relation": "oversees"
+    },
+    {
+      "source": "gather.coordinator",
+      "target": "orchestration.quality_board",
+      "relation": "reports"
+    },
+    {
+      "source": "orchestration.quality_board",
+      "target": "gather.coordinator",
+      "relation": "oversees"
+    },
+    {
+      "source": "produce.coordinator",
+      "target": "produce.insight_synthesizer",
+      "relation": "controls"
+    },
+    {
+      "source": "produce.insight_synthesizer",
+      "target": "produce.coordinator",
+      "relation": "reports"
+    },
+    {
+      "source": "produce.insight_synthesizer",
+      "target": "orchestration.retry_manager",
+      "relation": "retry_signal"
+    },
+    {
+      "source": "orchestration.retry_manager",
+      "target": "produce.insight_synthesizer",
+      "relation": "retry_dispatch"
+    },
+    {
+      "source": "produce.coordinator",
+      "target": "produce.summary_writer",
+      "relation": "controls"
+    },
+    {
+      "source": "produce.summary_writer",
+      "target": "produce.coordinator",
+      "relation": "reports"
+    },
+    {
+      "source": "produce.summary_writer",
+      "target": "orchestration.retry_manager",
+      "relation": "retry_signal"
+    },
+    {
+      "source": "orchestration.retry_manager",
+      "target": "produce.summary_writer",
+      "relation": "retry_dispatch"
+    },
+    {
+      "source": "produce.coordinator",
+      "target": "produce.quality_checker",
+      "relation": "controls"
+    },
+    {
+      "source": "produce.quality_checker",
+      "target": "produce.coordinator",
+      "relation": "reports"
+    },
+    {
+      "source": "produce.quality_checker",
+      "target": "orchestration.retry_manager",
+      "relation": "retry_signal"
+    },
+    {
+      "source": "orchestration.retry_manager",
+      "target": "produce.quality_checker",
+      "relation": "retry_dispatch"
+    },
+    {
+      "source": "produce.coordinator",
+      "target": "orchestration.supervisor",
+      "relation": "reports"
+    },
+    {
+      "source": "orchestration.supervisor",
+      "target": "produce.coordinator",
+      "relation": "oversees"
+    },
+    {
+      "source": "produce.coordinator",
+      "target": "orchestration.observability_hub",
+      "relation": "reports"
+    },
+    {
+      "source": "orchestration.observability_hub",
+      "target": "produce.coordinator",
+      "relation": "oversees"
+    },
+    {
+      "source": "produce.coordinator",
+      "target": "orchestration.policy_enforcer",
+      "relation": "reports"
+    },
+    {
+      "source": "orchestration.policy_enforcer",
+      "target": "produce.coordinator",
+      "relation": "oversees"
+    },
+    {
+      "source": "produce.coordinator",
+      "target": "orchestration.audit_trail",
+      "relation": "reports"
+    },
+    {
+      "source": "orchestration.audit_trail",
+      "target": "produce.coordinator",
+      "relation": "oversees"
+    },
+    {
+      "source": "produce.coordinator",
+      "target": "orchestration.retry_manager",
+      "relation": "reports"
+    },
+    {
+      "source": "orchestration.retry_manager",
+      "target": "produce.coordinator",
+      "relation": "oversees"
+    },
+    {
+      "source": "produce.coordinator",
+      "target": "orchestration.quality_board",
+      "relation": "reports"
+    },
+    {
+      "source": "orchestration.quality_board",
+      "target": "produce.coordinator",
+      "relation": "oversees"
+    }
+  ],
+  "policy_summary": {
+    "policy.evidence_threshold": 13,
+    "policy.latency_budget": 13,
+    "policy.research_depth": 13,
+    "policy.seed.evidence_threshold": 13,
+    "policy.seed.max_research_depth": 13,
+    "policy.seed.max_total_time": 13,
+    "policy.stage_alignment": 8,
+    "policy.system_fallbacks": 6,
+    "policy.system_observability": 6
+  },
+  "metadata": {
+    "stage_count": 2,
+    "agent_count": 13,
+    "policy_keys": [
+      "policy.evidence_threshold",
+      "policy.latency_budget",
+      "policy.research_depth",
+      "policy.seed.evidence_threshold",
+      "policy.seed.max_research_depth",
+      "policy.seed.max_total_time",
+      "policy.stage_alignment",
+      "policy.system_fallbacks",
+      "policy.system_observability"
+    ]
+  }
+}

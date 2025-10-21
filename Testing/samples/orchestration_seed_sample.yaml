@@ -1,0 +1,69 @@
+type: prompt_orchestration_framework
+name: Research Orchestrator
+description: Multi-stage research pipeline with 20+ agents and 80+ interconnections.
+policies:
+  max_research_depth: 3
+  evidence_threshold: 0.82
+  max_total_time: 60
+pipeline_stages:
+  - key: search
+    label: Literature Search
+    concurrency: 3
+    retry:
+      max_attempts: 2
+      strategy: exponential
+      cooldown_seconds: 10
+    agents:
+      - name: Scholar Agent
+        role: retriever
+        capabilities: [academic_papers, citations]
+      - name: Web Agent
+        role: retriever
+        capabilities: [web_articles, blogs]
+      - name: Code Agent
+        role: retriever
+        capabilities: [repositories, documentation]
+  - key: extraction
+    label: Content Extraction
+    concurrency: 5
+    agents:
+      - name: Key Concept Extractor
+        role: parser
+      - name: Methodology Extractor
+        role: parser
+      - name: Results Extractor
+        role: parser
+      - name: Limitations Extractor
+        role: parser
+      - name: References Extractor
+        role: parser
+  - key: analysis
+    label: Analysis
+    concurrency: 4
+    agents:
+      - name: Trend Analyzer
+        role: analyst
+      - name: Gap Identifier
+        role: analyst
+      - name: Contradiction Detector
+        role: analyst
+      - name: Synthesis Builder
+        role: analyst
+  - key: validation
+    label: Validation
+    concurrency: 3
+    agents:
+      - name: Fact Checker
+        role: validator
+      - name: Logic Validator
+        role: validator
+      - name: Consistency Checker
+        role: validator
+  - key: reporting
+    label: Reporting
+    concurrency: 2
+    agents:
+      - name: Structured Report Builder
+        role: communicator
+      - name: Executive Summary Generator
+        role: communicator

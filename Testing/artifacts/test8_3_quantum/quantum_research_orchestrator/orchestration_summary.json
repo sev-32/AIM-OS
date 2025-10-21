@@ -1,0 +1,1543 @@
+{
+  "name": "Quantum Research Orchestrator",
+  "description": "Research pipeline focused on quantum computing advancements.",
+  "nodes": [
+    {
+      "id": "discovery.qubit_literature_miner",
+      "name": "Qubit Literature Miner",
+      "stage": "discovery",
+      "role": "retriever",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time"
+      ],
+      "max_dependency_degree": 16,
+      "depends_on": [
+        "discovery.coordinator",
+        "orchestration.supervisor",
+        "orchestration.observability_hub",
+        "orchestration.policy_enforcer",
+        "orchestration.audit_trail",
+        "orchestration.retry_manager",
+        "orchestration.quality_board"
+      ],
+      "category": "stage"
+    },
+    {
+      "id": "discovery.hardware_landscape_mapper",
+      "name": "Hardware Landscape Mapper",
+      "stage": "discovery",
+      "role": "analyst",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time"
+      ],
+      "max_dependency_degree": 16,
+      "depends_on": [
+        "discovery.coordinator",
+        "orchestration.supervisor",
+        "orchestration.observability_hub",
+        "orchestration.policy_enforcer",
+        "orchestration.audit_trail",
+        "orchestration.retry_manager",
+        "orchestration.quality_board"
+      ],
+      "category": "stage"
+    },
+    {
+      "id": "discovery.quantum_standards_tracker",
+      "name": "Quantum Standards Tracker",
+      "stage": "discovery",
+      "role": "observer",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time"
+      ],
+      "max_dependency_degree": 16,
+      "depends_on": [
+        "discovery.coordinator",
+        "orchestration.supervisor",
+        "orchestration.observability_hub",
+        "orchestration.policy_enforcer",
+        "orchestration.audit_trail",
+        "orchestration.retry_manager",
+        "orchestration.quality_board"
+      ],
+      "category": "stage"
+    },
+    {
+      "id": "discovery.coordinator",
+      "name": "Quantum Discovery Coordinator",
+      "stage": "discovery",
+      "role": "coordinator",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time",
+        "policy.stage_alignment"
+      ],
+      "max_dependency_degree": 32,
+      "depends_on": [
+        "orchestration.supervisor",
+        "orchestration.observability_hub",
+        "orchestration.policy_enforcer",
+        "orchestration.audit_trail",
+        "orchestration.retry_manager",
+        "orchestration.quality_board"
+      ],
+      "category": "coordinator"
+    },
+    {
+      "id": "analysis.algorithm_benchmark_analyst",
+      "name": "Algorithm Benchmark Analyst",
+      "stage": "analysis",
+      "role": "analyst",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time"
+      ],
+      "max_dependency_degree": 16,
+      "depends_on": [
+        "analysis.coordinator",
+        "orchestration.supervisor",
+        "orchestration.observability_hub",
+        "orchestration.policy_enforcer",
+        "orchestration.audit_trail",
+        "orchestration.retry_manager",
+        "orchestration.quality_board"
+      ],
+      "category": "stage"
+    },
+    {
+      "id": "analysis.error_mitigation_specialist",
+      "name": "Error Mitigation Specialist",
+      "stage": "analysis",
+      "role": "specialist",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time"
+      ],
+      "max_dependency_degree": 16,
+      "depends_on": [
+        "analysis.coordinator",
+        "orchestration.supervisor",
+        "orchestration.observability_hub",
+        "orchestration.policy_enforcer",
+        "orchestration.audit_trail",
+        "orchestration.retry_manager",
+        "orchestration.quality_board"
+      ],
+      "category": "stage"
+    },
+    {
+      "id": "analysis.quantum_advantage_evaluator",
+      "name": "Quantum Advantage Evaluator",
+      "stage": "analysis",
+      "role": "analyst",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time"
+      ],
+      "max_dependency_degree": 16,
+      "depends_on": [
+        "analysis.coordinator",
+        "orchestration.supervisor",
+        "orchestration.observability_hub",
+        "orchestration.policy_enforcer",
+        "orchestration.audit_trail",
+        "orchestration.retry_manager",
+        "orchestration.quality_board"
+      ],
+      "category": "stage"
+    },
+    {
+      "id": "analysis.risk_compliance_reviewer",
+      "name": "Risk & Compliance Reviewer",
+      "stage": "analysis",
+      "role": "validator",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time"
+      ],
+      "max_dependency_degree": 16,
+      "depends_on": [
+        "analysis.coordinator",
+        "orchestration.supervisor",
+        "orchestration.observability_hub",
+        "orchestration.policy_enforcer",
+        "orchestration.audit_trail",
+        "orchestration.retry_manager",
+        "orchestration.quality_board"
+      ],
+      "category": "stage"
+    },
+    {
+      "id": "analysis.coordinator",
+      "name": "Quantum Analysis Coordinator",
+      "stage": "analysis",
+      "role": "coordinator",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time",
+        "policy.stage_alignment"
+      ],
+      "max_dependency_degree": 32,
+      "depends_on": [
+        "orchestration.supervisor",
+        "orchestration.observability_hub",
+        "orchestration.policy_enforcer",
+        "orchestration.audit_trail",
+        "orchestration.retry_manager",
+        "orchestration.quality_board"
+      ],
+      "category": "coordinator"
+    },
+    {
+      "id": "dissemination.technical_brief_author",
+      "name": "Technical Brief Author",
+      "stage": "dissemination",
+      "role": "communicator",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time"
+      ],
+      "max_dependency_degree": 16,
+      "depends_on": [
+        "dissemination.coordinator",
+        "orchestration.supervisor",
+        "orchestration.observability_hub",
+        "orchestration.policy_enforcer",
+        "orchestration.audit_trail",
+        "orchestration.retry_manager",
+        "orchestration.quality_board"
+      ],
+      "category": "stage"
+    },
+    {
+      "id": "dissemination.executive_summary_curator",
+      "name": "Executive Summary Curator",
+      "stage": "dissemination",
+      "role": "communicator",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time"
+      ],
+      "max_dependency_degree": 16,
+      "depends_on": [
+        "dissemination.coordinator",
+        "orchestration.supervisor",
+        "orchestration.observability_hub",
+        "orchestration.policy_enforcer",
+        "orchestration.audit_trail",
+        "orchestration.retry_manager",
+        "orchestration.quality_board"
+      ],
+      "category": "stage"
+    },
+    {
+      "id": "dissemination.adoption_strategy_advisor",
+      "name": "Adoption Strategy Advisor",
+      "stage": "dissemination",
+      "role": "strategist",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time"
+      ],
+      "max_dependency_degree": 16,
+      "depends_on": [
+        "dissemination.coordinator",
+        "orchestration.supervisor",
+        "orchestration.observability_hub",
+        "orchestration.policy_enforcer",
+        "orchestration.audit_trail",
+        "orchestration.retry_manager",
+        "orchestration.quality_board"
+      ],
+      "category": "stage"
+    },
+    {
+      "id": "dissemination.coordinator",
+      "name": "Stakeholder Dissemination Coordinator",
+      "stage": "dissemination",
+      "role": "coordinator",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time",
+        "policy.stage_alignment"
+      ],
+      "max_dependency_degree": 32,
+      "depends_on": [
+        "orchestration.supervisor",
+        "orchestration.observability_hub",
+        "orchestration.policy_enforcer",
+        "orchestration.audit_trail",
+        "orchestration.retry_manager",
+        "orchestration.quality_board"
+      ],
+      "category": "coordinator"
+    },
+    {
+      "id": "orchestration.supervisor",
+      "name": "Orchestration Supervisor",
+      "stage": "orchestration",
+      "role": "executive",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time",
+        "policy.stage_alignment",
+        "policy.system_observability",
+        "policy.system_fallbacks"
+      ],
+      "max_dependency_degree": 24,
+      "depends_on": [
+        "discovery.coordinator",
+        "analysis.coordinator",
+        "dissemination.coordinator"
+      ],
+      "category": "supervisor"
+    },
+    {
+      "id": "orchestration.observability_hub",
+      "name": "Observability Hub",
+      "stage": "orchestration",
+      "role": "telemetry",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time",
+        "policy.stage_alignment",
+        "policy.system_observability",
+        "policy.system_fallbacks"
+      ],
+      "max_dependency_degree": 24,
+      "depends_on": [
+        "discovery.coordinator",
+        "analysis.coordinator",
+        "dissemination.coordinator"
+      ],
+      "category": "observer"
+    },
+    {
+      "id": "orchestration.policy_enforcer",
+      "name": "Policy Enforcer",
+      "stage": "orchestration",
+      "role": "governance",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time",
+        "policy.stage_alignment",
+        "policy.system_observability",
+        "policy.system_fallbacks"
+      ],
+      "max_dependency_degree": 24,
+      "depends_on": [
+        "discovery.coordinator",
+        "analysis.coordinator",
+        "dissemination.coordinator"
+      ],
+      "category": "governance"
+    },
+    {
+      "id": "orchestration.audit_trail",
+      "name": "Audit Trail Emitter",
+      "stage": "orchestration",
+      "role": "provenance",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time",
+        "policy.stage_alignment",
+        "policy.system_observability",
+        "policy.system_fallbacks"
+      ],
+      "max_dependency_degree": 24,
+      "depends_on": [
+        "discovery.coordinator",
+        "analysis.coordinator",
+        "dissemination.coordinator"
+      ],
+      "category": "observer"
+    },
+    {
+      "id": "orchestration.retry_manager",
+      "name": "Retry Manager",
+      "stage": "orchestration",
+      "role": "resilience",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time",
+        "policy.stage_alignment",
+        "policy.system_observability",
+        "policy.system_fallbacks"
+      ],
+      "max_dependency_degree": 24,
+      "depends_on": [
+        "discovery.coordinator",
+        "analysis.coordinator",
+        "dissemination.coordinator"
+      ],
+      "category": "resilience"
+    },
+    {
+      "id": "orchestration.quality_board",
+      "name": "Quality Board",
+      "stage": "orchestration",
+      "role": "analysis",
+      "policy_pack_ids": [
+        "policy.evidence_threshold",
+        "policy.latency_budget",
+        "policy.research_depth",
+        "policy.seed.evidence_threshold",
+        "policy.seed.max_research_depth",
+        "policy.seed.max_total_time",
+        "policy.stage_alignment",
+        "policy.system_observability",
+        "policy.system_fallbacks"
+      ],
+      "max_dependency_degree": 24,
+      "depends_on": [
+        "discovery.coordinator",
+        "analysis.coordinator",
+        "dissemination.coordinator"
+      ],
+      "category": "analysis"
+    }
+  ],
+  "edges": [
+    {
+      "source": "discovery.qubit_literature_miner",
+      "target": "discovery.coordinator",
+      "relation": "depends_on"
+    },
+    {
+      "source": "discovery.qubit_literature_miner",
+      "target": "orchestration.supervisor",
+      "relation": "depends_on"
+    },
+    {
+      "source": "discovery.qubit_literature_miner",
+      "target": "orchestration.observability_hub",
+      "relation": "depends_on"
+    },
+    {
+      "source": "discovery.qubit_literature_miner",
+      "target": "orchestration.policy_enforcer",
+      "relation": "depends_on"
+    },
+    {
+      "source": "discovery.qubit_literature_miner",
+      "target": "orchestration.audit_trail",
+      "relation": "depends_on"
+    },
+    {
+      "source": "discovery.qubit_literature_miner",
+      "target": "orchestration.retry_manager",
+      "relation": "depends_on"
+    },
+    {
+      "source": "discovery.qubit_literature_miner",
+      "target": "orchestration.quality_board",
+      "relation": "depends_on"
+    },
+    {
+      "source": "discovery.hardware_landscape_mapper",
+      "target": "discovery.coordinator",
+      "relation": "depends_on"
+    },
+    {
+      "source": "discovery.hardware_landscape_mapper",
+      "target": "orchestration.supervisor",
+      "relation": "depends_on"
+    },
+    {
+      "source": "discovery.hardware_landscape_mapper",
+      "target": "orchestration.observability_hub",
+      "relation": "depends_on"
+    },
+    {
+      "source": "discovery.hardware_landscape_mapper",
+      "target": "orchestration.policy_enforcer",
+      "relation": "depends_on"
+    },
+    {
+      "source": "discovery.hardware_landscape_mapper",
+      "target": "orchestration.audit_trail",
+      "relation": "depends_on"
+    },
+    {
+      "source": "discovery.hardware_landscape_mapper",
+      "target": "orchestration.retry_manager",
+      "relation": "depends_on"
+    },
+    {
+      "source": "discovery.hardware_landscape_mapper",
+      "target": "orchestration.quality_board",
+      "relation": "depends_on"
+    },
+    {
+      "source": "discovery.quantum_standards_tracker",
+      "target": "discovery.coordinator",
+      "relation": "depends_on"
+    },
+    {
+      "source": "discovery.quantum_standards_tracker",
+      "target": "orchestration.supervisor",
+      "relation": "depends_on"
+    },
+    {
+      "source": "discovery.quantum_standards_tracker",
+      "target": "orchestration.observability_hub",
+      "relation": "depends_on"
+    },
+    {
+      "source": "discovery.quantum_standards_tracker",
+      "target": "orchestration.policy_enforcer",
+      "relation": "depends_on"
+    },
+    {
+      "source": "discovery.quantum_standards_tracker",
+      "target": "orchestration.audit_trail",
+      "relation": "depends_on"
+    },
+    {
+      "source": "discovery.quantum_standards_tracker",
+      "target": "orchestration.retry_manager",
+      "relation": "depends_on"
+    },
+    {
+      "source": "discovery.quantum_standards_tracker",
+      "target": "orchestration.quality_board",
+      "relation": "depends_on"
+    },
+    {
+      "source": "discovery.coordinator",
+      "target": "orchestration.supervisor",
+      "relation": "depends_on"
+    },
+    {
+      "source": "discovery.coordinator",
+      "target": "orchestration.observability_hub",
+      "relation": "depends_on"
+    },
+    {
+      "source": "discovery.coordinator",
+      "target": "orchestration.policy_enforcer",
+      "relation": "depends_on"
+    },
+    {
+      "source": "discovery.coordinator",
+      "target": "orchestration.audit_trail",
+      "relation": "depends_on"
+    },
+    {
+      "source": "discovery.coordinator",
+      "target": "orchestration.retry_manager",
+      "relation": "depends_on"
+    },
+    {
+      "source": "discovery.coordinator",
+      "target": "orchestration.quality_board",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.algorithm_benchmark_analyst",
+      "target": "analysis.coordinator",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.algorithm_benchmark_analyst",
+      "target": "orchestration.supervisor",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.algorithm_benchmark_analyst",
+      "target": "orchestration.observability_hub",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.algorithm_benchmark_analyst",
+      "target": "orchestration.policy_enforcer",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.algorithm_benchmark_analyst",
+      "target": "orchestration.audit_trail",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.algorithm_benchmark_analyst",
+      "target": "orchestration.retry_manager",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.algorithm_benchmark_analyst",
+      "target": "orchestration.quality_board",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.error_mitigation_specialist",
+      "target": "analysis.coordinator",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.error_mitigation_specialist",
+      "target": "orchestration.supervisor",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.error_mitigation_specialist",
+      "target": "orchestration.observability_hub",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.error_mitigation_specialist",
+      "target": "orchestration.policy_enforcer",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.error_mitigation_specialist",
+      "target": "orchestration.audit_trail",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.error_mitigation_specialist",
+      "target": "orchestration.retry_manager",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.error_mitigation_specialist",
+      "target": "orchestration.quality_board",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.quantum_advantage_evaluator",
+      "target": "analysis.coordinator",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.quantum_advantage_evaluator",
+      "target": "orchestration.supervisor",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.quantum_advantage_evaluator",
+      "target": "orchestration.observability_hub",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.quantum_advantage_evaluator",
+      "target": "orchestration.policy_enforcer",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.quantum_advantage_evaluator",
+      "target": "orchestration.audit_trail",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.quantum_advantage_evaluator",
+      "target": "orchestration.retry_manager",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.quantum_advantage_evaluator",
+      "target": "orchestration.quality_board",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.risk_compliance_reviewer",
+      "target": "analysis.coordinator",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.risk_compliance_reviewer",
+      "target": "orchestration.supervisor",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.risk_compliance_reviewer",
+      "target": "orchestration.observability_hub",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.risk_compliance_reviewer",
+      "target": "orchestration.policy_enforcer",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.risk_compliance_reviewer",
+      "target": "orchestration.audit_trail",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.risk_compliance_reviewer",
+      "target": "orchestration.retry_manager",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.risk_compliance_reviewer",
+      "target": "orchestration.quality_board",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.coordinator",
+      "target": "orchestration.supervisor",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.coordinator",
+      "target": "orchestration.observability_hub",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.coordinator",
+      "target": "orchestration.policy_enforcer",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.coordinator",
+      "target": "orchestration.audit_trail",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.coordinator",
+      "target": "orchestration.retry_manager",
+      "relation": "depends_on"
+    },
+    {
+      "source": "analysis.coordinator",
+      "target": "orchestration.quality_board",
+      "relation": "depends_on"
+    },
+    {
+      "source": "dissemination.technical_brief_author",
+      "target": "dissemination.coordinator",
+      "relation": "depends_on"
+    },
+    {
+      "source": "dissemination.technical_brief_author",
+      "target": "orchestration.supervisor",
+      "relation": "depends_on"
+    },
+    {
+      "source": "dissemination.technical_brief_author",
+      "target": "orchestration.observability_hub",
+      "relation": "depends_on"
+    },
+    {
+      "source": "dissemination.technical_brief_author",
+      "target": "orchestration.policy_enforcer",
+      "relation": "depends_on"
+    },
+    {
+      "source": "dissemination.technical_brief_author",
+      "target": "orchestration.audit_trail",
+      "relation": "depends_on"
+    },
+    {
+      "source": "dissemination.technical_brief_author",
+      "target": "orchestration.retry_manager",
+      "relation": "depends_on"
+    },
+    {
+      "source": "dissemination.technical_brief_author",
+      "target": "orchestration.quality_board",
+      "relation": "depends_on"
+    },
+    {
+      "source": "dissemination.executive_summary_curator",
+      "target": "dissemination.coordinator",
+      "relation": "depends_on"
+    },
+    {
+      "source": "dissemination.executive_summary_curator",
+      "target": "orchestration.supervisor",
+      "relation": "depends_on"
+    },
+    {
+      "source": "dissemination.executive_summary_curator",
+      "target": "orchestration.observability_hub",
+      "relation": "depends_on"
+    },
+    {
+      "source": "dissemination.executive_summary_curator",
+      "target": "orchestration.policy_enforcer",
+      "relation": "depends_on"
+    },
+    {
+      "source": "dissemination.executive_summary_curator",
+      "target": "orchestration.audit_trail",
+      "relation": "depends_on"
+    },
+    {
+      "source": "dissemination.executive_summary_curator",
+      "target": "orchestration.retry_manager",
+      "relation": "depends_on"
+    },
+    {
+      "source": "dissemination.executive_summary_curator",
+      "target": "orchestration.quality_board",
+      "relation": "depends_on"
+    },
+    {
+      "source": "dissemination.adoption_strategy_advisor",
+      "target": "dissemination.coordinator",
+      "relation": "depends_on"
+    },
+    {
+      "source": "dissemination.adoption_strategy_advisor",
+      "target": "orchestration.supervisor",
+      "relation": "depends_on"
+    },
+    {
+      "source": "dissemination.adoption_strategy_advisor",
+      "target": "orchestration.observability_hub",
+      "relation": "depends_on"
+    },
+    {
+      "source": "dissemination.adoption_strategy_advisor",
+      "target": "orchestration.policy_enforcer",
+      "relation": "depends_on"
+    },
+    {
+      "source": "dissemination.adoption_strategy_advisor",
+      "target": "orchestration.audit_trail",
+      "relation": "depends_on"
+    },
+    {
+      "source": "dissemination.adoption_strategy_advisor",
+      "target": "orchestration.retry_manager",
+      "relation": "depends_on"
+    },
+    {
+      "source": "dissemination.adoption_strategy_advisor",
+      "target": "orchestration.quality_board",
+      "relation": "depends_on"
+    },
+    {
+      "source": "dissemination.coordinator",
+      "target": "orchestration.supervisor",
+      "relation": "depends_on"
+    },
+    {
+      "source": "dissemination.coordinator",
+      "target": "orchestration.observability_hub",
+      "relation": "depends_on"
+    },
+    {
+      "source": "dissemination.coordinator",
+      "target": "orchestration.policy_enforcer",
+      "relation": "depends_on"
+    },
+    {
+      "source": "dissemination.coordinator",
+      "target": "orchestration.audit_trail",
+      "relation": "depends_on"
+    },
+    {
+      "source": "dissemination.coordinator",
+      "target": "orchestration.retry_manager",
+      "relation": "depends_on"
+    },
+    {
+      "source": "dissemination.coordinator",
+      "target": "orchestration.quality_board",
+      "relation": "depends_on"
+    },
+    {
+      "source": "orchestration.supervisor",
+      "target": "discovery.coordinator",
+      "relation": "monitors"
+    },
+    {
+      "source": "orchestration.supervisor",
+      "target": "analysis.coordinator",
+      "relation": "monitors"
+    },
+    {
+      "source": "orchestration.supervisor",
+      "target": "dissemination.coordinator",
+      "relation": "monitors"
+    },
+    {
+      "source": "orchestration.observability_hub",
+      "target": "discovery.coordinator",
+      "relation": "monitors"
+    },
+    {
+      "source": "orchestration.observability_hub",
+      "target": "analysis.coordinator",
+      "relation": "monitors"
+    },
+    {
+      "source": "orchestration.observability_hub",
+      "target": "dissemination.coordinator",
+      "relation": "monitors"
+    },
+    {
+      "source": "orchestration.policy_enforcer",
+      "target": "discovery.coordinator",
+      "relation": "monitors"
+    },
+    {
+      "source": "orchestration.policy_enforcer",
+      "target": "analysis.coordinator",
+      "relation": "monitors"
+    },
+    {
+      "source": "orchestration.policy_enforcer",
+      "target": "dissemination.coordinator",
+      "relation": "monitors"
+    },
+    {
+      "source": "orchestration.audit_trail",
+      "target": "discovery.coordinator",
+      "relation": "monitors"
+    },
+    {
+      "source": "orchestration.audit_trail",
+      "target": "analysis.coordinator",
+      "relation": "monitors"
+    },
+    {
+      "source": "orchestration.audit_trail",
+      "target": "dissemination.coordinator",
+      "relation": "monitors"
+    },
+    {
+      "source": "orchestration.retry_manager",
+      "target": "discovery.coordinator",
+      "relation": "monitors"
+    },
+    {
+      "source": "orchestration.retry_manager",
+      "target": "analysis.coordinator",
+      "relation": "monitors"
+    },
+    {
+      "source": "orchestration.retry_manager",
+      "target": "dissemination.coordinator",
+      "relation": "monitors"
+    },
+    {
+      "source": "orchestration.quality_board",
+      "target": "discovery.coordinator",
+      "relation": "monitors"
+    },
+    {
+      "source": "orchestration.quality_board",
+      "target": "analysis.coordinator",
+      "relation": "monitors"
+    },
+    {
+      "source": "orchestration.quality_board",
+      "target": "dissemination.coordinator",
+      "relation": "monitors"
+    },
+    {
+      "source": "discovery.qubit_literature_miner",
+      "target": "analysis.algorithm_benchmark_analyst",
+      "relation": "feeds"
+    },
+    {
+      "source": "discovery.qubit_literature_miner",
+      "target": "analysis.error_mitigation_specialist",
+      "relation": "feeds"
+    },
+    {
+      "source": "discovery.qubit_literature_miner",
+      "target": "analysis.quantum_advantage_evaluator",
+      "relation": "feeds"
+    },
+    {
+      "source": "discovery.qubit_literature_miner",
+      "target": "analysis.risk_compliance_reviewer",
+      "relation": "feeds"
+    },
+    {
+      "source": "discovery.hardware_landscape_mapper",
+      "target": "analysis.algorithm_benchmark_analyst",
+      "relation": "feeds"
+    },
+    {
+      "source": "discovery.hardware_landscape_mapper",
+      "target": "analysis.error_mitigation_specialist",
+      "relation": "feeds"
+    },
+    {
+      "source": "discovery.hardware_landscape_mapper",
+      "target": "analysis.quantum_advantage_evaluator",
+      "relation": "feeds"
+    },
+    {
+      "source": "discovery.hardware_landscape_mapper",
+      "target": "analysis.risk_compliance_reviewer",
+      "relation": "feeds"
+    },
+    {
+      "source": "discovery.quantum_standards_tracker",
+      "target": "analysis.algorithm_benchmark_analyst",
+      "relation": "feeds"
+    },
+    {
+      "source": "discovery.quantum_standards_tracker",
+      "target": "analysis.error_mitigation_specialist",
+      "relation": "feeds"
+    },
+    {
+      "source": "discovery.quantum_standards_tracker",
+      "target": "analysis.quantum_advantage_evaluator",
+      "relation": "feeds"
+    },
+    {
+      "source": "discovery.quantum_standards_tracker",
+      "target": "analysis.risk_compliance_reviewer",
+      "relation": "feeds"
+    },
+    {
+      "source": "discovery.coordinator",
+      "target": "analysis.coordinator",
+      "relation": "handoff"
+    },
+    {
+      "source": "analysis.algorithm_benchmark_analyst",
+      "target": "dissemination.technical_brief_author",
+      "relation": "feeds"
+    },
+    {
+      "source": "analysis.algorithm_benchmark_analyst",
+      "target": "dissemination.executive_summary_curator",
+      "relation": "feeds"
+    },
+    {
+      "source": "analysis.algorithm_benchmark_analyst",
+      "target": "dissemination.adoption_strategy_advisor",
+      "relation": "feeds"
+    },
+    {
+      "source": "analysis.error_mitigation_specialist",
+      "target": "dissemination.technical_brief_author",
+      "relation": "feeds"
+    },
+    {
+      "source": "analysis.error_mitigation_specialist",
+      "target": "dissemination.executive_summary_curator",
+      "relation": "feeds"
+    },
+    {
+      "source": "analysis.error_mitigation_specialist",
+      "target": "dissemination.adoption_strategy_advisor",
+      "relation": "feeds"
+    },
+    {
+      "source": "analysis.quantum_advantage_evaluator",
+      "target": "dissemination.technical_brief_author",
+      "relation": "feeds"
+    },
+    {
+      "source": "analysis.quantum_advantage_evaluator",
+      "target": "dissemination.executive_summary_curator",
+      "relation": "feeds"
+    },
+    {
+      "source": "analysis.quantum_advantage_evaluator",
+      "target": "dissemination.adoption_strategy_advisor",
+      "relation": "feeds"
+    },
+    {
+      "source": "analysis.risk_compliance_reviewer",
+      "target": "dissemination.technical_brief_author",
+      "relation": "feeds"
+    },
+    {
+      "source": "analysis.risk_compliance_reviewer",
+      "target": "dissemination.executive_summary_curator",
+      "relation": "feeds"
+    },
+    {
+      "source": "analysis.risk_compliance_reviewer",
+      "target": "dissemination.adoption_strategy_advisor",
+      "relation": "feeds"
+    },
+    {
+      "source": "analysis.coordinator",
+      "target": "dissemination.coordinator",
+      "relation": "handoff"
+    },
+    {
+      "source": "discovery.coordinator",
+      "target": "discovery.qubit_literature_miner",
+      "relation": "controls"
+    },
+    {
+      "source": "discovery.qubit_literature_miner",
+      "target": "discovery.coordinator",
+      "relation": "reports"
+    },
+    {
+      "source": "discovery.qubit_literature_miner",
+      "target": "orchestration.retry_manager",
+      "relation": "retry_signal"
+    },
+    {
+      "source": "orchestration.retry_manager",
+      "target": "discovery.qubit_literature_miner",
+      "relation": "retry_dispatch"
+    },
+    {
+      "source": "discovery.coordinator",
+      "target": "discovery.hardware_landscape_mapper",
+      "relation": "controls"
+    },
+    {
+      "source": "discovery.hardware_landscape_mapper",
+      "target": "discovery.coordinator",
+      "relation": "reports"
+    },
+    {
+      "source": "discovery.hardware_landscape_mapper",
+      "target": "orchestration.retry_manager",
+      "relation": "retry_signal"
+    },
+    {
+      "source": "orchestration.retry_manager",
+      "target": "discovery.hardware_landscape_mapper",
+      "relation": "retry_dispatch"
+    },
+    {
+      "source": "discovery.coordinator",
+      "target": "discovery.quantum_standards_tracker",
+      "relation": "controls"
+    },
+    {
+      "source": "discovery.quantum_standards_tracker",
+      "target": "discovery.coordinator",
+      "relation": "reports"
+    },
+    {
+      "source": "discovery.quantum_standards_tracker",
+      "target": "orchestration.retry_manager",
+      "relation": "retry_signal"
+    },
+    {
+      "source": "orchestration.retry_manager",
+      "target": "discovery.quantum_standards_tracker",
+      "relation": "retry_dispatch"
+    },
+    {
+      "source": "discovery.coordinator",
+      "target": "orchestration.supervisor",
+      "relation": "reports"
+    },
+    {
+      "source": "orchestration.supervisor",
+      "target": "discovery.coordinator",
+      "relation": "oversees"
+    },
+    {
+      "source": "discovery.coordinator",
+      "target": "orchestration.observability_hub",
+      "relation": "reports"
+    },
+    {
+      "source": "orchestration.observability_hub",
+      "target": "discovery.coordinator",
+      "relation": "oversees"
+    },
+    {
+      "source": "discovery.coordinator",
+      "target": "orchestration.policy_enforcer",
+      "relation": "reports"
+    },
+    {
+      "source": "orchestration.policy_enforcer",
+      "target": "discovery.coordinator",
+      "relation": "oversees"
+    },
+    {
+      "source": "discovery.coordinator",
+      "target": "orchestration.audit_trail",
+      "relation": "reports"
+    },
+    {
+      "source": "orchestration.audit_trail",
+      "target": "discovery.coordinator",
+      "relation": "oversees"
+    },
+    {
+      "source": "discovery.coordinator",
+      "target": "orchestration.retry_manager",
+      "relation": "reports"
+    },
+    {
+      "source": "orchestration.retry_manager",
+      "target": "discovery.coordinator",
+      "relation": "oversees"
+    },
+    {
+      "source": "discovery.coordinator",
+      "target": "orchestration.quality_board",
+      "relation": "reports"
+    },
+    {
+      "source": "orchestration.quality_board",
+      "target": "discovery.coordinator",
+      "relation": "oversees"
+    },
+    {
+      "source": "analysis.coordinator",
+      "target": "analysis.algorithm_benchmark_analyst",
+      "relation": "controls"
+    },
+    {
+      "source": "analysis.algorithm_benchmark_analyst",
+      "target": "analysis.coordinator",
+      "relation": "reports"
+    },
+    {
+      "source": "analysis.algorithm_benchmark_analyst",
+      "target": "orchestration.retry_manager",
+      "relation": "retry_signal"
+    },
+    {
+      "source": "orchestration.retry_manager",
+      "target": "analysis.algorithm_benchmark_analyst",
+      "relation": "retry_dispatch"
+    },
+    {
+      "source": "analysis.coordinator",
+      "target": "analysis.error_mitigation_specialist",
+      "relation": "controls"
+    },
+    {
+      "source": "analysis.error_mitigation_specialist",
+      "target": "analysis.coordinator",
+      "relation": "reports"
+    },
+    {
+      "source": "analysis.error_mitigation_specialist",
+      "target": "orchestration.retry_manager",
+      "relation": "retry_signal"
+    },
+    {
+      "source": "orchestration.retry_manager",
+      "target": "analysis.error_mitigation_specialist",
+      "relation": "retry_dispatch"
+    },
+    {
+      "source": "analysis.coordinator",
+      "target": "analysis.quantum_advantage_evaluator",
+      "relation": "controls"
+    },
+    {
+      "source": "analysis.quantum_advantage_evaluator",
+      "target": "analysis.coordinator",
+      "relation": "reports"
+    },
+    {
+      "source": "analysis.quantum_advantage_evaluator",
+      "target": "orchestration.retry_manager",
+      "relation": "retry_signal"
+    },
+    {
+      "source": "orchestration.retry_manager",
+      "target": "analysis.quantum_advantage_evaluator",
+      "relation": "retry_dispatch"
+    },
+    {
+      "source": "analysis.coordinator",
+      "target": "analysis.risk_compliance_reviewer",
+      "relation": "controls"
+    },
+    {
+      "source": "analysis.risk_compliance_reviewer",
+      "target": "analysis.coordinator",
+      "relation": "reports"
+    },
+    {
+      "source": "analysis.risk_compliance_reviewer",
+      "target": "orchestration.retry_manager",
+      "relation": "retry_signal"
+    },
+    {
+      "source": "orchestration.retry_manager",
+      "target": "analysis.risk_compliance_reviewer",
+      "relation": "retry_dispatch"
+    },
+    {
+      "source": "analysis.coordinator",
+      "target": "orchestration.supervisor",
+      "relation": "reports"
+    },
+    {
+      "source": "orchestration.supervisor",
+      "target": "analysis.coordinator",
+      "relation": "oversees"
+    },
+    {
+      "source": "analysis.coordinator",
+      "target": "orchestration.observability_hub",
+      "relation": "reports"
+    },
+    {
+      "source": "orchestration.observability_hub",
+      "target": "analysis.coordinator",
+      "relation": "oversees"
+    },
+    {
+      "source": "analysis.coordinator",
+      "target": "orchestration.policy_enforcer",
+      "relation": "reports"
+    },
+    {
+      "source": "orchestration.policy_enforcer",
+      "target": "analysis.coordinator",
+      "relation": "oversees"
+    },
+    {
+      "source": "analysis.coordinator",
+      "target": "orchestration.audit_trail",
+      "relation": "reports"
+    },
+    {
+      "source": "orchestration.audit_trail",
+      "target": "analysis.coordinator",
+      "relation": "oversees"
+    },
+    {
+      "source": "analysis.coordinator",
+      "target": "orchestration.retry_manager",
+      "relation": "reports"
+    },
+    {
+      "source": "orchestration.retry_manager",
+      "target": "analysis.coordinator",
+      "relation": "oversees"
+    },
+    {
+      "source": "analysis.coordinator",
+      "target": "orchestration.quality_board",
+      "relation": "reports"
+    },
+    {
+      "source": "orchestration.quality_board",
+      "target": "analysis.coordinator",
+      "relation": "oversees"
+    },
+    {
+      "source": "dissemination.coordinator",
+      "target": "dissemination.technical_brief_author",
+      "relation": "controls"
+    },
+    {
+      "source": "dissemination.technical_brief_author",
+      "target": "dissemination.coordinator",
+      "relation": "reports"
+    },
+    {
+      "source": "dissemination.technical_brief_author",
+      "target": "orchestration.retry_manager",
+      "relation": "retry_signal"
+    },
+    {
+      "source": "orchestration.retry_manager",
+      "target": "dissemination.technical_brief_author",
+      "relation": "retry_dispatch"
+    },
+    {
+      "source": "dissemination.coordinator",
+      "target": "dissemination.executive_summary_curator",
+      "relation": "controls"
+    },
+    {
+      "source": "dissemination.executive_summary_curator",
+      "target": "dissemination.coordinator",
+      "relation": "reports"
+    },
+    {
+      "source": "dissemination.executive_summary_curator",
+      "target": "orchestration.retry_manager",
+      "relation": "retry_signal"
+    },
+    {
+      "source": "orchestration.retry_manager",
+      "target": "dissemination.executive_summary_curator",
+      "relation": "retry_dispatch"
+    },
+    {
+      "source": "dissemination.coordinator",
+      "target": "dissemination.adoption_strategy_advisor",
+      "relation": "controls"
+    },
+    {
+      "source": "dissemination.adoption_strategy_advisor",
+      "target": "dissemination.coordinator",
+      "relation": "reports"
+    },
+    {
+      "source": "dissemination.adoption_strategy_advisor",
+      "target": "orchestration.retry_manager",
+      "relation": "retry_signal"
+    },
+    {
+      "source": "orchestration.retry_manager",
+      "target": "dissemination.adoption_strategy_advisor",
+      "relation": "retry_dispatch"
+    },
+    {
+      "source": "dissemination.coordinator",
+      "target": "orchestration.supervisor",
+      "relation": "reports"
+    },
+    {
+      "source": "orchestration.supervisor",
+      "target": "dissemination.coordinator",
+      "relation": "oversees"
+    },
+    {
+      "source": "dissemination.coordinator",
+      "target": "orchestration.observability_hub",
+      "relation": "reports"
+    },
+    {
+      "source": "orchestration.observability_hub",
+      "target": "dissemination.coordinator",
+      "relation": "oversees"
+    },
+    {
+      "source": "dissemination.coordinator",
+      "target": "orchestration.policy_enforcer",
+      "relation": "reports"
+    },
+    {
+      "source": "orchestration.policy_enforcer",
+      "target": "dissemination.coordinator",
+      "relation": "oversees"
+    },
+    {
+      "source": "dissemination.coordinator",
+      "target": "orchestration.audit_trail",
+      "relation": "reports"
+    },
+    {
+      "source": "orchestration.audit_trail",
+      "target": "dissemination.coordinator",
+      "relation": "oversees"
+    },
+    {
+      "source": "dissemination.coordinator",
+      "target": "orchestration.retry_manager",
+      "relation": "reports"
+    },
+    {
+      "source": "orchestration.retry_manager",
+      "target": "dissemination.coordinator",
+      "relation": "oversees"
+    },
+    {
+      "source": "dissemination.coordinator",
+      "target": "orchestration.quality_board",
+      "relation": "reports"
+    },
+    {
+      "source": "orchestration.quality_board",
+      "target": "dissemination.coordinator",
+      "relation": "oversees"
+    }
+  ],
+  "policy_summary": {
+    "policy.evidence_threshold": 19,
+    "policy.latency_budget": 19,
+    "policy.research_depth": 19,
+    "policy.seed.evidence_threshold": 19,
+    "policy.seed.max_research_depth": 19,
+    "policy.seed.max_total_time": 19,
+    "policy.stage_alignment": 9,
+    "policy.system_fallbacks": 6,
+    "policy.system_observability": 6
+  },
+  "metadata": {
+    "stage_count": 3,
+    "agent_count": 19,
+    "policy_keys": [
+      "policy.evidence_threshold",
+      "policy.latency_budget",
+      "policy.research_depth",
+      "policy.seed.evidence_threshold",
+      "policy.seed.max_research_depth",
+      "policy.seed.max_total_time",
+      "policy.stage_alignment",
+      "policy.system_fallbacks",
+      "policy.system_observability"
+    ]
+  }
+}

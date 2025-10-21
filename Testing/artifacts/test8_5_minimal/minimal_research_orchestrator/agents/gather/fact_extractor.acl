@@ -1,0 +1,37 @@
+agent:
+  id: gather.fact_extractor
+  name: Fact Extractor
+  stage: gather
+  stage_label: Gather
+  role: parser
+  description: Executes Fact Extractor responsibilities within the Gather stage.
+  capabilities: []
+  policies:
+  - policy.evidence_threshold
+  - policy.latency_budget
+  - policy.research_depth
+  - policy.seed.evidence_threshold
+  - policy.seed.max_research_depth
+  - policy.seed.max_total_time
+  depends_on:
+  - gather.coordinator
+  - orchestration.supervisor
+  - orchestration.observability_hub
+  - orchestration.policy_enforcer
+  - orchestration.audit_trail
+  - orchestration.retry_manager
+  - orchestration.quality_board
+  inputs:
+  - gather.input
+  outputs:
+  - gather.output
+  prompts:
+  - prompts/gather/fact_extractor_primary.md
+  - prompts/gather/fact_extractor_fallback.md
+  - prompts/gather/fact_extractor_summary.md
+  concurrency: 1
+  retry:
+    max_attempts: 3
+    strategy: exponential
+    cooldown_seconds: 15
+  category: stage

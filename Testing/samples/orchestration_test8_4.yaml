@@ -1,0 +1,34 @@
+type: prompt_orchestration_framework
+name: Policy Stress Test Orchestrator
+description: Stress test orchestration with strict governance policies.
+policies:
+  max_research_depth: 1
+  evidence_threshold: 0.95
+  max_total_time: 15
+pipeline_stages:
+  - key: triage
+    label: Rapid Triage
+    concurrency: 2
+    agents:
+      - name: Signal Screener
+        role: retriever
+      - name: Policy Gate Sentry
+        role: validator
+  - key: rapid_analysis
+    label: Rapid Analysis
+    concurrency: 3
+    agents:
+      - name: Key Fact Extractor
+        role: parser
+      - name: Conflict Detector
+        role: analyst
+      - name: Evidence Verifier
+        role: validator
+  - key: response
+    label: Response & Escalation
+    concurrency: 2
+    agents:
+      - name: Alert Author
+        role: communicator
+      - name: Escalation Coordinator
+        role: strategist

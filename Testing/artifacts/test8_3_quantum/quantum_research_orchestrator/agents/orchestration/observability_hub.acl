@@ -1,0 +1,39 @@
+agent:
+  id: orchestration.observability_hub
+  name: Observability Hub
+  stage: orchestration
+  stage_label: Global Orchestration
+  role: telemetry
+  description: Aggregates metrics, traces, and structured logs for every stage transition.
+  capabilities:
+  - monitor
+  - govern
+  - recover
+  policies:
+  - policy.evidence_threshold
+  - policy.latency_budget
+  - policy.research_depth
+  - policy.seed.evidence_threshold
+  - policy.seed.max_research_depth
+  - policy.seed.max_total_time
+  - policy.stage_alignment
+  - policy.system_observability
+  - policy.system_fallbacks
+  depends_on:
+  - discovery.coordinator
+  - analysis.coordinator
+  - dissemination.coordinator
+  inputs:
+  - orchestration.signal
+  outputs:
+  - orchestration.report
+  prompts:
+  - prompts/orchestration/observability_hub_primary.md
+  - prompts/orchestration/observability_hub_monitor.md
+  - prompts/orchestration/observability_hub_summary.md
+  concurrency: 1
+  retry:
+    max_attempts: 5
+    strategy: exponential
+    cooldown_seconds: 30
+  category: observer

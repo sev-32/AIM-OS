@@ -1,0 +1,40 @@
+type: prompt_orchestration_framework
+name: Quantum Research Orchestrator
+description: Research pipeline focused on quantum computing advancements.
+policies:
+  max_research_depth: 4
+  evidence_threshold: 0.88
+  max_total_time: 60
+pipeline_stages:
+  - key: discovery
+    label: Quantum Discovery
+    concurrency: 3
+    agents:
+      - name: Qubit Literature Miner
+        role: retriever
+      - name: Hardware Landscape Mapper
+        role: analyst
+      - name: Quantum Standards Tracker
+        role: observer
+  - key: analysis
+    label: Quantum Analysis
+    concurrency: 4
+    agents:
+      - name: Algorithm Benchmark Analyst
+        role: analyst
+      - name: Error Mitigation Specialist
+        role: specialist
+      - name: Quantum Advantage Evaluator
+        role: analyst
+      - name: Risk & Compliance Reviewer
+        role: validator
+  - key: dissemination
+    label: Stakeholder Dissemination
+    concurrency: 3
+    agents:
+      - name: Technical Brief Author
+        role: communicator
+      - name: Executive Summary Curator
+        role: communicator
+      - name: Adoption Strategy Advisor
+        role: strategist

@@ -1,0 +1,38 @@
+agent:
+  id: rapid_analysis.conflict_detector
+  name: Conflict Detector
+  stage: rapid_analysis
+  stage_label: Rapid Analysis
+  role: analyst
+  description: Executes Conflict Detector responsibilities within the Rapid Analysis
+    stage.
+  capabilities: []
+  policies:
+  - policy.evidence_threshold
+  - policy.latency_budget
+  - policy.research_depth
+  - policy.seed.evidence_threshold
+  - policy.seed.max_research_depth
+  - policy.seed.max_total_time
+  depends_on:
+  - rapid_analysis.coordinator
+  - orchestration.supervisor
+  - orchestration.observability_hub
+  - orchestration.policy_enforcer
+  - orchestration.audit_trail
+  - orchestration.retry_manager
+  - orchestration.quality_board
+  inputs:
+  - rapid_analysis.input
+  outputs:
+  - rapid_analysis.output
+  prompts:
+  - prompts/rapid_analysis/conflict_detector_primary.md
+  - prompts/rapid_analysis/conflict_detector_fallback.md
+  - prompts/rapid_analysis/conflict_detector_summary.md
+  concurrency: 1
+  retry:
+    max_attempts: 3
+    strategy: exponential
+    cooldown_seconds: 15
+  category: stage

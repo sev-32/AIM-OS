@@ -1,0 +1,59 @@
+name: AIM-OS CI + Audit
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build-test-audit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .[test]
+          # HHNI optional deps (safe if none present)
+          pip install sentence-transformers==5.1.1 qdrant-client==1.15.1
+
+      - name: Install Playwright browsers
+        run: python -m playwright install --with-deps chromium
+
+      - name: Run test suite
+        run: pytest -q
+
+      - name: Run MIGE pipeline smoke test
+        run: |
+          python scripts/run_mige_pipeline.py \
+            --seed runs/ci_seed \
+            --trunk runs/ci_trunk \
+            --branch runs/ci_branch \
+            --seed-capsule "CI vision seed" \
+            --vision-fit-threshold 0.8 \
+            --trunk-threshold 0.82
+
+      - name: Summarise SEG witnesses
+        run: python scripts/seg_diff_report.py
+
+      - name: Generate audit bundle
+        run: |
+          python audit/scripts/post_run_audit.py \
+            --agent ${{ github.actor }} \
+            --task ci-run \
+            --corr ${{ github.run_id }} --skip-tests
+
+      - name: Upload audit artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: audit-${{ github.run_id }}
+          path: audit/history/*${{ github.run_id }}*/

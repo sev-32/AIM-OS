@@ -1,0 +1,8 @@
+{
+  "base": {
+    "max_research_depth": 2,
+    "evidence_threshold": 0.8,
+    "max_total_time_minutes": 30
+  },
+  "stage_overrides": {}
+}

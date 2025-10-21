@@ -1,0 +1,38 @@
+agent:
+  id: investigation.interview_summarizer
+  name: Interview Summarizer
+  stage: investigation
+  stage_label: Investigation
+  role: analyzer
+  description: Executes Interview Summarizer responsibilities within the Investigation
+    stage.
+  capabilities: []
+  policies:
+  - policy.evidence_threshold
+  - policy.latency_budget
+  - policy.research_depth
+  - policy.seed.evidence_threshold
+  - policy.seed.max_research_depth
+  - policy.seed.max_total_time
+  depends_on:
+  - investigation.coordinator
+  - orchestration.supervisor
+  - orchestration.observability_hub
+  - orchestration.policy_enforcer
+  - orchestration.audit_trail
+  - orchestration.retry_manager
+  - orchestration.quality_board
+  inputs:
+  - investigation.input
+  outputs:
+  - investigation.output
+  prompts:
+  - prompts/investigation/interview_summarizer_primary.md
+  - prompts/investigation/interview_summarizer_fallback.md
+  - prompts/investigation/interview_summarizer_summary.md
+  concurrency: 1
+  retry:
+    max_attempts: 3
+    strategy: exponential
+    cooldown_seconds: 15
+  category: stage

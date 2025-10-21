@@ -1,0 +1,37 @@
+agent:
+  id: validation.logic_validator
+  name: Logic Validator
+  stage: validation
+  stage_label: Validation
+  role: validator
+  description: Executes Logic Validator responsibilities within the Validation stage.
+  capabilities: []
+  policies:
+  - policy.evidence_threshold
+  - policy.latency_budget
+  - policy.research_depth
+  - policy.seed.evidence_threshold
+  - policy.seed.max_research_depth
+  - policy.seed.max_total_time
+  depends_on:
+  - validation.coordinator
+  - orchestration.supervisor
+  - orchestration.observability_hub
+  - orchestration.policy_enforcer
+  - orchestration.audit_trail
+  - orchestration.retry_manager
+  - orchestration.quality_board
+  inputs:
+  - validation.input
+  outputs:
+  - validation.output
+  prompts:
+  - prompts/validation/logic_validator_primary.md
+  - prompts/validation/logic_validator_fallback.md
+  - prompts/validation/logic_validator_summary.md
+  concurrency: 1
+  retry:
+    max_attempts: 3
+    strategy: exponential
+    cooldown_seconds: 15
+  category: stage

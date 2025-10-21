@@ -1,0 +1,372 @@
+[
+  {
+    "label": "part",
+    "title": "Case Studies & Patterns",
+    "pos": 5120
+  },
+  {
+    "label": "part",
+    "title": "Evaluation & Observability",
+    "pos": 5380
+  },
+  {
+    "label": "part",
+    "title": "Security, Safety & Compliance",
+    "pos": 5634
+  },
+  {
+    "label": "part",
+    "title": "IDE-in-the-Loop",
+    "pos": 5871
+  },
+  {
+    "label": "part",
+    "title": "Atomic Evolution (SDFCVF)",
+    "pos": 6103
+  },
+  {
+    "label": "part",
+    "title": "Verifiable Intelligence (VIF) & Shared Evidence Graph (SEG)",
+    "pos": 6427
+  },
+  {
+    "label": "part",
+    "title": "Orchestration: APOE & DEPP",
+    "pos": 6883
+  },
+  {
+    "label": "part",
+    "title": "Dynamic Vector Navigation System (DVNS)",
+    "pos": 7217
+  },
+  {
+    "label": "part",
+    "title": "Context\u2013Memory Core (CMC) & HHNI",
+    "pos": 7844
+  },
+  {
+    "label": "part",
+    "title": "Why this must exist (tightened)",
+    "pos": 8466
+  },
+  {
+    "label": "appendix",
+    "title": "Risk Taxonomy & Playbooks",
+    "pos": 21306
+  },
+  {
+    "label": "appendix",
+    "title": "Compliance Artifacts (Sample Export Packs)",
+    "pos": 22120
+  },
+  {
+    "label": "appendix",
+    "title": "Troubleshooting Guide",
+    "pos": 22746
+  },
+  {
+    "label": "appendix",
+    "title": "Quickstarts & Labs",
+    "pos": 23537
+  },
+  {
+    "label": "appendix",
+    "title": "Index of Indexes (HHNI Cross-Reference)",
+    "pos": 24117
+  },
+  {
+    "label": "appendix",
+    "title": "Change Log (Excerpt)",
+    "pos": 24526
+  },
+  {
+    "label": "appendix",
+    "title": "Figures & Tables List",
+    "pos": 25368
+  },
+  {
+    "label": "appendix",
+    "title": "Extended End-to-End Examples",
+    "pos": 27959
+  },
+  {
+    "label": "appendix",
+    "title": "Acronyms",
+    "pos": 28217
+  },
+  {
+    "label": "appendix",
+    "title": "Glossary (Expanded)",
+    "pos": 30720
+  },
+  {
+    "label": "part",
+    "title": "Roadmap & Governance",
+    "pos": 40419
+  },
+  {
+    "label": "part",
+    "title": "Roadmap & Governance",
+    "pos": 48982
+  },
+  {
+    "label": "part",
+    "title": "Mathematics & Formal Methods",
+    "pos": 59941
+  },
+  {
+    "label": "part",
+    "title": "Mathematics & Formal Methods",
+    "pos": 67883
+  },
+  {
+    "label": "part",
+    "title": "Mathematics & Formal Methods",
+    "pos": 75722
+  },
+  {
+    "label": "part",
+    "title": "Mathematics & Formal Methods",
+    "pos": 83781
+  },
+  {
+    "label": "part",
+    "title": "Mathematics & Formal Methods",
+    "pos": 90303
+  },
+  {
+    "label": "part",
+    "title": "Reference Implementations",
+    "pos": 110746
+  },
+  {
+    "label": "part",
+    "title": "Reference Implementations",
+    "pos": 122537
+  },
+  {
+    "label": "part",
+    "title": "Reference Implementations",
+    "pos": 144548
+  },
+  {
+    "label": "part",
+    "title": "Case Studies & Patterns",
+    "pos": 153504
+  },
+  {
+    "label": "part",
+    "title": "Case Studies & Patterns",
+    "pos": 162991
+  },
+  {
+    "label": "part",
+    "title": "Case Studies & Patterns",
+    "pos": 173835
+  },
+  {
+    "label": "part",
+    "title": "Evaluation, Benchmarks, & Observability",
+    "pos": 183369
+  },
+  {
+    "label": "part",
+    "title": "Evaluation, Benchmarks, & Observability",
+    "pos": 191399
+  },
+  {
+    "label": "part",
+    "title": "Security, Safety, & Compliance",
+    "pos": 201593
+  },
+  {
+    "label": "part",
+    "title": "Security, Safety, & Compliance",
+    "pos": 212564
+  },
+  {
+    "label": "part",
+    "title": "IDE-in-the-Loop: From Prompt to Running App",
+    "pos": 223036
+  },
+  {
+    "label": "part",
+    "title": "IDE-in-the-Loop: From Prompt to Running App",
+    "pos": 233637
+  },
+  {
+    "label": "part",
+    "title": "Atomic Evolution: SDF-CVF",
+    "pos": 241719
+  },
+  {
+    "label": "part",
+    "title": "Atomic Evolution: SDF-CVF",
+    "pos": 248618
+  },
+  {
+    "label": "part",
+    "title": "Verifiable Intelligence: VIF & SEG",
+    "pos": 260312
+  },
+  {
+    "label": "part",
+    "title": "Verifiable Intelligence: VIF & SEG",
+    "pos": 269201
+  },
+  {
+    "label": "part",
+    "title": "Orchestration: APOE & DEPP",
+    "pos": 282630
+  },
+  {
+    "label": "part",
+    "title": "Orchestration: APOE & DEPP",
+    "pos": 292501
+  },
+  {
+    "label": "part",
+    "title": "Orchestration: APOE & DEPP",
+    "pos": 301915
+  },
+  {
+    "label": "part",
+    "title": "Dynamic Vector Navigation System (DVNS)",
+    "pos": 308477
+  },
+  {
+    "label": "part",
+    "title": "Dynamic Vector Navigation System (DVNS)",
+    "pos": 314045
+  },
+  {
+    "label": "part",
+    "title": "Dynamic Vector Navigation System (DVNS)",
+    "pos": 320193
+  },
+  {
+    "label": "part",
+    "title": "Context Memory Core (CMC) & HHNI",
+    "pos": 327448
+  },
+  {
+    "label": "part",
+    "title": "Context Memory Core (CMC) & HHNI",
+    "pos": 336380
+  },
+  {
+    "label": "part",
+    "title": "Context Memory Core (CMC) & HHNI",
+    "pos": 346304
+  },
+  {
+    "label": "part",
+    "title": "Context Memory Core (CMC) & HHNI",
+    "pos": 356409
+  },
+  {
+    "label": "chapter",
+    "title": "Design North-Star",
+    "pos": 385741
+  },
+  {
+    "label": "chapter",
+    "title": "System Axioms",
+    "pos": 391701
+  },
+  {
+    "label": "chapter",
+    "title": "System Axioms",
+    "pos": 399714
+  },
+  {
+    "label": "chapter",
+    "title": "System Axioms",
+    "pos": 405638
+  },
+  {
+    "label": "chapter",
+    "title": "System Axioms",
+    "pos": 412455
+  },
+  {
+    "label": "chapter",
+    "title": "System Axioms",
+    "pos": 419390
+  },
+  {
+    "label": "chapter",
+    "title": "System Axioms",
+    "pos": 426359
+  },
+  {
+    "label": "chapter",
+    "title": "The Why",
+    "pos": 462988
+  },
+  {
+    "label": "part",
+    "title": "Roadmap & Governance",
+    "pos": 464138
+  },
+  {
+    "label": "part",
+    "title": "Mathematics & Formal Methods",
+    "pos": 464558
+  },
+  {
+    "label": "part",
+    "title": "Reference Implementations",
+    "pos": 464842
+  },
+  {
+    "label": "part",
+    "title": "Case Studies & Patterns",
+    "pos": 465231
+  },
+  {
+    "label": "part",
+    "title": "Evaluation, Benchmarks, & Observability",
+    "pos": 465610
+  },
+  {
+    "label": "part",
+    "title": "Security, Safety, & Compliance",
+    "pos": 466056
+  },
+  {
+    "label": "part",
+    "title": "IDE",
+    "pos": 466568
+  },
+  {
+    "label": "part",
+    "title": "Atomic Evolution: SDF",
+    "pos": 467002
+  },
+  {
+    "label": "part",
+    "title": "Verifiable Intelligence: VIF & SEG",
+    "pos": 467456
+  },
+  {
+    "label": "part",
+    "title": "Orchestration: APOE & DEPP",
+    "pos": 468192
+  },
+  {
+    "label": "part",
+    "title": "Dynamic Vector Navigation System (DVNS)",
+    "pos": 468831
+  },
+  {
+    "label": "part",
+    "title": "Context Memory Core (CMC) & HHNI",
+    "pos": 469730
+  },
+  {
+    "label": "part",
+    "title": "First Principles & Invariants",
+    "pos": 470664
+  }
+]

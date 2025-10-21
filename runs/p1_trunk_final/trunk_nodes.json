@@ -1,0 +1,88 @@
+[
+  {
+    "mpd_id": "aimos.mige.trunk",
+    "type": "program",
+    "purpose": "Amplify Memory-to-Idea pipeline for governed deployments",
+    "capabilities": [
+      "vision-tracing",
+      "mpd-draft"
+    ],
+    "interfaces": [
+      "plans/seed_to_tensor.acl"
+    ],
+    "manager_of": [
+      "aimos.mige.trunk.guardrails"
+    ],
+    "depends_on": [
+      "aimos.cmc"
+    ],
+    "policy_pack_ids": [
+      "policy.mige.default"
+    ],
+    "budgets": [
+      "analysis:medium"
+    ],
+    "owners": [
+      "GPT-5 Codex",
+      "o3pro-ai"
+    ],
+    "kpis": [
+      {
+        "name": "MIGE_VisionFit_target",
+        "target": 0.9
+      }
+    ],
+    "lifecycle": "draft",
+    "witness": "seg://plan/seed_to_tensor/19847859-cfdc-44d4-a537-fc0879b5a89a",
+    "links": [
+      "plans/seed_to_tensor.acl"
+    ],
+    "max_dependency_degree": 8,
+    "tt_start": "2025-10-20T22:04:35.077530+00:00",
+    "tt_end": null,
+    "vt_start": "2025-10-20T22:04:35.077530+00:00",
+    "vt_end": null
+  },
+  {
+    "mpd_id": "aimos.mige.trunk.guardrails",
+    "type": "control",
+    "purpose": "Tracks MIGE governance guardrails for trunk evolution.",
+    "capabilities": [
+      "gate-validation",
+      "seg-export"
+    ],
+    "interfaces": [
+      "plans/tensor_to_trunk.acl"
+    ],
+    "manager_of": [],
+    "depends_on": [
+      "aimos.mige.trunk"
+    ],
+    "policy_pack_ids": [
+      "policy.mige.guardrails"
+    ],
+    "budgets": [
+      "governance:low"
+    ],
+    "owners": [
+      "GPT-5 Codex",
+      "o3pro-ai"
+    ],
+    "kpis": [
+      {
+        "name": "MIGE_BlastRadiusFalseNegatives_target",
+        "target": 0.0
+      }
+    ],
+    "lifecycle": "draft",
+    "witness": "seg://plan/tensor_to_trunk/19847859-cfdc-44d4-a537-fc0879b5a89a",
+    "links": [
+      "plans/tensor_to_trunk.acl"
+    ],
+    "max_dependency_degree": 4,
+    "tt_start": "2025-10-20T22:04:35.077530+00:00",
+    "tt_end": null,
+    "vt_start": "2025-10-20T22:04:35.077530+00:00",
+    "vt_end": null
+  }
+]

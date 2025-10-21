@@ -1,0 +1,38 @@
+agent:
+  id: reporting.structured_report_builder
+  name: Structured Report Builder
+  stage: reporting
+  stage_label: Reporting
+  role: communicator
+  description: Executes Structured Report Builder responsibilities within the Reporting
+    stage.
+  capabilities: []
+  policies:
+  - policy.evidence_threshold
+  - policy.latency_budget
+  - policy.research_depth
+  - policy.seed.evidence_threshold
+  - policy.seed.max_research_depth
+  - policy.seed.max_total_time
+  depends_on:
+  - reporting.coordinator
+  - orchestration.supervisor
+  - orchestration.observability_hub
+  - orchestration.policy_enforcer
+  - orchestration.audit_trail
+  - orchestration.retry_manager
+  - orchestration.quality_board
+  inputs:
+  - reporting.input
+  outputs:
+  - reporting.output
+  prompts:
+  - prompts/reporting/structured_report_builder_primary.md
+  - prompts/reporting/structured_report_builder_fallback.md
+  - prompts/reporting/structured_report_builder_summary.md
+  concurrency: 1
+  retry:
+    max_attempts: 3
+    strategy: exponential
+    cooldown_seconds: 15
+  category: stage

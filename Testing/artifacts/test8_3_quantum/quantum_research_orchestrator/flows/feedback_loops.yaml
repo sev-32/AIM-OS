@@ -1,0 +1,27 @@
+loops:
+- name: analysis_validation_feedback
+  sources:
+  - analysis.algorithm_benchmark_analyst
+  - analysis.error_mitigation_specialist
+  - analysis.quantum_advantage_evaluator
+  - analysis.risk_compliance_reviewer
+  targets: []
+  mode: bidirectional
+  criteria:
+  - evidence_threshold >= 0.8
+  - no_conflicts_detected
+- name: discovery_retry_loop
+  stage: discovery
+  manager: orchestration.retry_manager
+  trigger: quality_board
+  max_attempts: 3
+- name: analysis_retry_loop
+  stage: analysis
+  manager: orchestration.retry_manager
+  trigger: quality_board
+  max_attempts: 3
+- name: dissemination_retry_loop
+  stage: dissemination
+  manager: orchestration.retry_manager
+  trigger: quality_board
+  max_attempts: 3

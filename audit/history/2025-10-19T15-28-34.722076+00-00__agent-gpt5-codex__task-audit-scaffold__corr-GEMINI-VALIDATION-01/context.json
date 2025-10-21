@@ -1,0 +1,33 @@
+{
+  "agent": "gpt5-codex",
+  "task": "audit-scaffold",
+  "corr": "GEMINI-VALIDATION-01",
+  "started_at": "2025-10-19T15:28:21.489924+00:00",
+  "finished_at": "2025-10-19T15:28:34.722076+00:00",
+  "diff": {
+    "summary": "",
+    "files": []
+  },
+  "status_files": [],
+  "pytest": {
+    "passed": true,
+    "names": [],
+    "output": [
+      "..............................                                           [100%]",
+      "30 passed in 10.95s"
+    ],
+    "returncode": 0
+  },
+  "status": {
+    "sqlite": {
+      "raw": "{\"ts\": \"2025-10-19T15:28:34.416038Z\", \"level\": \"info\", \"action\": \"store.init\", \"message\": \"store.init.complete\", \"correlation_id\": null, \"path\": \"packages\\\\cmc_service\\\\data\", \"atoms\": 1, \"snapshots\": 1, \"backend\": \"sqlite\"}\n{\n  \"backend\": \"sqlite\",\n  \"atom_count\": 1,\n  \"snapshot_count\": 1,\n  \"latest_snapshot\": {\n    \"id\": \"8518f5cb06fc8266e241cb1bcbb40d681b99b25114723a51779cdfe93927d1a8\",\n    \"created_at\": \"2025-10-18T21:06:52.930035Z\"\n  },\n  \"counters\": {\n    \"atoms_created_total\": {},\n    \"snapshots_created_total\": 0,\n    \"write_errors_total\": 0\n  },\n  \"snapshot_duration_ms\": [],\n  \"journal_intact\": {\n    \"atoms_log_ok\": true,\n    \"snapshots_log_ok\": true\n  }\n}\n"
+    },
+    "jsonl": {
+      "raw": "{\"ts\": \"2025-10-19T15:28:34.684964Z\", \"level\": \"info\", \"action\": \"store.init\", \"message\": \"store.init.complete\", \"correlation_id\": null, \"path\": \"packages\\\\cmc_service\\\\data\", \"atoms\": 1, \"snapshots\": 1, \"backend\": \"jsonl\"}\n{\n  \"backend\": \"jsonl\",\n  \"atom_count\": 1,\n  \"snapshot_count\": 1,\n  \"latest_snapshot\": {\n    \"id\": \"8518f5cb06fc8266e241cb1bcbb40d681b99b25114723a51779cdfe93927d1a8\",\n    \"created_at\": \"2025-10-18T21:06:52.930035Z\"\n  },\n  \"counters\": {\n    \"atoms_created_total\": {},\n    \"snapshots_created_total\": 0,\n    \"write_errors_total\": 0\n  },\n  \"snapshot_duration_ms\": [],\n  \"journal_intact\": {\n    \"atoms_log_ok\": true,\n    \"snapshots_log_ok\": true\n  }\n}\n"
+    }
+  },
+  "sqlite_snapshot": null,
+  "change_list_text": "- no tracked changes",
+  "goals": [],
+  "goals_text": "[]"
+}

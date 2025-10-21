@@ -1,0 +1,38 @@
+agent:
+  id: extraction.references_extractor
+  name: References Extractor
+  stage: extraction
+  stage_label: Content Extraction
+  role: parser
+  description: Executes References Extractor responsibilities within the Content Extraction
+    stage.
+  capabilities: []
+  policies:
+  - policy.evidence_threshold
+  - policy.latency_budget
+  - policy.research_depth
+  - policy.seed.evidence_threshold
+  - policy.seed.max_research_depth
+  - policy.seed.max_total_time
+  depends_on:
+  - extraction.coordinator
+  - orchestration.supervisor
+  - orchestration.observability_hub
+  - orchestration.policy_enforcer
+  - orchestration.audit_trail
+  - orchestration.retry_manager
+  - orchestration.quality_board
+  inputs:
+  - extraction.input
+  outputs:
+  - extraction.output
+  prompts:
+  - prompts/extraction/references_extractor_primary.md
+  - prompts/extraction/references_extractor_fallback.md
+  - prompts/extraction/references_extractor_summary.md
+  concurrency: 1
+  retry:
+    max_attempts: 3
+    strategy: exponential
+    cooldown_seconds: 15
+  category: stage

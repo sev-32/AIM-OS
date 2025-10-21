@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cmc-service"
+version = "0.1.0"
+description = "Phase 1 minimal viable memory store for AIM-OS"
+authors = [
+    { name = "GPT-5 Codex" },
+]
+requires-python = ">=3.10"
+dependencies = [
+    "typer~=0.12",
+    "rich~=13.7",
+    "PyYAML>=6.0",
+    "fastapi>=0.119", 
+    "uvicorn>=0.38",
+    "google-generativeai>=0.7"
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=7.0",
+    "playwright>=1.48",
+]
+
+[project.scripts]
+cmc = "cmc_service.cli:run"
+apoe-run = "apoe_runner.cli:app"
+
+[tool.setuptools.packages.find]
+where = ["packages"]
+include = [
+    "cmc_service",
+    "cmc_service.*",
+    "apoe_runner",
+    "apoe_runner.*",
+    "meta_optimizer",
+    "meta_optimizer.*",
+    "seg",
+    "seg.*",
+    "doc_builder",
+    "doc_builder.*",
+    "orchestration_builder",
+    "orchestration_builder.*",
+    "schemas",
+    "schemas.*",
+]

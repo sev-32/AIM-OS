@@ -1,0 +1,37 @@
+{
+  "title": "AIM-OS Architecture Overview",
+  "summary": "Structured brief describing the five core invariants and their interactions.",
+  "sections": [
+    {
+      "heading": "Context Memory Core (CMC)",
+      "body": "CMC captures every observation with reversible snapshots and bitemporal lineage.",
+      "bullets": [
+        "Guarantees perfect recall across sessions",
+        "Supports policy-aware dependency tracking",
+        "Feeds SEG with atomized evidence"
+      ]
+    },
+    {
+      "heading": "Shared Evidence Graph (SEG)",
+      "body": "SEG reconciles decisions, detects contradictions, and anchors provenance for audits.",
+      "bullets": [
+        "Records decision conflicts with auto-resolution guidance",
+        "Aligns with VIF for governance checks"
+      ]
+    },
+    {
+      "heading": "Policy-Aware Blast Radius",
+      "body": "Preventive guardrails simulate change impacts before execution, enforcing policy packs.",
+      "bullets": [
+        "Calculates dependency fan-out",
+        "Blocks violations prior to merge",
+        "Produces human-readable violation reports"
+      ]
+    }
+  ],
+  "metadata": {
+    "author": "AIM-OS automated builder",
+    "version": "0.1",
+    "seed_id": "doc-seed-sample-001"
+  }
+}

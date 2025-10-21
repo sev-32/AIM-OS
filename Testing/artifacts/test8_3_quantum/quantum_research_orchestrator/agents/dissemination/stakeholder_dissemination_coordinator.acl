@@ -1,0 +1,39 @@
+agent:
+  id: dissemination.coordinator
+  name: Stakeholder Dissemination Coordinator
+  stage: dissemination
+  stage_label: Stakeholder Dissemination
+  role: coordinator
+  description: Coordinates all Stakeholder Dissemination agents and manages hand-offs
+    to subsequent stages.
+  capabilities:
+  - schedule
+  - governance
+  - quality_assurance
+  policies:
+  - policy.evidence_threshold
+  - policy.latency_budget
+  - policy.research_depth
+  - policy.seed.evidence_threshold
+  - policy.seed.max_research_depth
+  - policy.seed.max_total_time
+  - policy.stage_alignment
+  depends_on:
+  - orchestration.supervisor
+  - orchestration.observability_hub
+  - orchestration.policy_enforcer
+  - orchestration.audit_trail
+  - orchestration.retry_manager
+  - orchestration.quality_board
+  inputs:
+  - dissemination.input
+  outputs:
+  - dissemination.handoff
+  prompts:
+  - prompts/dissemination/dissemination_coordination.md
+  concurrency: 3
+  retry:
+    max_attempts: 3
+    strategy: exponential
+    cooldown_seconds: 15
+  category: coordinator

@@ -1,0 +1,40 @@
+loops:
+- name: analysis_validation_feedback
+  sources:
+  - analysis.trend_analyzer
+  - analysis.gap_identifier
+  - analysis.contradiction_detector
+  - analysis.synthesis_builder
+  targets:
+  - validation.fact_checker
+  - validation.logic_validator
+  - validation.consistency_checker
+  mode: bidirectional
+  criteria:
+  - evidence_threshold >= 0.8
+  - no_conflicts_detected
+- name: search_retry_loop
+  stage: search
+  manager: orchestration.retry_manager
+  trigger: quality_board
+  max_attempts: 2
+- name: extraction_retry_loop
+  stage: extraction
+  manager: orchestration.retry_manager
+  trigger: quality_board
+  max_attempts: 3
+- name: analysis_retry_loop
+  stage: analysis
+  manager: orchestration.retry_manager
+  trigger: quality_board
+  max_attempts: 3
+- name: validation_retry_loop
+  stage: validation
+  manager: orchestration.retry_manager
+  trigger: quality_board
+  max_attempts: 3
+- name: reporting_retry_loop
+  stage: reporting
+  manager: orchestration.retry_manager
+  trigger: quality_board
+  max_attempts: 3

@@ -1,0 +1,40 @@
+{
+  "artifact_type": "audit",
+  "agent": {
+    "name": "claude-4-5",
+    "role": "sqlite-phase1"
+  },
+  "model": {
+    "id": "audit-script",
+    "version": "0.1"
+  },
+  "corr_id": "TEST-002",
+  "started_at": "2025-10-19T15:21:01.268952+00:00",
+  "finished_at": "2025-10-19T15:21:01.938992+00:00",
+  "inputs": {
+    "files_before": [],
+    "plan_before": "",
+    "goals": []
+  },
+  "outputs": {
+    "files_changed": [],
+    "tests": {
+      "passed": 1,
+      "failed": 0,
+      "names": []
+    },
+    "snapshot_id": null,
+    "log_actions": []
+  },
+  "acceptance": {
+    "docs": [],
+    "gates_touched": [],
+    "status": "pass",
+    "notes": ""
+  },
+  "risk": {
+    "band": "green",
+    "issues": []
+  },
+  "signature": null
+}

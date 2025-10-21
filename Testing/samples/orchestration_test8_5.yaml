@@ -1,0 +1,26 @@
+type: prompt_orchestration_framework
+name: Minimal Research Orchestrator
+description: Minimal viable orchestration with five agents.
+policies:
+  max_research_depth: 2
+  evidence_threshold: 0.8
+  max_total_time: 30
+pipeline_stages:
+  - key: gather
+    label: Gather
+    concurrency: 2
+    agents:
+      - name: Source Collector
+        role: retriever
+      - name: Fact Extractor
+        role: parser
+  - key: produce
+    label: Produce
+    concurrency: 3
+    agents:
+      - name: Insight Synthesizer
+        role: analyst
+      - name: Summary Writer
+        role: communicator
+      - name: Quality Checker
+        role: validator

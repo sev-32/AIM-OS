@@ -1,0 +1,38 @@
+agent:
+  id: intake.scope_analyst
+  name: Scope Analyst
+  stage: intake
+  stage_label: Intake & Scoping
+  role: coordinator
+  description: Executes Scope Analyst responsibilities within the Intake & Scoping
+    stage.
+  capabilities: []
+  policies:
+  - policy.evidence_threshold
+  - policy.latency_budget
+  - policy.research_depth
+  - policy.seed.evidence_threshold
+  - policy.seed.max_research_depth
+  - policy.seed.max_total_time
+  depends_on:
+  - intake.coordinator
+  - orchestration.supervisor
+  - orchestration.observability_hub
+  - orchestration.policy_enforcer
+  - orchestration.audit_trail
+  - orchestration.retry_manager
+  - orchestration.quality_board
+  inputs:
+  - intake.input
+  outputs:
+  - intake.output
+  prompts:
+  - prompts/intake/scope_analyst_primary.md
+  - prompts/intake/scope_analyst_fallback.md
+  - prompts/intake/scope_analyst_summary.md
+  concurrency: 1
+  retry:
+    max_attempts: 3
+    strategy: exponential
+    cooldown_seconds: 15
+  category: stage

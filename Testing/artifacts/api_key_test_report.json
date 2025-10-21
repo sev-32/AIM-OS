@@ -1,0 +1,47 @@
+{
+  "timestamp": "2025-10-21T08:12:15.778437",
+  "providers": {
+    "openai": {
+      "status": "\u274c FAILED",
+      "model": null,
+      "response": null,
+      "error": "Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************0IsA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}"
+    },
+    "gemini": {
+      "status": "\u2705 WORKING",
+      "model": "gemini-2.0-flash-exp",
+      "response": "API key valid\n",
+      "error": null
+    },
+    "cerebras": {
+      "status": "\u2705 WORKING",
+      "model": "llama3.1-8b",
+      "response": "API key valid.",
+      "error": null
+    },
+    "anthropic_1": {
+      "status": "\u274c FAILED",
+      "model": null,
+      "response": null,
+      "error": "Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}, 'request_id': 'req_011CULKfPH8HvU6imK8v5F3s'}"
+    },
+    "anthropic_2": {
+      "status": "\u2705 WORKING",
+      "model": "claude-3-haiku-20240307",
+      "response": "API key valid",
+      "error": null
+    },
+    "deepinfra": {
+      "status": "\u2705 WORKING",
+      "model": "llama-3.1-8b",
+      "response": "API key valid.",
+      "error": null
+    },
+    "replicate": {
+      "status": "\u274c FAILED",
+      "model": null,
+      "response": null,
+      "error": "ReplicateError Details:\ntitle: Unauthenticated\nstatus: 401\ndetail: You did not pass a valid authentication token"
+    }
+  }
+}

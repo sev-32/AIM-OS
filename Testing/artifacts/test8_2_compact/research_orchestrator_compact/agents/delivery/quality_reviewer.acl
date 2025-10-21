@@ -1,0 +1,38 @@
+agent:
+  id: delivery.quality_reviewer
+  name: Quality Reviewer
+  stage: delivery
+  stage_label: Delivery & QA
+  role: validator
+  description: Executes Quality Reviewer responsibilities within the Delivery & QA
+    stage.
+  capabilities: []
+  policies:
+  - policy.evidence_threshold
+  - policy.latency_budget
+  - policy.research_depth
+  - policy.seed.evidence_threshold
+  - policy.seed.max_research_depth
+  - policy.seed.max_total_time
+  depends_on:
+  - delivery.coordinator
+  - orchestration.supervisor
+  - orchestration.observability_hub
+  - orchestration.policy_enforcer
+  - orchestration.audit_trail
+  - orchestration.retry_manager
+  - orchestration.quality_board
+  inputs:
+  - delivery.input
+  outputs:
+  - delivery.output
+  prompts:
+  - prompts/delivery/quality_reviewer_primary.md
+  - prompts/delivery/quality_reviewer_fallback.md
+  - prompts/delivery/quality_reviewer_summary.md
+  concurrency: 1
+  retry:
+    max_attempts: 3
+    strategy: exponential
+    cooldown_seconds: 15
+  category: stage

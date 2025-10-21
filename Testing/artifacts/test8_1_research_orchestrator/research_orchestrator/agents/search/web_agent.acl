@@ -1,0 +1,39 @@
+agent:
+  id: search.web_agent
+  name: Web Agent
+  stage: search
+  stage_label: Literature Search
+  role: retriever
+  description: Executes Web Agent responsibilities within the Literature Search stage.
+  capabilities:
+  - web_articles
+  - blogs
+  policies:
+  - policy.evidence_threshold
+  - policy.latency_budget
+  - policy.research_depth
+  - policy.seed.evidence_threshold
+  - policy.seed.max_research_depth
+  - policy.seed.max_total_time
+  depends_on:
+  - search.coordinator
+  - orchestration.supervisor
+  - orchestration.observability_hub
+  - orchestration.policy_enforcer
+  - orchestration.audit_trail
+  - orchestration.retry_manager
+  - orchestration.quality_board
+  inputs:
+  - search.input
+  outputs:
+  - search.output
+  prompts:
+  - prompts/search/web_agent_primary.md
+  - prompts/search/web_agent_fallback.md
+  - prompts/search/web_agent_summary.md
+  concurrency: 1
+  retry:
+    max_attempts: 2
+    strategy: exponential
+    cooldown_seconds: 10
+  category: stage

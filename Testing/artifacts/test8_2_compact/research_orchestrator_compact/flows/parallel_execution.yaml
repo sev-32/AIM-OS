@@ -1,0 +1,27 @@
+groups:
+- name: intake_parallel
+  members:
+  - intake.scope_analyst
+  - intake.question_curator
+  - intake.source_prioritizer
+  concurrency: 2
+- name: investigation_parallel
+  members:
+  - investigation.literature_reviewer
+  - investigation.interview_summarizer
+  - investigation.data_extractor
+  - investigation.insight_synthesizer
+  concurrency: 4
+- name: delivery_parallel
+  members:
+  - delivery.draft_writer
+  - delivery.quality_reviewer
+  - delivery.client_liaison
+  concurrency: 4
+supervisors:
+- orchestration.supervisor
+- orchestration.observability_hub
+- orchestration.policy_enforcer
+- orchestration.audit_trail
+- orchestration.retry_manager
+- orchestration.quality_board

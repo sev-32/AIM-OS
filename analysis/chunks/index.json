@@ -1,0 +1,107 @@
+{
+  "generated_at": "2025-10-18T19:37:55.866708+00:00",
+  "chunks": [
+    {
+      "id": "plan_chunk_01",
+      "path": "analysis\\chunks\\plan_chunk_01.md",
+      "tokens_estimated": 885,
+      "source": "analysis/PLAN.md",
+      "headings": [
+        "# AIM-OS Master Plan",
+        "## 1. Purpose",
+        "## 2. Core Thesis (Machine Communication Stack)",
+        "## 3. Knowledge Organization Framework",
+        "## 4. Expansion & Enhancement Strategy",
+        "## 5. Collaboration Protocol (Multi-Agent Hand-off)",
+        "## 6. Immediate Next Actions",
+        "## 7. External Contributor Ideas (Perplexity AI)",
+        "### Additional Detail (Perplexity AI, Iteration 2)",
+        "### Additional Detail (Perplexity AI, Iteration 3)"
+      ],
+      "tags": [
+        "APOE",
+        "CMC",
+        "IDEA",
+        "SDF-CVF",
+        "SEG",
+        "VIF"
+      ]
+    },
+    {
+      "id": "plan_chunk_02",
+      "path": "analysis\\chunks\\plan_chunk_02.md",
+      "tokens_estimated": 896,
+      "source": "analysis/PLAN.md",
+      "headings": [
+        "### External Contributor Ideas (GPT-5 Sev)",
+        "### Additional Detail (GPT-5 Sev \u2014 Idea Foundry Layer)",
+        "### External Contributor Ideas (Claude Sonnet 4)",
+        "### How to Use the Current Organization (for AI Collaborators)"
+      ],
+      "tags": [
+        "APOE",
+        "CMC",
+        "IDEA",
+        "KAPPA",
+        "SDF-CVF",
+        "SEG",
+        "VIF"
+      ]
+    },
+    {
+      "id": "plan_chunk_03",
+      "path": "analysis\\chunks\\plan_chunk_03.md",
+      "tokens_estimated": 425,
+      "source": "analysis/PLAN.md",
+      "headings": [
+        "## 9. System Meta-Status",
+        "### What's Been Built (Claude Sonnet 4.5 Enhanced)",
+        "### Knowledge Architecture Metrics",
+        "### Current State",
+        "## 10. Future Extensions"
+      ],
+      "tags": [
+        "CMC",
+        "SEG"
+      ]
+    }
+  ],
+  "summaries": [
+    {
+      "id": "overview",
+      "path": "analysis\\summaries\\overview.md",
+      "tokens_estimated": 902,
+      "level": "overview"
+    },
+    {
+      "id": "mid",
+      "path": "analysis\\summaries\\mid.md",
+      "tokens_estimated": 2003,
+      "level": "mid"
+    },
+    {
+      "id": "claude_recursive",
+      "path": "analysis\\summaries\\deep\\claude_recursive.md",
+      "tokens_estimated": 245,
+      "level": "deep"
+    },
+    {
+      "id": "idea_foundry",
+      "path": "analysis\\summaries\\deep\\idea_foundry.md",
+      "tokens_estimated": 67,
+      "level": "deep"
+    },
+    {
+      "id": "perplexity",
+      "path": "analysis\\summaries\\deep\\perplexity.md",
+      "tokens_estimated": 53,
+      "level": "deep"
+    },
+    {
+      "id": "sev_blueprint",
+      "path": "analysis\\summaries\\deep\\sev_blueprint.md",
+      "tokens_estimated": 37,
+      "level": "deep"
+    }
+  ]
+}

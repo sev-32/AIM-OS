@@ -1,0 +1,40 @@
+{
+  "artifact_type": "audit",
+  "agent": {
+    "name": "gpt5-codex",
+    "role": "audit-scaffold"
+  },
+  "model": {
+    "id": "audit-script",
+    "version": "0.1"
+  },
+  "corr_id": "GEMINI-VALIDATION-01",
+  "started_at": "2025-10-19T15:28:21.489924+00:00",
+  "finished_at": "2025-10-19T15:28:34.722076+00:00",
+  "inputs": {
+    "files_before": [],
+    "plan_before": "",
+    "goals": []
+  },
+  "outputs": {
+    "files_changed": [],
+    "tests": {
+      "passed": 1,
+      "failed": 0,
+      "names": []
+    },
+    "snapshot_id": null,
+    "log_actions": []
+  },
+  "acceptance": {
+    "docs": [],
+    "gates_touched": [],
+    "status": "pass",
+    "notes": ""
+  },
+  "risk": {
+    "band": "green",
+    "issues": []
+  },
+  "signature": null
+}

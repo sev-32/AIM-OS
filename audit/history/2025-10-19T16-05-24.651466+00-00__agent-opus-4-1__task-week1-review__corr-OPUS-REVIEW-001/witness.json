@@ -1,0 +1,40 @@
+{
+  "artifact_type": "audit",
+  "agent": {
+    "name": "opus-4-1",
+    "role": "week1-review"
+  },
+  "model": {
+    "id": "audit-script",
+    "version": "0.1"
+  },
+  "corr_id": "OPUS-REVIEW-001",
+  "started_at": "2025-10-19T16:05:10.980430+00:00",
+  "finished_at": "2025-10-19T16:05:24.651466+00:00",
+  "inputs": {
+    "files_before": [],
+    "plan_before": "",
+    "goals": []
+  },
+  "outputs": {
+    "files_changed": [],
+    "tests": {
+      "passed": 1,
+      "failed": 0,
+      "names": []
+    },
+    "snapshot_id": null,
+    "log_actions": []
+  },
+  "acceptance": {
+    "docs": [],
+    "gates_touched": [],
+    "status": "pass",
+    "notes": ""
+  },
+  "risk": {
+    "band": "green",
+    "issues": []
+  },
+  "signature": null
+}

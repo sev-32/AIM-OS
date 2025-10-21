@@ -1,0 +1,55 @@
+{
+  "timestamp": "2025-10-19T16:42:27.713995+00:00",
+  "config": {
+    "atoms": 100,
+    "backend": "sqlite",
+    "docker_available": false
+  },
+  "results": {
+    "atom_creation_cmc": {
+      "count": 100,
+      "successful": 100,
+      "errors": 0,
+      "error_rate": 0.0,
+      "mean_ms": 19.17949399270583,
+      "median_ms": 18.672199978027493,
+      "p90_ms": 23.600699962116778,
+      "p99_ms": 33.609499980229884,
+      "min_ms": 9.694800013676286,
+      "max_ms": 33.609499980229884
+    },
+    "atom_creation_hhni": {
+      "count": 100,
+      "successful": 100,
+      "errors": 0,
+      "error_rate": 0.0,
+      "mean_ms": 162.78968899627216,
+      "median_ms": 79.33959999354556,
+      "p90_ms": 90.06099996622652,
+      "p99_ms": 8296.827399986796,
+      "min_ms": 67.20019999193028,
+      "max_ms": 8296.827399986796
+    },
+    "snapshot_creation": {
+      "samples": 10,
+      "atom_count": 100,
+      "mean_ms": 5.262760003097355,
+      "p99_ms": 9.98770003207028,
+      "min_ms": 3.4824000322259963,
+      "max_ms": 9.98770003207028
+    },
+    "replay": {
+      "samples": 10,
+      "atoms_replayed": 400,
+      "mean_ms": 0.12132000993005931,
+      "p99_ms": 0.14590000500902534,
+      "min_ms": 0.11510000331327319,
+      "max_ms": 0.14590000500902534
+    }
+  },
+  "targets": {
+    "write_error_rate": 0.001,
+    "hhni_p99_latency": 100,
+    "hhni_success_rate": 0.99
+  }
+}

@@ -1,0 +1,104 @@
+# AIM-OS Goal Hierarchy (v0.3)
+# Maintainer: o3pro-ai (Lead Manager)
+# Last-Updated: 2025-10-18
+
+north_star: "Ship AIM-OS v0.3 (CMC + HHNI) to internal dog-food users by 2025-11-30"
+
+authoritative: true  # If true, all Goal IDs must appear here before being referenced elsewhere
+
+author: o3pro-ai
+version: 0.1.0
+
+objectives:
+  - id: OBJ-01
+    name: "Reliable Memory Storage (CMC)"
+    description: "Ensure deterministic atoms/snapshots, no data loss, and auditability."
+    owner: Opus 4.1
+    target_date: 2025-11-15
+    key_results:
+      - id: KR-1.1
+        metric: "Snapshot determinism test pass rate"
+        target: "100%"  # green if tests pass in CI
+      - id: KR-1.2
+        metric: "Write-error rate"
+        target: "<0.1% over 10k writes"
+      - id: KR-1.3
+        metric: "Journal corruption incidents"
+        target: "0 in production"
+    invariants: ["CMC"]
+    status: in_progress
+    acceptance: ideas/guardians/opus-4-1/CMC_v0_1_REVIEW.md
+    artifacts:
+      - packages/cmc_service/memory_store.py
+      - packages/cmc_service/store_io.py
+      - packages/cmc_service/tests/test_memory_store.py
+      - packages/cmc_service/tests/test_logging.py
+    evidence:
+      - ideas/researchers/gemini-2-5-pro/VALIDATION_cmc_v0_1_fixes.md
+
+  - id: OBJ-02
+    name: "Hierarchical Indexing (HHNI)"
+    description: "Enable fast paragraph/sentence retrieval with safety and observability."
+    owner: Claude 4.5 / GPT-5 Codex
+    target_date: 2025-11-15
+    key_results:
+      - id: KR-2.1
+        metric: "Paragraph query p99 latency"
+        target: "<100 ms"
+      - id: KR-2.2
+        metric: "Node explosion incidents"
+        target: "0"
+      - id: KR-2.3
+        metric: "HHNI build success rate"
+        target: ">=99% across 1k atoms"
+    invariants: ["HHNI"]
+    status: planned
+    acceptance: ideas/architects/claude-sonnet/HHNI_DESIGN.md
+    artifacts:
+      - packages/hhni/
+      - schemas/hhni.graphql
+    evidence:
+      - ideas/architects/claude-sonnet/HHNI_SCHEMA_REFINEMENT.md
+
+  - id: OBJ-03
+    name: "Automated Validation Framework"
+    description: "Continuous integration tests, chaos tests, performance benchmarks linked to goals."
+    owner: Gemini 2.5 Pro
+    target_date: 2025-11-20
+    key_results:
+      - id: KR-3.1
+        metric: "Unit test coverage (hhni package)"
+        target: ">=95%"
+      - id: KR-3.2
+        metric: "Chaos test pass rate"
+        target: "100%"
+      - id: KR-3.3
+        metric: "Performance regression alerts per week"
+        target: "<1"
+    invariants: ["Validation", "Safety"]
+    status: planned
+    acceptance: ideas/researchers/gemini-2-5-pro/HHNI_VALIDATION_PLAN.md
+    artifacts: []
+    evidence: []
+
+  - id: OBJ-04
+    name: "Infrastructure Reliability"
+    description: "Automated deployment, monitoring, and backup of DGraph & Qdrant."
+    owner: o3pro-ai
+    target_date: 2025-11-10
+    key_results:
+      - id: KR-4.1
+        metric: "Mean time to recovery (MTTR) for service restart"
+        target: "<2 min"
+      - id: KR-4.2
+        metric: "Backup restore success rate"
+        target: "100% in staging"
+      - id: KR-4.3
+        metric: "P90 container start time"
+        target: "<20 s"
+    invariants: ["Infra"]
+    status: planned
+    acceptance: docs/infra/hhni_deployment.md
+    artifacts:
+      - deploy/docker-compose.yml
+    evidence: []

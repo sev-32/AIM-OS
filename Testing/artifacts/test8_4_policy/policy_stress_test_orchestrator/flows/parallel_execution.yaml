@@ -1,0 +1,24 @@
+groups:
+- name: triage_parallel
+  members:
+  - triage.signal_screener
+  - triage.policy_gate_sentry
+  concurrency: 2
+- name: rapid_analysis_parallel
+  members:
+  - rapid_analysis.key_fact_extractor
+  - rapid_analysis.conflict_detector
+  - rapid_analysis.evidence_verifier
+  concurrency: 3
+- name: response_parallel
+  members:
+  - response.alert_author
+  - response.escalation_coordinator
+  concurrency: 2
+supervisors:
+- orchestration.supervisor
+- orchestration.observability_hub
+- orchestration.policy_enforcer
+- orchestration.audit_trail
+- orchestration.retry_manager
+- orchestration.quality_board

@@ -1,0 +1,62 @@
+id: seed_to_tensor
+description: Convert a seed capsule into a Vision Tensor and validate VisionFit.
+inputs:
+  seed_capsule:
+    required: true
+  axes:
+    default: []
+  vision_fit_threshold:
+    default: 0.9
+  correlation_id:
+    default: null
+  policy_pack_ids:
+    default: []
+  policy_packs:
+    default: []
+outputs:
+  tensor_path:
+    default: "vision_tensor.json"
+participants:
+  - name: vision_tensor
+    module: packages.meta_optimizer.vision_tensor
+    call: compute_tensor
+    args:
+      seed_capsule: "@input.seed_capsule"
+      axes: "@input.axes"
+      model: "meta-optimizer-deterministic"
+      correlation_id: "@input.correlation_id"
+      policy_pack_ids: "@input.policy_pack_ids"
+      policy_packs: "@input.policy_packs"
+    result: vision_tensor
+gates:
+  - id: g_vision_fit
+    module: packages.meta_optimizer.vision_tensor
+    call: g_vision_fit
+    args:
+      result: "@result.vision_tensor"
+      threshold: "@input.vision_fit_threshold"
+    on_fail:
+      - action: log
+        params:
+          level: error
+          message: "VisionFit @gate.score below threshold @gate.threshold"
+      - action: abort
+steps:
+  - action: write_json
+    params:
+      path: "@output.tensor_path"
+      payload: "@result.vision_tensor"
+  - action: write_witness
+    params:
+      payload:
+        event: "plan.seed_to_tensor"
+        plan_id: "@plan.id"
+        correlation_id: "@result.vision_tensor.correlation_id"
+        score: "@result.vision_tensor.score"
+        threshold: "@input.vision_fit_threshold"
+        policy_pack_ids: "@result.vision_tensor.policy_pack_ids"
+      filename: "plan_seed_to_tensor.jsonl"
+  - action: log
+    params:
+      level: info
+      message: "Vision tensor stored at @output.tensor_path"

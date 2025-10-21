@@ -1,0 +1,38 @@
+agent:
+  id: intake.source_prioritizer
+  name: Source Prioritizer
+  stage: intake
+  stage_label: Intake & Scoping
+  role: specialist
+  description: Executes Source Prioritizer responsibilities within the Intake & Scoping
+    stage.
+  capabilities: []
+  policies:
+  - policy.evidence_threshold
+  - policy.latency_budget
+  - policy.research_depth
+  - policy.seed.evidence_threshold
+  - policy.seed.max_research_depth
+  - policy.seed.max_total_time
+  depends_on:
+  - intake.coordinator
+  - orchestration.supervisor
+  - orchestration.observability_hub
+  - orchestration.policy_enforcer
+  - orchestration.audit_trail
+  - orchestration.retry_manager
+  - orchestration.quality_board
+  inputs:
+  - intake.input
+  outputs:
+  - intake.output
+  prompts:
+  - prompts/intake/source_prioritizer_primary.md
+  - prompts/intake/source_prioritizer_fallback.md
+  - prompts/intake/source_prioritizer_summary.md
+  concurrency: 1
+  retry:
+    max_attempts: 3
+    strategy: exponential
+    cooldown_seconds: 15
+  category: stage

@@ -1,0 +1,19 @@
+groups:
+- name: gather_parallel
+  members:
+  - gather.source_collector
+  - gather.fact_extractor
+  concurrency: 2
+- name: produce_parallel
+  members:
+  - produce.insight_synthesizer
+  - produce.summary_writer
+  - produce.quality_checker
+  concurrency: 3
+supervisors:
+- orchestration.supervisor
+- orchestration.observability_hub
+- orchestration.policy_enforcer
+- orchestration.audit_trail
+- orchestration.retry_manager
+- orchestration.quality_board

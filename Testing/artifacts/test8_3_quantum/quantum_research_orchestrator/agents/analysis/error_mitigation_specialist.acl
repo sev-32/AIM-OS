@@ -1,0 +1,38 @@
+agent:
+  id: analysis.error_mitigation_specialist
+  name: Error Mitigation Specialist
+  stage: analysis
+  stage_label: Quantum Analysis
+  role: specialist
+  description: Executes Error Mitigation Specialist responsibilities within the Quantum
+    Analysis stage.
+  capabilities: []
+  policies:
+  - policy.evidence_threshold
+  - policy.latency_budget
+  - policy.research_depth
+  - policy.seed.evidence_threshold
+  - policy.seed.max_research_depth
+  - policy.seed.max_total_time
+  depends_on:
+  - analysis.coordinator
+  - orchestration.supervisor
+  - orchestration.observability_hub
+  - orchestration.policy_enforcer
+  - orchestration.audit_trail
+  - orchestration.retry_manager
+  - orchestration.quality_board
+  inputs:
+  - analysis.input
+  outputs:
+  - analysis.output
+  prompts:
+  - prompts/analysis/error_mitigation_specialist_primary.md
+  - prompts/analysis/error_mitigation_specialist_fallback.md
+  - prompts/analysis/error_mitigation_specialist_summary.md
+  concurrency: 1
+  retry:
+    max_attempts: 3
+    strategy: exponential
+    cooldown_seconds: 15
+  category: stage

@@ -1,0 +1,37 @@
+agent:
+  id: triage.signal_screener
+  name: Signal Screener
+  stage: triage
+  stage_label: Rapid Triage
+  role: retriever
+  description: Executes Signal Screener responsibilities within the Rapid Triage stage.
+  capabilities: []
+  policies:
+  - policy.evidence_threshold
+  - policy.latency_budget
+  - policy.research_depth
+  - policy.seed.evidence_threshold
+  - policy.seed.max_research_depth
+  - policy.seed.max_total_time
+  depends_on:
+  - triage.coordinator
+  - orchestration.supervisor
+  - orchestration.observability_hub
+  - orchestration.policy_enforcer
+  - orchestration.audit_trail
+  - orchestration.retry_manager
+  - orchestration.quality_board
+  inputs:
+  - triage.input
+  outputs:
+  - triage.output
+  prompts:
+  - prompts/triage/signal_screener_primary.md
+  - prompts/triage/signal_screener_fallback.md
+  - prompts/triage/signal_screener_summary.md
+  concurrency: 1
+  retry:
+    max_attempts: 3
+    strategy: exponential
+    cooldown_seconds: 15
+  category: stage

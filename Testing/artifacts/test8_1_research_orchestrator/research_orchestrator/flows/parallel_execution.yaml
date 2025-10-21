@@ -1,0 +1,40 @@
+groups:
+- name: search_parallel
+  members:
+  - search.scholar_agent
+  - search.web_agent
+  - search.code_agent
+  concurrency: 3
+- name: extraction_parallel
+  members:
+  - extraction.key_concept_extractor
+  - extraction.methodology_extractor
+  - extraction.results_extractor
+  - extraction.limitations_extractor
+  - extraction.references_extractor
+  concurrency: 5
+- name: analysis_parallel
+  members:
+  - analysis.trend_analyzer
+  - analysis.gap_identifier
+  - analysis.contradiction_detector
+  - analysis.synthesis_builder
+  concurrency: 4
+- name: validation_parallel
+  members:
+  - validation.fact_checker
+  - validation.logic_validator
+  - validation.consistency_checker
+  concurrency: 3
+- name: reporting_parallel
+  members:
+  - reporting.structured_report_builder
+  - reporting.executive_summary_generator
+  concurrency: 2
+supervisors:
+- orchestration.supervisor
+- orchestration.observability_hub
+- orchestration.policy_enforcer
+- orchestration.audit_trail
+- orchestration.retry_manager
+- orchestration.quality_board

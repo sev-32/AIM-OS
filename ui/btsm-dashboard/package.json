@@ -1,0 +1,16 @@
+{
+  "name": "btsm-dashboard",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "echo \"TODO: integrate Next.js dev server\"",
+    "build": "echo \"TODO: implement build step\"",
+    "start": "echo \"TODO: implement production server\""
+  },
+  "dependencies": {
+    "@types/recharts": "^1.8.29",
+    "@visx/network": "^3.6.0",
+    "d3-force": "^3.0.0",
+    "recharts": "^3.3.0"
+  }
+}

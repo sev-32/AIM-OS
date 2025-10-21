@@ -1,0 +1,40 @@
+{
+  "artifact_type": "audit",
+  "agent": {
+    "name": "claude-4-5",
+    "role": "phase3-monday-integration"
+  },
+  "model": {
+    "id": "audit-script",
+    "version": "0.1"
+  },
+  "corr_id": "CLAUDE-PHASE3-001",
+  "started_at": "2025-10-19T16:35:25.586231+00:00",
+  "finished_at": "2025-10-19T16:35:41.288982+00:00",
+  "inputs": {
+    "files_before": [],
+    "plan_before": "",
+    "goals": []
+  },
+  "outputs": {
+    "files_changed": [],
+    "tests": {
+      "passed": 1,
+      "failed": 0,
+      "names": []
+    },
+    "snapshot_id": null,
+    "log_actions": []
+  },
+  "acceptance": {
+    "docs": [],
+    "gates_touched": [],
+    "status": "pass",
+    "notes": ""
+  },
+  "risk": {
+    "band": "green",
+    "issues": []
+  },
+  "signature": null
+}

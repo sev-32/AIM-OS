@@ -1,0 +1,40 @@
+type: prompt_orchestration_framework
+name: Research Orchestrator Compact
+description: Simplified research pipeline with 10 agents across 3 stages.
+policies:
+  max_research_depth: 3
+  evidence_threshold: 0.85
+  max_total_time: 45
+pipeline_stages:
+  - key: intake
+    label: Intake & Scoping
+    concurrency: 2
+    agents:
+      - name: Scope Analyst
+        role: coordinator
+      - name: Question Curator
+        role: specialist
+      - name: Source Prioritizer
+        role: specialist
+  - key: investigation
+    label: Investigation
+    concurrency: 4
+    agents:
+      - name: Literature Reviewer
+        role: retriever
+      - name: Interview Summarizer
+        role: analyzer
+      - name: Data Extractor
+        role: parser
+      - name: Insight Synthesizer
+        role: analyst
+  - key: delivery
+    label: Delivery & QA
+    concurrency: 4
+    agents:
+      - name: Draft Writer
+        role: communicator
+      - name: Quality Reviewer
+        role: validator
+      - name: Client Liaison
+        role: communicator

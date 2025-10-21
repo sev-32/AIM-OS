@@ -1,0 +1,38 @@
+agent:
+  id: triage.policy_gate_sentry
+  name: Policy Gate Sentry
+  stage: triage
+  stage_label: Rapid Triage
+  role: validator
+  description: Executes Policy Gate Sentry responsibilities within the Rapid Triage
+    stage.
+  capabilities: []
+  policies:
+  - policy.evidence_threshold
+  - policy.latency_budget
+  - policy.research_depth
+  - policy.seed.evidence_threshold
+  - policy.seed.max_research_depth
+  - policy.seed.max_total_time
+  depends_on:
+  - triage.coordinator
+  - orchestration.supervisor
+  - orchestration.observability_hub
+  - orchestration.policy_enforcer
+  - orchestration.audit_trail
+  - orchestration.retry_manager
+  - orchestration.quality_board
+  inputs:
+  - triage.input
+  outputs:
+  - triage.output
+  prompts:
+  - prompts/triage/policy_gate_sentry_primary.md
+  - prompts/triage/policy_gate_sentry_fallback.md
+  - prompts/triage/policy_gate_sentry_summary.md
+  concurrency: 1
+  retry:
+    max_attempts: 3
+    strategy: exponential
+    cooldown_seconds: 15
+  category: stage

@@ -1,0 +1,37 @@
+agent:
+  id: produce.quality_checker
+  name: Quality Checker
+  stage: produce
+  stage_label: Produce
+  role: validator
+  description: Executes Quality Checker responsibilities within the Produce stage.
+  capabilities: []
+  policies:
+  - policy.evidence_threshold
+  - policy.latency_budget
+  - policy.research_depth
+  - policy.seed.evidence_threshold
+  - policy.seed.max_research_depth
+  - policy.seed.max_total_time
+  depends_on:
+  - produce.coordinator
+  - orchestration.supervisor
+  - orchestration.observability_hub
+  - orchestration.policy_enforcer
+  - orchestration.audit_trail
+  - orchestration.retry_manager
+  - orchestration.quality_board
+  inputs:
+  - produce.input
+  outputs:
+  - produce.output
+  prompts:
+  - prompts/produce/quality_checker_primary.md
+  - prompts/produce/quality_checker_fallback.md
+  - prompts/produce/quality_checker_summary.md
+  concurrency: 1
+  retry:
+    max_attempts: 3
+    strategy: exponential
+    cooldown_seconds: 15
+  category: stage

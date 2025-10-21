@@ -1,0 +1,16 @@
+{
+  "branches": [
+    {
+      "mpd_id": "aimos.mige.trunk",
+      "variant_id": "aimos.mige.trunk::variant-a",
+      "summary": "Blueprint variant for governed Memory-to-Idea expansion",
+      "max_dependency_degree": 8
+    },
+    {
+      "mpd_id": "aimos.mige.trunk.guardrails",
+      "variant_id": "aimos.mige.trunk.guardrails::variant-a",
+      "summary": "Blueprint variant for governed Memory-to-Idea expansion",
+      "max_dependency_degree": 4
+    }
+  ]
+}

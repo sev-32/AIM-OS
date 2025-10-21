@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+  dgraph-zero:
+    image: dgraph/dgraph:latest
+    command: dgraph zero --my=dgraph-zero:5080
+    container_name: dgraph-zero
+    restart: unless-stopped
+    ports:
+      - "5080:5080"
+      - "6080:6080"
+    volumes:
+      - ./data/dgraph/zero:/dgraph
+
+  dgraph-alpha:
+    image: dgraph/dgraph:latest
+    command: >
+      dgraph alpha --my=dgraph-alpha:7080 --zero dgraph-zero:5080
+                   --security whitelist=127.0.0.1,172.18.0.0/16
+                   --graphql_port 8080 --lru_mb 1024
+    container_name: dgraph-alpha
+    restart: unless-stopped
+    depends_on:
+      - dgraph-zero
+    ports:
+      - "8080:8080"   # GraphQL endpoint
+      - "9080:9080"   # gRPC internal
+    volumes:
+      - ./data/dgraph/alpha:/dgraph
+    environment:
+      - DGRAPH_URL=http://dgraph-alpha:8080
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: qdrant
+    restart: unless-stopped
+    ports:
+      - "6333:6333"   # REST / gRPC auto
+    volumes:
+      - ./data/qdrant:/qdrant/storage
+    environment:
+      - QDRANT_URL=http://qdrant:6333
+
+networks:
+  default:
+    name: aimos-net

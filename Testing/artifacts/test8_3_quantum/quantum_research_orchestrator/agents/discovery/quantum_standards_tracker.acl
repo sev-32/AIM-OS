@@ -1,0 +1,38 @@
+agent:
+  id: discovery.quantum_standards_tracker
+  name: Quantum Standards Tracker
+  stage: discovery
+  stage_label: Quantum Discovery
+  role: observer
+  description: Executes Quantum Standards Tracker responsibilities within the Quantum
+    Discovery stage.
+  capabilities: []
+  policies:
+  - policy.evidence_threshold
+  - policy.latency_budget
+  - policy.research_depth
+  - policy.seed.evidence_threshold
+  - policy.seed.max_research_depth
+  - policy.seed.max_total_time
+  depends_on:
+  - discovery.coordinator
+  - orchestration.supervisor
+  - orchestration.observability_hub
+  - orchestration.policy_enforcer
+  - orchestration.audit_trail
+  - orchestration.retry_manager
+  - orchestration.quality_board
+  inputs:
+  - discovery.input
+  outputs:
+  - discovery.output
+  prompts:
+  - prompts/discovery/quantum_standards_tracker_primary.md
+  - prompts/discovery/quantum_standards_tracker_fallback.md
+  - prompts/discovery/quantum_standards_tracker_summary.md
+  concurrency: 1
+  retry:
+    max_attempts: 3
+    strategy: exponential
+    cooldown_seconds: 15
+  category: stage

@@ -1,0 +1,38 @@
+agent:
+  id: discovery.qubit_literature_miner
+  name: Qubit Literature Miner
+  stage: discovery
+  stage_label: Quantum Discovery
+  role: retriever
+  description: Executes Qubit Literature Miner responsibilities within the Quantum
+    Discovery stage.
+  capabilities: []
+  policies:
+  - policy.evidence_threshold
+  - policy.latency_budget
+  - policy.research_depth
+  - policy.seed.evidence_threshold
+  - policy.seed.max_research_depth
+  - policy.seed.max_total_time
+  depends_on:
+  - discovery.coordinator
+  - orchestration.supervisor
+  - orchestration.observability_hub
+  - orchestration.policy_enforcer
+  - orchestration.audit_trail
+  - orchestration.retry_manager
+  - orchestration.quality_board
+  inputs:
+  - discovery.input
+  outputs:
+  - discovery.output
+  prompts:
+  - prompts/discovery/qubit_literature_miner_primary.md
+  - prompts/discovery/qubit_literature_miner_fallback.md
+  - prompts/discovery/qubit_literature_miner_summary.md
+  concurrency: 1
+  retry:
+    max_attempts: 3
+    strategy: exponential
+    cooldown_seconds: 15
+  category: stage

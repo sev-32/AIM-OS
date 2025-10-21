@@ -1,0 +1,75 @@
+id: tensor_to_trunk
+description: Draft BTSM trunk nodes from a stored Vision Tensor and persist them to CMC.
+inputs:
+  vision_tensor_path:
+    required: true
+  cmc_db_path:
+    default: "packages/cmc_service/data/cmc.db"
+  owners:
+    default:
+      - GPT-5 Codex
+      - o3pro-ai
+  trunk_coherence_threshold:
+    default: 0.85
+outputs:
+  trunk_nodes_path:
+    default: "trunk_nodes.json"
+participants:
+  - name: vision_tensor
+    module: packages.apoe_runner.helpers
+    call: read_json
+    args:
+      path: "@input.vision_tensor_path"
+    result: vision_tensor
+  - name: trunk_nodes
+    module: packages.cmc_service.btsm
+    call: draft_trunk_nodes
+    args:
+      vision_tensor: "@result.vision_tensor"
+      owners: "@input.owners"
+    result: trunk_nodes
+  - name: committed_ids
+    module: packages.cmc_service.btsm
+    call: persist_nodes
+    args:
+      db_path: "@input.cmc_db_path"
+      nodes: "@result.trunk_nodes"
+    result: committed_ids
+  - name: depends_count
+    module: packages.cmc_service.btsm
+    call: persist_depends_on_edges
+    args:
+      db_path: "@input.cmc_db_path"
+      nodes: "@result.trunk_nodes"
+    result: depends_count
+gates:
+  - id: g_trunk_coherence
+    module: packages.meta_optimizer.vision_tensor
+    call: g_vision_fit
+    args:
+      result: "@result.vision_tensor"
+      threshold: "@input.trunk_coherence_threshold"
+    on_fail:
+      - action: log
+        params:
+          level: error
+          message: "Trunk VisionFit @gate.score below @gate.threshold"
+      - action: abort
+steps:
+  - action: write_json
+    params:
+      path: "@output.trunk_nodes_path"
+      payload: "@result.trunk_nodes"
+  - action: write_witness
+    params:
+      payload:
+        event: "plan.tensor_to_trunk"
+        plan_id: "@plan.id"
+        mpd_ids: "@result.committed_ids"
+        correlation_id: "@result.vision_tensor.correlation_id"
+        depends_edges: "@result.depends_count"
+        policy_pack_ids: "@result.vision_tensor.policy_pack_ids"
+      filename: "plan_tensor_to_trunk.jsonl"
+  - action: todo
+    params:
+      message: "Conduct policy review for committed MPD trunk nodes, confirm dependency ceilings, and record SEG witness ids before advancing to Phase P2."

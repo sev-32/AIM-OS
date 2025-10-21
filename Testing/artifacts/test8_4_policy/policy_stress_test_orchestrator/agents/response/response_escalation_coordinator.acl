@@ -1,0 +1,39 @@
+agent:
+  id: response.coordinator
+  name: Response & Escalation Coordinator
+  stage: response
+  stage_label: Response & Escalation
+  role: coordinator
+  description: Coordinates all Response & Escalation agents and manages hand-offs
+    to subsequent stages.
+  capabilities:
+  - schedule
+  - governance
+  - quality_assurance
+  policies:
+  - policy.evidence_threshold
+  - policy.latency_budget
+  - policy.research_depth
+  - policy.seed.evidence_threshold
+  - policy.seed.max_research_depth
+  - policy.seed.max_total_time
+  - policy.stage_alignment
+  depends_on:
+  - orchestration.supervisor
+  - orchestration.observability_hub
+  - orchestration.policy_enforcer
+  - orchestration.audit_trail
+  - orchestration.retry_manager
+  - orchestration.quality_board
+  inputs:
+  - response.input
+  outputs:
+  - response.handoff
+  prompts:
+  - prompts/response/response_coordination.md
+  concurrency: 2
+  retry:
+    max_attempts: 3
+    strategy: exponential
+    cooldown_seconds: 15
+  category: coordinator

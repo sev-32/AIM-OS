@@ -1,0 +1,38 @@
+agent:
+  id: response.alert_author
+  name: Alert Author
+  stage: response
+  stage_label: Response & Escalation
+  role: communicator
+  description: Executes Alert Author responsibilities within the Response & Escalation
+    stage.
+  capabilities: []
+  policies:
+  - policy.evidence_threshold
+  - policy.latency_budget
+  - policy.research_depth
+  - policy.seed.evidence_threshold
+  - policy.seed.max_research_depth
+  - policy.seed.max_total_time
+  depends_on:
+  - response.coordinator
+  - orchestration.supervisor
+  - orchestration.observability_hub
+  - orchestration.policy_enforcer
+  - orchestration.audit_trail
+  - orchestration.retry_manager
+  - orchestration.quality_board
+  inputs:
+  - response.input
+  outputs:
+  - response.output
+  prompts:
+  - prompts/response/alert_author_primary.md
+  - prompts/response/alert_author_fallback.md
+  - prompts/response/alert_author_summary.md
+  concurrency: 1
+  retry:
+    max_attempts: 3
+    strategy: exponential
+    cooldown_seconds: 15
+  category: stage

@@ -1,0 +1,208 @@
+{
+  "generated_at": "2025-10-21T05:52:48.206103+00:00",
+  "output_count": 13,
+  "entries": [
+    {
+      "agent_id": "gather.source_collector",
+      "stage": "gather",
+      "prompt_file": "prompts\\gather\\source_collector_primary.md",
+      "dependencies": [
+        "gather.coordinator",
+        "orchestration.supervisor",
+        "orchestration.observability_hub",
+        "orchestration.policy_enforcer",
+        "orchestration.audit_trail",
+        "orchestration.retry_manager",
+        "orchestration.quality_board"
+      ],
+      "output_file": "outputs\\gather_source_collector.md",
+      "started_at": "2025-10-21T05:50:48.011787+00:00",
+      "duration_ms": 9068.455900007393,
+      "model": "gemini-2.0-flash-exp"
+    },
+    {
+      "agent_id": "gather.fact_extractor",
+      "stage": "gather",
+      "prompt_file": "prompts\\gather\\fact_extractor_primary.md",
+      "dependencies": [
+        "gather.coordinator",
+        "orchestration.supervisor",
+        "orchestration.observability_hub",
+        "orchestration.policy_enforcer",
+        "orchestration.audit_trail",
+        "orchestration.retry_manager",
+        "orchestration.quality_board"
+      ],
+      "output_file": "outputs\\gather_fact_extractor.md",
+      "started_at": "2025-10-21T05:50:57.082022+00:00",
+      "duration_ms": 11295.226900023408,
+      "model": "gemini-2.0-flash-exp"
+    },
+    {
+      "agent_id": "gather.coordinator",
+      "stage": "gather",
+      "prompt_file": "prompts\\gather\\gather_coordination.md",
+      "dependencies": [
+        "orchestration.supervisor",
+        "orchestration.observability_hub",
+        "orchestration.policy_enforcer",
+        "orchestration.audit_trail",
+        "orchestration.retry_manager",
+        "orchestration.quality_board"
+      ],
+      "output_file": "outputs\\gather_coordinator.md",
+      "started_at": "2025-10-21T05:51:08.378874+00:00",
+      "duration_ms": 9414.124900009483,
+      "model": "gemini-2.0-flash-exp"
+    },
+    {
+      "agent_id": "produce.insight_synthesizer",
+      "stage": "produce",
+      "prompt_file": "prompts\\produce\\insight_synthesizer_primary.md",
+      "dependencies": [
+        "produce.coordinator",
+        "orchestration.supervisor",
+        "orchestration.observability_hub",
+        "orchestration.policy_enforcer",
+        "orchestration.audit_trail",
+        "orchestration.retry_manager",
+        "orchestration.quality_board"
+      ],
+      "output_file": "outputs\\produce_insight_synthesizer.md",
+      "started_at": "2025-10-21T05:51:17.794961+00:00",
+      "duration_ms": 9290.684699954,
+      "model": "gemini-2.0-flash-exp"
+    },
+    {
+      "agent_id": "produce.summary_writer",
+      "stage": "produce",
+      "prompt_file": "prompts\\produce\\summary_writer_primary.md",
+      "dependencies": [
+        "produce.coordinator",
+        "orchestration.supervisor",
+        "orchestration.observability_hub",
+        "orchestration.policy_enforcer",
+        "orchestration.audit_trail",
+        "orchestration.retry_manager",
+        "orchestration.quality_board"
+      ],
+      "output_file": "outputs\\produce_summary_writer.md",
+      "started_at": "2025-10-21T05:51:27.087026+00:00",
+      "duration_ms": 1068.2500000111759,
+      "model": "gemini-2.0-flash-exp"
+    },
+    {
+      "agent_id": "produce.quality_checker",
+      "stage": "produce",
+      "prompt_file": "prompts\\produce\\quality_checker_primary.md",
+      "dependencies": [
+        "produce.coordinator",
+        "orchestration.supervisor",
+        "orchestration.observability_hub",
+        "orchestration.policy_enforcer",
+        "orchestration.audit_trail",
+        "orchestration.retry_manager",
+        "orchestration.quality_board"
+      ],
+      "output_file": "outputs\\produce_quality_checker.md",
+      "started_at": "2025-10-21T05:51:28.156466+00:00",
+      "duration_ms": 6973.762899986468,
+      "model": "gemini-2.0-flash-exp"
+    },
+    {
+      "agent_id": "produce.coordinator",
+      "stage": "produce",
+      "prompt_file": "prompts\\produce\\produce_coordination.md",
+      "dependencies": [
+        "orchestration.supervisor",
+        "orchestration.observability_hub",
+        "orchestration.policy_enforcer",
+        "orchestration.audit_trail",
+        "orchestration.retry_manager",
+        "orchestration.quality_board"
+      ],
+      "output_file": "outputs\\produce_coordinator.md",
+      "started_at": "2025-10-21T05:51:35.132180+00:00",
+      "duration_ms": 8631.978599994909,
+      "model": "gemini-2.0-flash-exp"
+    },
+    {
+      "agent_id": "orchestration.supervisor",
+      "stage": "orchestration",
+      "prompt_file": "prompts\\orchestration\\supervisor_primary.md",
+      "dependencies": [
+        "gather.coordinator",
+        "produce.coordinator"
+      ],
+      "output_file": "outputs\\orchestration_supervisor.md",
+      "started_at": "2025-10-21T05:51:43.766228+00:00",
+      "duration_ms": 11017.480299982708,
+      "model": "gemini-2.0-flash-exp"
+    },
+    {
+      "agent_id": "orchestration.observability_hub",
+      "stage": "orchestration",
+      "prompt_file": "prompts\\orchestration\\observability_hub_primary.md",
+      "dependencies": [
+        "gather.coordinator",
+        "produce.coordinator"
+      ],
+      "output_file": "outputs\\orchestration_observability_hub.md",
+      "started_at": "2025-10-21T05:51:54.785293+00:00",
+      "duration_ms": 11205.771900014952,
+      "model": "gemini-2.0-flash-exp"
+    },
+    {
+      "agent_id": "orchestration.policy_enforcer",
+      "stage": "orchestration",
+      "prompt_file": "prompts\\orchestration\\policy_enforcer_primary.md",
+      "dependencies": [
+        "gather.coordinator",
+        "produce.coordinator"
+      ],
+      "output_file": "outputs\\orchestration_policy_enforcer.md",
+      "started_at": "2025-10-21T05:52:05.992264+00:00",
+      "duration_ms": 9813.800600008108,
+      "model": "gemini-2.0-flash-exp"
+    },
+    {
+      "agent_id": "orchestration.audit_trail",
+      "stage": "orchestration",
+      "prompt_file": "prompts\\orchestration\\audit_trail_primary.md",
+      "dependencies": [
+        "gather.coordinator",
+        "produce.coordinator"
+      ],
+      "output_file": "outputs\\orchestration_audit_trail.md",
+      "started_at": "2025-10-21T05:52:15.807531+00:00",
+      "duration_ms": 11078.838000015821,
+      "model": "gemini-2.0-flash-exp"
+    },
+    {
+      "agent_id": "orchestration.retry_manager",
+      "stage": "orchestration",
+      "prompt_file": "prompts\\orchestration\\retry_manager_primary.md",
+      "dependencies": [
+        "gather.coordinator",
+        "produce.coordinator"
+      ],
+      "output_file": "outputs\\orchestration_retry_manager.md",
+      "started_at": "2025-10-21T05:52:26.887579+00:00",
+      "duration_ms": 13684.618400002364,
+      "model": "gemini-2.0-flash-exp"
+    },
+    {
+      "agent_id": "orchestration.quality_board",
+      "stage": "orchestration",
+      "prompt_file": "prompts\\orchestration\\quality_board_primary.md",
+      "dependencies": [
+        "gather.coordinator",
+        "produce.coordinator"
+      ],
+      "output_file": "outputs\\orchestration_quality_board.md",
+      "started_at": "2025-10-21T05:52:40.573829+00:00",
+      "duration_ms": 7631.4831000054255,
+      "model": "gemini-2.0-flash-exp"
+    }
+  ]
+}

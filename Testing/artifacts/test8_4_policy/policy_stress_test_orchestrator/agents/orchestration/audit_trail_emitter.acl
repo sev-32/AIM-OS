@@ -1,0 +1,39 @@
+agent:
+  id: orchestration.audit_trail
+  name: Audit Trail Emitter
+  stage: orchestration
+  stage_label: Global Orchestration
+  role: provenance
+  description: Emits immutable VIF evidence for each agent execution.
+  capabilities:
+  - monitor
+  - govern
+  - recover
+  policies:
+  - policy.evidence_threshold
+  - policy.latency_budget
+  - policy.research_depth
+  - policy.seed.evidence_threshold
+  - policy.seed.max_research_depth
+  - policy.seed.max_total_time
+  - policy.stage_alignment
+  - policy.system_observability
+  - policy.system_fallbacks
+  depends_on:
+  - triage.coordinator
+  - rapid_analysis.coordinator
+  - response.coordinator
+  inputs:
+  - orchestration.signal
+  outputs:
+  - orchestration.report
+  prompts:
+  - prompts/orchestration/audit_trail_primary.md
+  - prompts/orchestration/audit_trail_monitor.md
+  - prompts/orchestration/audit_trail_summary.md
+  concurrency: 1
+  retry:
+    max_attempts: 5
+    strategy: exponential
+    cooldown_seconds: 30
+  category: observer

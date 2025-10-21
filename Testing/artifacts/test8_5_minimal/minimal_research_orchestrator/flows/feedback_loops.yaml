@@ -1,0 +1,18 @@
+loops:
+- name: analysis_validation_feedback
+  sources: []
+  targets: []
+  mode: bidirectional
+  criteria:
+  - evidence_threshold >= 0.8
+  - no_conflicts_detected
+- name: gather_retry_loop
+  stage: gather
+  manager: orchestration.retry_manager
+  trigger: quality_board
+  max_attempts: 3
+- name: produce_retry_loop
+  stage: produce
+  manager: orchestration.retry_manager
+  trigger: quality_board
+  max_attempts: 3

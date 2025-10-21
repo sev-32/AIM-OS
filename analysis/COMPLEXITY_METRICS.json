@@ -1,0 +1,71 @@
+{
+  "summary": {
+    "files_analyzed": 74,
+    "total_packages": 10,
+    "total_modules": 74
+  },
+  "cyclomatic_complexity": {
+    "min": 1,
+    "max": 28,
+    "avg": 2.9138321995464853,
+    "median": 2,
+    "p95": 9
+  },
+  "cognitive_complexity": {
+    "min": 0,
+    "max": 49,
+    "avg": 2.439909297052154,
+    "median": 1,
+    "p95": 10
+  },
+  "function_length": {
+    "min": 1,
+    "max": 150,
+    "avg": 18.519274376417233,
+    "median": 11,
+    "p95": 65
+  },
+  "file_metrics": {
+    "lines_per_file": {
+      "min": 0,
+      "max": 828,
+      "avg": 124.39189189189189,
+      "median": 86,
+      "p95": 341
+    },
+    "functions_per_file": {
+      "min": 0,
+      "max": 26,
+      "avg": 5.95945945945946,
+      "median": 5,
+      "p95": 22
+    },
+    "classes_per_file": {
+      "min": 0,
+      "max": 7,
+      "avg": 1.0135135135135136,
+      "median": 0,
+      "p95": 5
+    },
+    "imports_per_file": {
+      "min": 0,
+      "max": 17,
+      "avg": 5.513513513513513,
+      "median": 5,
+      "p95": 10
+    }
+  },
+  "architecture": {
+    "total_packages": 10,
+    "total_modules": 74,
+    "dependency_graph": {
+      "cmc_service": "{'hhni', 'cmc_service', 'seg', 'schemas'}",
+      "hhni": "{'hhni', 'cmc_service'}"
+    },
+    "max_dependency_depth": 2,
+    "coupling_score": 6,
+    "avg_package_size": 7.4,
+    "interface_count": 0
+  },
+  "complexity_grade": "A (Excellent)"
+}

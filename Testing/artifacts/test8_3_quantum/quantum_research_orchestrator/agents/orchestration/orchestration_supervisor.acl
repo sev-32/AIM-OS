@@ -1,0 +1,40 @@
+agent:
+  id: orchestration.supervisor
+  name: Orchestration Supervisor
+  stage: orchestration
+  stage_label: Global Orchestration
+  role: executive
+  description: Directs the full orchestration lifecycle and resolves contention across
+    stages.
+  capabilities:
+  - monitor
+  - govern
+  - recover
+  policies:
+  - policy.evidence_threshold
+  - policy.latency_budget
+  - policy.research_depth
+  - policy.seed.evidence_threshold
+  - policy.seed.max_research_depth
+  - policy.seed.max_total_time
+  - policy.stage_alignment
+  - policy.system_observability
+  - policy.system_fallbacks
+  depends_on:
+  - discovery.coordinator
+  - analysis.coordinator
+  - dissemination.coordinator
+  inputs:
+  - orchestration.signal
+  outputs:
+  - orchestration.report
+  prompts:
+  - prompts/orchestration/supervisor_primary.md
+  - prompts/orchestration/supervisor_monitor.md
+  - prompts/orchestration/supervisor_summary.md
+  concurrency: 1
+  retry:
+    max_attempts: 5
+    strategy: exponential
+    cooldown_seconds: 30
+  category: supervisor

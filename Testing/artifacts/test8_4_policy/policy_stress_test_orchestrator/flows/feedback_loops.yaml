@@ -1,0 +1,23 @@
+loops:
+- name: analysis_validation_feedback
+  sources: []
+  targets: []
+  mode: bidirectional
+  criteria:
+  - evidence_threshold >= 0.8
+  - no_conflicts_detected
+- name: triage_retry_loop
+  stage: triage
+  manager: orchestration.retry_manager
+  trigger: quality_board
+  max_attempts: 3
+- name: rapid_analysis_retry_loop
+  stage: rapid_analysis
+  manager: orchestration.retry_manager
+  trigger: quality_board
+  max_attempts: 3
+- name: response_retry_loop
+  stage: response
+  manager: orchestration.retry_manager
+  trigger: quality_board
+  max_attempts: 3
