@@ -39,6 +39,13 @@ from .hitl_escalation import (
     EscalationRequest,
     create_hitl_manager
 )
+from .depp import (
+    SelfModifyingPlan,
+    DEPPController,
+    PlanModification,
+    low_confidence_adds_verification,
+    timeout_increases_budget
+)
 
 __all__ = [
     # Core
@@ -82,5 +89,11 @@ __all__ = [
     "EscalationPriority",
     "EscalationRequest",
     "create_hitl_manager",
+    # DEPP (Dynamic Plans)
+    "SelfModifyingPlan",
+    "DEPPController",
+    "PlanModification",
+    "low_confidence_adds_verification",
+    "timeout_increases_budget",
 ]
 
