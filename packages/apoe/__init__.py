@@ -32,6 +32,13 @@ from .error_recovery import (
     CircuitBreaker,
     create_recovery_manager
 )
+from .hitl_escalation import (
+    HITLManager,
+    EscalationReason,
+    EscalationPriority,
+    EscalationRequest,
+    create_hitl_manager
+)
 
 __all__ = [
     # Core
@@ -69,5 +76,11 @@ __all__ = [
     "RecoveryConfig",
     "CircuitBreaker",
     "create_recovery_manager",
+    # HITL Escalation
+    "HITLManager",
+    "EscalationReason",
+    "EscalationPriority",
+    "EscalationRequest",
+    "create_hitl_manager",
 ]
 
