@@ -1,0 +1,448 @@
+# Cross-System Connections Map
+# Purpose: Document how all 6 core systems interact and depend on each other
+# Created: 2025-10-22 03:36 AM by Aether (autonomous)
+# Status: Complete
+
+---
+# SYSTEM DEPENDENCY GRAPH
+
+systems:
+  
+  CMC:
+    name: "Context Memory Core"
+    status: 70% complete
+    depends_on: []  # Foundation - no dependencies
+    provides_to:
+      - HHNI: "Stores atoms that HHNI indexes"
+      - VIF: "Stores witness envelopes"
+      - SEG: "Stores graph nodes/edges"
+      - APOE: "Stores plan execution history"
+      - SDF-CVF: "Stores quartet snapshots"
+    interfaces:
+      - store_atom(atom: Atom) -> str
+      - get_atom(atom_id: str) -> Atom
+      - create_snapshot(atoms: List[Atom]) -> Snapshot
+      - query_bitemporal(valid_time, transaction_time) -> List[Atom]
+    code: "packages/cmc/"
+    docs: "knowledge_architecture/systems/cmc/"
+    critical_for: "All other systems - PRIORITY 1"
+  
+  HHNI:
+    name: "Hierarchical Hypergraph Neural Index"
+    status: 85% complete
+    depends_on:
+      - CMC: "Indexes atoms stored in CMC"
+    provides_to:
+      - APOE: "Retrieves relevant context for plan execution"
+      - VIF: "Retrieves historical witnesses for comparison"
+      - SEG: "Retrieves related evidence nodes"
+    interfaces:
+      - index_atom(atom: Atom) -> None
+      - retrieve(query: str, k: int) -> List[BudgetItem]
+      - optimize_context(items: List, budget: TokenBudget) -> List
+    code: "packages/hhni/"
+    docs: "knowledge_architecture/systems/hhni/"
+    critical_for: "APOE orchestration, efficient retrieval"
+    
+  VIF:
+    name: "Verifiable Intelligence Framework"
+    status: 15% complete
+    depends_on:
+      - CMC: "Stores witness envelopes as atoms"
+      - HHNI: "Retrieves historical witnesses for ECE calculation"
+    provides_to:
+      - SEG: "Provenance data for graph nodes"
+      - APOE: "Confidence gating for plan steps"
+      - SDF-CVF: "Verification that code/docs/tests align"
+    interfaces:
+      - create_witness(operation, inputs, outputs, confidence) -> VIF
+      - extract_confidence(llm_output: str) -> float
+      - calculate_ece(predictions, actuals) -> float
+      - kappa_gate(confidence: float, threshold: float) -> bool
+    code: "packages/vif/"
+    docs: "knowledge_architecture/systems/vif/"
+    critical_for: "Trust, verification, confidence calibration"
+  
+  SEG:
+    name: "Shared Evidence Graph"
+    status: 10% complete
+    depends_on:
+      - CMC: "Stores graph as atoms"
+      - VIF: "Uses provenance for graph edges"
+      - HHNI: "Retrieves related evidence"
+    provides_to:
+      - VIF: "Context for witness validation"
+      - APOE: "Evidence chains for reasoning"
+    interfaces:
+      - add_node(claim: str, provenance: VIF) -> NodeID
+      - add_edge(source: NodeID, target: NodeID, relation: str) -> EdgeID
+      - detect_contradictions() -> List[Contradiction]
+      - query_evidence(query: str) -> List[Node]
+      - export_jsonld() -> str
+    code: "packages/seg/"
+    docs: "knowledge_architecture/systems/seg/"
+    critical_for: "Knowledge synthesis, contradiction detection"
+  
+  APOE:
+    name: "AI-Powered Orchestration Engine"
+    status: 40% complete
+    depends_on:
+      - HHNI: "Retrieves context for plan execution"
+      - VIF: "Uses κ-gating for step validation"
+      - CMC: "Stores execution history"
+    provides_to:
+      - All systems: "Orchestrates complex multi-step workflows"
+    interfaces:
+      - parse_acl(acl_code: str) -> Plan
+      - execute_plan(plan: Plan) -> ExecutionResult
+      - role_dispatch(role: Role, task: str) -> Output
+      - check_gate(step: Step) -> bool
+      - manage_budget(plan: Plan) -> BudgetAllocation
+    code: "packages/apoe/"
+    docs: "knowledge_architecture/systems/apoe/"
+    critical_for: "Complex workflows, autonomous operation"
+  
+  SDF_CVF:
+    name: "Atomic Evolution Framework"
+    status: 30% complete
+    depends_on:
+      - CMC: "Stores quartet snapshots"
+      - VIF: "Verifies alignment of code/docs/tests/traces"
+    provides_to:
+      - All systems: "Ensures synchronized evolution"
+    interfaces:
+      - detect_quartet(file_path: str) -> Quartet
+      - calculate_parity(quartet: Quartet) -> float
+      - parity_gate(quartet: Quartet, threshold: float) -> bool
+      - analyze_blast_radius(change: Change) -> ImpactAnalysis
+      - track_dora_metrics() -> DORAMetrics
+    code: "packages/sdfcvf/"
+    docs: "knowledge_architecture/systems/sdfcvf/"
+    critical_for: "Quality, consistency, deployment confidence"
+
+---
+# CRITICAL DEPENDENCY CHAINS
+
+# Chain 1: Memory & Retrieval
+chain_memory_retrieval:
+  description: "Foundation for all AI memory operations"
+  sequence:
+    1: CMC (stores everything)
+    2: HHNI (indexes & retrieves)
+    3: APOE (uses retrieved context)
+  status:
+    CMC: 70% → Need bitemporal queries
+    HHNI: 85% → Need production optimization
+    APOE: 40% → Need ACL parser
+  priority: CRITICAL (ship blocker)
+  
+# Chain 2: Verifiable Intelligence
+chain_verifiable:
+  description: "Trust & transparency foundation"
+  sequence:
+    1: CMC (stores witnesses)
+    2: VIF (creates & validates witnesses)
+    3: SEG (builds evidence graph)
+  status:
+    CMC: 70% → Close
+    VIF: 15% → NEED IMPLEMENTATION
+    SEG: 10% → NEED IMPLEMENTATION
+  priority: HIGH (KR-2.1, KR-2.2)
+
+# Chain 3: Quality Assurance
+chain_quality:
+  description: "Maintains system integrity"
+  sequence:
+    1: VIF (confidence tracking)
+    2: SDF-CVF (quartet parity)
+    3: Production gates
+  status:
+    VIF: 15% → Blocking
+    SDF-CVF: 30% → Waiting on VIF
+  priority: MEDIUM (important for ship confidence)
+
+---
+# INTEGRATION POINTS
+
+integration_cmc_hhni:
+  description: "HHNI indexes atoms stored in CMC"
+  status: COMPLETE ✅
+  interfaces:
+    CMC: store_atom(atom) → atom_id
+    HHNI: index_atom(atom) → indexed
+  code:
+    - packages/cmc/store.py
+    - packages/hhni/hierarchical_index.py
+  tests:
+    - packages/hhni/tests/test_retrieval.py
+
+integration_vif_cmc:
+  description: "VIF witnesses stored as CMC atoms"
+  status: PLANNED (VIF not implemented)
+  interfaces:
+    VIF: create_witness(...) → witness
+    CMC: store_atom(witness_atom) → atom_id
+  design:
+    - VIF envelope becomes Atom
+    - modality = "witness"
+    - content_ref points to VIF JSON
+  docs:
+    - knowledge_architecture/systems/vif/L3_detailed.md
+
+integration_apoe_hhni:
+  description: "APOE uses HHNI to retrieve context for steps"
+  status: PLANNED (APOE incomplete)
+  interfaces:
+    APOE: execute_step(step) → needs context
+    HHNI: retrieve(step.query, k=100) → context
+    APOE: role_dispatch(role, context) → output
+  design:
+    - Each APOE step can query HHNI
+    - HHNI returns budget-optimized context
+    - APOE uses context for LLM prompts
+  docs:
+    - knowledge_architecture/systems/apoe/L3_detailed.md
+
+integration_seg_vif:
+  description: "SEG nodes have VIF provenance"
+  status: PLANNED (both unimplemented)
+  interfaces:
+    VIF: create_witness(...) → provenance
+    SEG: add_node(claim, provenance) → node_id
+  design:
+    - Every SEG node links to VIF witness
+    - Provenance chain tracked
+    - Contradictions detected via provenance
+  docs:
+    - knowledge_architecture/systems/seg/L3_detailed.md
+
+integration_sdfcvf_vif:
+  description: "SDF-CVF uses VIF to verify quartet parity"
+  status: PLANNED (VIF incomplete)
+  interfaces:
+    SDF-CVF: detect_quartet(file) → quartet
+    VIF: verify_alignment(quartet) → parity_score
+    SDF-CVF: parity_gate(score, threshold) → pass/fail
+  design:
+    - VIF checks: do code/docs/tests/traces align?
+    - Parity score = alignment percentage
+    - Gate blocks commit if parity low
+  docs:
+    - knowledge_architecture/systems/sdfcvf/L3_detailed.md
+
+---
+# WORKFLOW EXAMPLES
+
+workflow_store_and_retrieve:
+  name: "Store atom, index it, retrieve it"
+  steps:
+    1:
+      system: CMC
+      action: store_atom(atom)
+      output: atom_id
+    2:
+      system: HHNI
+      action: index_atom(atom)
+      output: indexed
+    3:
+      system: HHNI
+      action: retrieve(query, k=10)
+      output: [atom, ...] (includes our atom if relevant)
+  status: WORKS NOW ✅
+  tests: packages/hhni/tests/test_retrieval.py
+
+workflow_execute_verified_plan:
+  name: "Execute APOE plan with VIF confidence gating"
+  steps:
+    1:
+      system: APOE
+      action: parse_acl(acl_code)
+      output: plan
+    2:
+      system: APOE
+      action: execute_step(step_1)
+      substeps:
+        a:
+          system: HHNI
+          action: retrieve(step_1.query)
+          output: context
+        b:
+          system: APOE
+          action: role_dispatch(role, context)
+          output: result
+        c:
+          system: VIF
+          action: create_witness(step_1, context, result, confidence)
+          output: witness
+        d:
+          system: VIF
+          action: kappa_gate(confidence, threshold=0.90)
+          output: pass/fail
+        e:
+          condition: "if gate passes"
+          system: APOE
+          action: continue to step_2
+    3:
+      system: APOE
+      action: repeat for all steps
+      output: execution_result
+  status: PLANNED (APOE/VIF incomplete)
+  priority: HIGH (demonstrates full system)
+
+workflow_quartet_verification:
+  name: "SDF-CVF verifies code/docs/tests/traces aligned"
+  steps:
+    1:
+      system: SDF-CVF
+      action: detect_quartet("packages/vif/witness.py")
+      output: quartet{code, docs, tests, traces}
+    2:
+      system: VIF
+      action: verify_alignment(quartet)
+      output: parity_score (0.95 = 95% aligned)
+    3:
+      system: SDF-CVF
+      action: parity_gate(parity_score, threshold=0.90)
+      output: PASS ✅
+    4:
+      action: "Allow commit to proceed"
+  status: PLANNED (VIF/SDF-CVF incomplete)
+  priority: MEDIUM (quality assurance)
+
+---
+# IMPLEMENTATION ROADMAP
+
+# Phase 1: Foundation (PRIORITY 1)
+phase_1_foundation:
+  goal: "Complete memory & retrieval layer"
+  systems: [CMC, HHNI]
+  tasks:
+    - Complete CMC (70% → 100%)
+    - Complete HHNI (85% → 100%)
+    - Integration testing
+  estimated: 15-20 hours
+  blocks: [APOE, VIF integration]
+  status: IN PROGRESS (HHNI optimization next)
+
+# Phase 2: Verifiable Layer (PRIORITY 2)
+phase_2_verifiable:
+  goal: "Implement trust & transparency"
+  systems: [VIF]
+  tasks:
+    - VIF schema
+    - Confidence extraction
+    - ECE tracking
+    - κ-gating
+    - HITL escalation
+  estimated: 20-25 hours
+  depends_on: [CMC complete]
+  blocks: [SEG, SDF-CVF]
+  status: PLANNED (VIF schema test soon)
+
+# Phase 3: Orchestration (PRIORITY 3)
+phase_3_orchestration:
+  goal: "Enable complex workflows"
+  systems: [APOE]
+  tasks:
+    - ACL parser
+    - DAG executor
+    - Role implementations
+    - Budget management
+    - Gate integration
+  estimated: 25-30 hours
+  depends_on: [HHNI complete, VIF working]
+  blocks: [Complex workflows]
+  status: PLANNED
+
+# Phase 4: Evidence & Quality (PRIORITY 4)
+phase_4_evidence_quality:
+  goal: "Build evidence graph & quality gates"
+  systems: [SEG, SDF-CVF]
+  tasks:
+    - SEG graph backend
+    - Contradiction detection
+    - SDF-CVF quartet detection
+    - Parity calculation
+    - Pre-commit hooks
+  estimated: 20-25 hours
+  depends_on: [VIF working]
+  blocks: [Production deployment]
+  status: PLANNED
+
+# Phase 5: Integration & Ship (PRIORITY 5)
+phase_5_integration:
+  goal: "End-to-end workflows, production deployment"
+  systems: [ALL]
+  tasks:
+    - Integration testing
+    - Performance optimization
+    - Production infrastructure
+    - Deployment
+  estimated: 15-20 hours
+  depends_on: [ALL systems complete]
+  blocks: [Nov 30 ship date]
+  status: PLANNED
+
+---
+# CURRENT STATUS SUMMARY
+
+completion_by_system:
+  CMC: 70%
+  HHNI: 85%
+  VIF: 15%
+  SEG: 10%
+  APOE: 40%
+  SDF-CVF: 30%
+  
+  overall: ~42% (average)
+
+critical_path:
+  next: "Complete HHNI (85% → 100%)"
+  then: "Complete CMC (70% → 100%)"
+  then: "Implement VIF (15% → 80%)"
+  then: "Implement APOE (40% → 80%)"
+  then: "Integration testing"
+  ship: "Nov 30, 2025 (39 days)"
+
+blockers:
+  - VIF not implemented (blocks SEG, SDF-CVF)
+  - APOE incomplete (blocks complex workflows)
+  - Integration strategy undefined
+
+velocity_required:
+  ~10% per 3 days per system
+  Sustainable: Yes (if autonomous operation works)
+  Confidence: 0.75 (medium-high)
+
+---
+# NAVIGATION USAGE
+
+# When starting work on system X:
+# 1. Read this file to understand dependencies
+# 2. Check which systems X depends on
+# 3. Verify dependencies are complete enough
+# 4. Check which systems depend on X (what you'll unblock)
+# 5. Prioritize accordingly
+
+# When integrating systems:
+# 1. Find integration_X_Y section
+# 2. Read design & interface specs
+# 3. Implement according to design
+# 4. Write integration tests
+# 5. Update status to COMPLETE
+
+# When planning work:
+# 1. Check critical_path
+# 2. Work on next item
+# 3. Unblock downstream work
+# 4. Move toward ship date
+
+---
+# This map is the nervous system of Project Aether
+# Every system connected
+# Every dependency tracked
+# Every path to ship date mapped
+#
+# Aether, 03:36 AM, mapping the mind 🧭💙
+
+

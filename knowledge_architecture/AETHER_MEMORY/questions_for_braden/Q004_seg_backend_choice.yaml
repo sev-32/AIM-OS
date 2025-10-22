@@ -1,0 +1,193 @@
+# Question Q004: Neo4j vs NetworkX for SEG Production?
+
+question_id: Q-BR-004
+created: 2025-10-22T02:26:00Z
+updated: 2025-10-22T03:03:00Z
+status: active
+urgency: medium
+category: technical_architecture
+
+---
+
+## 📋 QUESTION
+
+**Text:** "Should SEG use NetworkX (in-memory) or Neo4j (distributed graph database) for production deployment?"
+
+**Type:** Technical architecture choice  
+**Time-sensitive:** Moderate (affects Week 5 SEG implementation)  
+**Blocking:** Not immediate (VIF is Week 4 priority)  
+
+---
+
+## 🎯 SYSTEM INTEGRATION
+
+### Points To Systems:
+- **SEG (Shared Evidence Graph)**
+  - Current: 10% implemented (design only)
+  - Target: Production-ready graph database
+  - Location: `systems/seg/`, planned in `packages/seg/`
+
+### Affects Objectives:
+- **OBJ-03: Automated Validation** (Indirect - SEG provides provenance)
+- **Future objective:** Knowledge graph operations
+
+### Affects Key Results:
+- **No explicit KRs** for SEG currently
+- Would affect: Graph query performance, scalability, reliability
+
+---
+
+## 💡 COMPARISON ANALYSIS
+
+### Option A: NetworkX
+
+**Pros:**
+- In-memory (very fast queries)
+- Simple setup (pip install, no infrastructure)
+- Good for <100k nodes
+- Easy development/testing
+- Python-native
+
+**Cons:**
+- Doesn't persist (need serialization)
+- Limited to single machine memory
+- No ACID guarantees
+- Won't scale to millions of nodes
+
+**Best for:**
+- Development and testing
+- Small-scale deployments
+- Dog-food users (if graph stays small)
+
+---
+
+### Option B: Neo4j
+
+**Pros:**
+- Production graph database
+- Scales to millions/billions of nodes
+- ACID transactions
+- Cypher query language
+- Replication and HA
+- Industry standard
+
+**Cons:**
+- Complex setup (requires Neo4j server)
+- Slower than in-memory
+- Additional infrastructure
+- Learning curve
+
+**Best for:**
+- Production at scale
+- Multi-user deployments
+- Long-term growth
+
+---
+
+## 🔗 DECISION FACTORS
+
+### Need to Know:
+1. **Expected graph size for dog-food users?**
+   - If <10k nodes → NetworkX fine
+   - If >100k nodes → Neo4j needed
+   - Unknown currently
+
+2. **Persistence requirements?**
+   - Do we need graph to survive restarts?
+   - If yes: Neo4j or NetworkX + serialization
+   - If no: NetworkX in-memory okay
+
+3. **Multi-user access?**
+   - Single user: NetworkX okay
+   - Multiple users: Neo4j better (concurrent access)
+
+4. **Timeline for SEG?**
+   - MVP by when? (determines if Neo4j setup time acceptable)
+   - Production scale when? (determines urgency)
+
+---
+
+## 💡 RECOMMENDATION FRAMEWORK
+
+**Decision tree:**
+```
+If dog_food_users_count < 10:
+  AND graph_size_estimate < 50k nodes:
+  AND single_deployment:
+    → Start with NetworkX (fast to implement)
+    → Migrate to Neo4j later if needed
+    → **LOW RISK: Easy migration path**
+
+Else if production_scale_expected:
+  OR multi_user_required:
+  OR graph_size > 100k:
+    → Use Neo4j from start
+    → Worth setup time investment
+    → **FUTURE-PROOF**
+
+Else:
+  → Hybrid: NetworkX for dev, Neo4j for prod
+  → Implement both backends (abstraction layer)
+  → **FLEXIBLE**
+```
+
+---
+
+## 🔗 CONNECTIONS
+
+### Depends On:
+- Dog-food user count estimate
+- Expected graph growth rate
+- Production timeline for SEG
+
+### Informs:
+- SEG implementation approach (Week 5)
+- Infrastructure requirements
+- Development complexity
+
+### Related:
+- CMC backend choice (similar decision - chose SQLite for dev, PostgreSQL for prod)
+- Pattern: "Start simple, scale when needed"
+
+---
+
+## ✅ MY ANALYSIS
+
+**I would choose:**  
+**Hybrid approach** (NetworkX for dev/MVP, Neo4j path for production)
+
+**Reasoning:**
+1. **Ship fast:** NetworkX MVP for dog-food users (Nov 30 deadline)
+2. **Scale later:** Neo4j when graph grows
+3. **Both implemented:** Abstraction layer (like CMC has multiple backends)
+4. **Low risk:** Can start simple, upgrade when needed
+
+**Implementation:**
+```python
+class SEG:
+    def __init__(self, backend="networkx"):  # Default: simple
+        if backend == "networkx":
+            self.backend = SEGNetworkX()
+        elif backend == "neo4j":
+            self.backend = SEGNeo4j()  # When scale needed
+
+# L3 already shows both! Just implement abstraction.
+```
+
+**Confidence:** 0.85 (architectural decision with precedent)
+
+---
+
+## 📋 ANSWER NEEDED
+
+**From Braden:**
+- Expected graph size for internal dog-food?
+- Multi-user access needed?
+- Or: Approve hybrid approach?
+
+**Time to answer:** 2 minutes  
+**Value:** Clear SEG implementation path  
+
+**Status:** Active, medium urgency  
+
+

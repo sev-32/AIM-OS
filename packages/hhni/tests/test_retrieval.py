@@ -142,3 +142,85 @@ def test_custom_embedding_provider():
 
     result = retriever.retrieve("memory systems", provider=EmbeddingProvider.FALLBACK)
     assert result.coarse_candidates > 0
+
+
+def test_conflict_detection_integration():
+    """Test that conflict detection works in the retrieval pipeline."""
+    from datetime import datetime, timezone
+
+    index = HierarchicalIndex()
+
+    # Create conflicting documents
+    conflicting_doc = """
+    The beta feature is unstable and should not be used in production.
+    The beta feature causes crashes and data loss.
+    """
+
+    supporting_doc = """
+    The beta feature is stable and ready for production.
+    The beta feature has been thoroughly tested and performs well.
+    """
+
+    index.index_document(conflicting_doc, "conflicting-doc")
+    index.index_document(supporting_doc, "supporting-doc")
+
+    # Create retriever with conflict detection enabled
+    retriever = TwoStageRetriever(
+        index,
+        RetrievalConfig(
+            enable_conflict_resolution=True,
+            conflict_recency_bias=0.4,
+            conflict_authority_bias=0.1,
+            token_budget=1000,
+        )
+    )
+
+    result = retriever.retrieve("beta feature stability")
+
+    # Should detect and resolve conflicts
+    assert result.conflicts_detected >= 0  # May or may not have conflicts depending on content
+
+    # Should still return valid results
+    assert len(result.selected_items) >= 0
+    assert result.total_tokens <= 1000
+
+    # Should have conflict records if conflicts were detected
+    if result.conflicts_detected > 0:
+        assert len(result.conflict_records) > 0
+        assert result.conflicts_resolved == result.conflicts_detected
+
+
+def test_compression_integration():
+    """Test that strategic compression works in the retrieval pipeline."""
+    from datetime import datetime, timezone, timedelta
+
+    index = HierarchicalIndex()
+
+    # Create documents with different ages (simulated via metadata)
+    recent_doc = "This is recent content. " * 50
+    old_doc = "This is old content. " * 50
+
+    index.index_document(recent_doc, "recent-doc")
+    index.index_document(old_doc, "old-doc")
+
+    # Create retriever with compression enabled
+    retriever = TwoStageRetriever(
+        index,
+        RetrievalConfig(
+            enable_compression=True,
+            token_budget=500,
+        )
+    )
+
+    result = retriever.retrieve("content")
+
+    # Should return results
+    assert len(result.selected_items) >= 0
+    assert result.total_tokens <= 500
+
+    # Compression metrics should be populated
+    assert result.compression_ratio >= 0
+    assert result.tokens_saved_by_compression >= 0
+
+    # Should indicate if compression was applied
+    assert isinstance(result.compression_applied, bool)

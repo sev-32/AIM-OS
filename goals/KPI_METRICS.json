@@ -27,6 +27,10 @@
       {
         "timestamp": "2025-10-21T02:52:19Z",
         "value": "100%"
+      },
+      {
+        "timestamp": "2025-10-21T21:42:49Z",
+        "value": "100%"
       }
     ],
     "KR-1.2": [
@@ -36,6 +40,10 @@
       },
       {
         "timestamp": "2025-10-21T02:52:19Z",
+        "value": 0.0
+      },
+      {
+        "timestamp": "2025-10-21T21:42:49Z",
         "value": 0.0
       }
     ],
@@ -47,6 +55,10 @@
       {
         "timestamp": "2025-10-21T02:52:19Z",
         "value": 0
+      },
+      {
+        "timestamp": "2025-10-21T21:42:49Z",
+        "value": 0
       }
     ],
     "KR-2.1": [
@@ -56,6 +68,10 @@
       },
       {
         "timestamp": "2025-10-21T02:52:19Z",
+        "value": "pending-benchmark"
+      },
+      {
+        "timestamp": "2025-10-21T21:42:49Z",
         "value": "pending-benchmark"
       }
     ],
@@ -67,6 +83,10 @@
       {
         "timestamp": "2025-10-21T02:52:19Z",
         "value": 0
+      },
+      {
+        "timestamp": "2025-10-21T21:42:49Z",
+        "value": 0
       }
     ],
     "KR-2.3": [
@@ -76,6 +96,10 @@
       },
       {
         "timestamp": "2025-10-21T02:52:19Z",
+        "value": "pending-benchmark"
+      },
+      {
+        "timestamp": "2025-10-21T21:42:49Z",
         "value": "pending-benchmark"
       }
     ],
@@ -87,6 +111,10 @@
       {
         "timestamp": "2025-10-21T02:52:19Z",
         "value": "pending-coverage"
+      },
+      {
+        "timestamp": "2025-10-21T21:42:49Z",
+        "value": "pending-coverage"
       }
     ],
     "KR-3.2": [
@@ -96,6 +124,10 @@
       },
       {
         "timestamp": "2025-10-21T02:52:19Z",
+        "value": "pending-chaos"
+      },
+      {
+        "timestamp": "2025-10-21T21:42:49Z",
         "value": "pending-chaos"
       }
     ],
@@ -107,6 +139,10 @@
       {
         "timestamp": "2025-10-21T02:52:19Z",
         "value": "pending-performance"
+      },
+      {
+        "timestamp": "2025-10-21T21:42:49Z",
+        "value": "pending-performance"
       }
     ],
     "MIGE_VisionFit_target": [
@@ -116,6 +152,10 @@
       },
       {
         "timestamp": "2025-10-21T02:52:19Z",
+        "value": 0.9
+      },
+      {
+        "timestamp": "2025-10-21T21:42:49Z",
         "value": 0.9
       }
     ],
@@ -127,6 +167,10 @@
       {
         "timestamp": "2025-10-21T02:52:19Z",
         "value": "pending-baseline"
+      },
+      {
+        "timestamp": "2025-10-21T21:42:49Z",
+        "value": "pending-baseline"
       }
     ],
     "MIGE_LineageCompleteness_target": [
@@ -136,6 +180,10 @@
       },
       {
         "timestamp": "2025-10-21T02:52:19Z",
+        "value": 0.95
+      },
+      {
+        "timestamp": "2025-10-21T21:42:49Z",
         "value": 0.95
       }
     ],
@@ -147,6 +195,10 @@
       {
         "timestamp": "2025-10-21T02:52:19Z",
         "value": "pending-baseline"
+      },
+      {
+        "timestamp": "2025-10-21T21:42:49Z",
+        "value": "pending-baseline"
       }
     ],
     "MIGE_BlastRadiusFalseNegatives_target": [
@@ -156,6 +208,10 @@
       },
       {
         "timestamp": "2025-10-21T02:52:19Z",
+        "value": 0
+      },
+      {
+        "timestamp": "2025-10-21T21:42:49Z",
         "value": 0
       }
     ],
@@ -167,6 +223,10 @@
       {
         "timestamp": "2025-10-21T02:52:19Z",
         "value": "pending-baseline"
+      },
+      {
+        "timestamp": "2025-10-21T21:42:49Z",
+        "value": "pending-baseline"
       }
     ],
     "MIGE_ReplaySuccess_target": [
@@ -176,6 +236,10 @@
       },
       {
         "timestamp": "2025-10-21T02:52:19Z",
+        "value": 0.99
+      },
+      {
+        "timestamp": "2025-10-21T21:42:49Z",
         "value": 0.99
       }
     ],
@@ -187,6 +251,10 @@
       {
         "timestamp": "2025-10-21T02:52:19Z",
         "value": "pending-baseline"
+      },
+      {
+        "timestamp": "2025-10-21T21:42:49Z",
+        "value": "pending-baseline"
       }
     ],
     "MIGE_IdeaToDeployLeadTime_target_days": [
@@ -196,6 +264,10 @@
       },
       {
         "timestamp": "2025-10-21T02:52:19Z",
+        "value": 14
+      },
+      {
+        "timestamp": "2025-10-21T21:42:49Z",
         "value": 14
       }
     ],
@@ -207,11 +279,15 @@
       {
         "timestamp": "2025-10-21T02:52:19Z",
         "value": "pending-baseline"
+      },
+      {
+        "timestamp": "2025-10-21T21:42:49Z",
+        "value": "pending-baseline"
       }
     ]
   },
   "history_metadata": {
-    "generated_at": "2025-10-21T02:52:19Z",
+    "generated_at": "2025-10-21T21:42:49Z",
     "notes": "Updated via kpi_refresh script."
   }
 }

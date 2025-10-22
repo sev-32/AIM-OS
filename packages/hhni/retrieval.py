@@ -7,6 +7,8 @@ from dataclasses import dataclass, field
 from typing import Dict, Iterable, List, Optional, Tuple
 
 from .budget_manager import BudgetItem, BudgetStrategy, TokenBudgetManager
+from .compressor import CompressionConfig, CompressionLevel, CompressionMetrics, compress_candidates
+from .conflict_resolver import ConflictMetrics, ConflictRecord, detect_conflicts
 from .dvns_physics import DVNSConfig, DVNSPhysics, SimulationResult, create_particles_from_search
 from .hierarchical_index import HierarchicalIndex, IndexLevel, IndexNode
 from .semantic_search import EmbeddingProvider, SearchResult, SemanticSearchEngine, _fallback_embedding as _semantic_fallback  # type: ignore
@@ -27,6 +29,15 @@ class RetrievalConfig:
 
     include_metrics: bool = True
     top_k_after_dvns: Optional[int] = None
+
+    # Conflict resolution settings
+    enable_conflict_resolution: bool = True
+    conflict_recency_bias: float = 0.2
+    conflict_authority_bias: float = 0.3
+
+    # Strategic compression settings
+    enable_compression: bool = True
+    compression_config: Optional[CompressionConfig] = None
 
 
 @dataclass
@@ -49,6 +60,16 @@ class RetrievalResult:
 
     excluded_count: int = 0
     excluded_high_relevance: List[Dict[str, float]] = field(default_factory=list)
+
+    # Conflict resolution results
+    conflicts_detected: int = 0
+    conflicts_resolved: int = 0
+    conflict_records: List[ConflictRecord] = field(default_factory=list)
+
+    # Compression results
+    compression_applied: bool = False
+    tokens_saved_by_compression: int = 0
+    compression_ratio: float = 1.0
 
     audit_trail: Dict[str, str] = field(default_factory=dict)
 
@@ -247,6 +268,40 @@ class TwoStageRetriever:
             for result in filtered_results
         ]
 
+        # Step 3: Conflict Detection & Resolution (if enabled)
+        conflict_records: List[ConflictRecord] = []
+        if self.config.enable_conflict_resolution and len(budget_items) > 1:
+            resolved_items, conflict_metrics = detect_conflicts(
+                budget_items,
+                recency_bias=self.config.conflict_recency_bias,
+                authority_bias=self.config.conflict_authority_bias,
+                audit=conflict_records,
+            )
+            budget_items = resolved_items
+        else:
+            conflict_metrics = ConflictMetrics(
+                total_candidates=len(budget_items),
+                conflicts_detected=0,
+                suppressed_items=0,
+            )
+
+        # Step 4: Strategic Compression (if enabled)
+        compression_audit: List[Dict] = []
+        if self.config.enable_compression and len(budget_items) > 0:
+            compressed_items, compression_metrics = compress_candidates(
+                budget_items,
+                config=self.config.compression_config,
+                audit=compression_audit,
+            )
+            budget_items = compressed_items
+        else:
+            compression_metrics = CompressionMetrics(
+                total_candidates=len(budget_items),
+                compressed_count=0,
+                tokens_saved=0,
+                compression_ratio=1.0,
+            )
+
         allocation = self.budget_manager.optimize_for_budget(
             budget_items,
             budget,
@@ -273,6 +328,12 @@ class TwoStageRetriever:
             efficiency=allocation.efficiency,
             excluded_count=len(allocation.excluded),
             excluded_high_relevance=allocation.audit_trail.get("excluded_high_relevance", []),
+            conflicts_detected=conflict_metrics.conflicts_detected,
+            conflicts_resolved=conflict_metrics.conflicts_detected,  # All detected conflicts are resolved
+            conflict_records=conflict_records,
+            compression_applied=compression_metrics.compressed_count > 0,
+            tokens_saved_by_compression=compression_metrics.tokens_saved,
+            compression_ratio=compression_metrics.compression_ratio,
         )
 
     def _compute_rs_lift(self, dvns_result: RetrievalResult, baseline_result: RetrievalResult) -> float:
@@ -316,6 +377,12 @@ class TwoStageRetriever:
             efficiency=0.0,
             excluded_count=0,
             excluded_high_relevance=[],
+            conflicts_detected=0,
+            conflicts_resolved=0,
+            conflict_records=[],
+            compression_applied=False,
+            tokens_saved_by_compression=0,
+            compression_ratio=1.0,
         )
 
 
@@ -323,4 +390,9 @@ __all__ = [
     "RetrievalConfig",
     "RetrievalResult",
     "TwoStageRetriever",
+    "ConflictRecord",
+    "ConflictMetrics",
+    "CompressionConfig",
+    "CompressionLevel",
+    "CompressionMetrics",
 ]

@@ -1,0 +1,139 @@
+# Question Q003: Which Embedding Model for Production HHNI?
+
+question_id: Q-BR-003
+created: 2025-10-22T02:26:00Z
+updated: 2025-10-22T03:02:00Z
+status: self_researchable
+urgency: low
+category: technical_optimization
+
+---
+
+## 📋 QUESTION
+
+**Text:** "Should HHNI use all-MiniLM-L6-v2 (fast) or all-mpnet-base-v2 (higher quality) for production?"
+
+**Type:** Technical optimization  
+**Time-sensitive:** No (can test both before production)  
+**Blocking:** No (either works, just optimizing)  
+
+---
+
+## 🎯 SYSTEM INTEGRATION
+
+### Points To Systems:
+- **HHNI (Hierarchical Hypergraph Neural Index)**
+  - Component: Semantic search and embeddings
+  - Current: Uses all-MiniLM-L6-v2 in code examples
+  - Location: `packages/hhni/retrieval.py`
+
+### Affects Objectives:
+- **OBJ-02: Hierarchical Indexing (HHNI)** (Due: Nov 15)
+  - Affects KR-2.1: <100ms query latency
+  - Faster model → better latency ✅
+  - Better model → higher quality retrieval ✅
+  - **Tradeoff to evaluate**
+
+### Affects Key Results:
+- **KR-2.1:** Paragraph query p99 latency <100ms
+  - all-MiniLM: Faster inference → better latency
+  - all-mpnet: Slower inference → might miss target
+  
+- **Retrieval quality** (not explicit KR, but important)
+  - all-MiniLM: 384 dim, good quality
+  - all-mpnet: 768 dim, higher quality
+  - Need to measure: Does quality improvement justify latency cost?
+
+---
+
+## 💡 WHY ANSWERING HELPS
+
+### Research Approach (I Can Do This Myself):
+
+**Method:**
+1. Benchmark both models on sample queries
+2. Measure:
+   - Inference time (affects KR-2.1)
+   - Retrieval quality (p@5, p@10)
+   - Memory usage
+   - Embedding size (storage impact)
+3. Compare:
+   - Does all-mpnet quality improvement justify 2x slower?
+   - Can we meet <100ms with all-mpnet?
+4. Recommendation based on data
+
+**Tools:**
+```python
+from sentence_transformers import SentenceTransformer
+import time
+
+# Benchmark
+models = ["all-MiniLM-L6-v2", "all-mpnet-base-v2"]
+results = {}
+
+for model_name in models:
+    model = SentenceTransformer(model_name)
+    
+    # Time inference
+    start = time.time()
+    embedding = model.encode("sample query")
+    latency = (time.time() - start) * 1000  # ms
+    
+    # Measure quality (would need test set)
+    quality_score = evaluate_retrieval(model)
+    
+    results[model_name] = {
+        "latency_ms": latency,
+        "quality_p@5": quality_score,
+        "dimensions": embedding.shape[0]
+    }
+
+# Decision
+if results["all-mpnet"]["latency_ms"] < 100 and \
+   results["all-mpnet"]["quality_p@5"] > results["all-MiniLM"]["quality_p@5"] * 1.1:
+    recommend = "all-mpnet" (10%+ quality gain, meets latency)
+else:
+    recommend = "all-MiniLM" (fast enough, good quality)
+```
+
+**I can answer this myself through testing.** ✅
+
+---
+
+## 🔗 CONNECTIONS
+
+### Depends On:
+- KR-2.1 latency target (<100ms)
+- Production query volume (affects inference cost)
+- Quality requirements for dog-food users
+
+### Informs:
+- HHNI production deployment
+- Embedding storage strategy
+- Retrieval quality expectations
+
+### Related:
+- Deduplication (uses same embeddings)
+- Conflict detection (semantic similarity)
+- All HHNI components (use embeddings)
+
+---
+
+## ✅ SELF-RESEARCH PLAN
+
+**I will:**
+1. Add to questions_for_self/ (research queue)
+2. When implementing HHNI benchmarks:
+   - Test both models
+   - Measure latency + quality
+   - Compare results
+3. Document findings in learning_log
+4. Make recommendation to Braden with data
+5. **Answer based on empirical evidence**
+
+**Estimated research time:** 1-2 hours (when doing HHNI work)  
+**Confidence I can answer:** 0.85 (straightforward benchmarking)  
+
+**Status:** Moving to self-research (delegated to myself) ✅
+
+

@@ -236,26 +236,42 @@ def _resolve_cluster(
     recency_bias: float,
     authority_bias: float,
 ) -> Tuple[BudgetItem, str, List[str], str]:
-    suppressed_ids: List[str] = []
-    best_item: Optional[BudgetItem] = None
-    best_score = -1.0
-    winning_stance = ""
+    """
+    Resolve conflicts within a topic by finding the absolute best item across all stances.
 
+    When there are opposing stances on the same topic, we need to:
+    1. Find the single best item across ALL stances (not best per stance)
+    2. Use the composite scoring (relevance + recency_bias + authority_bias)
+    3. The winning stance is the stance of that best item
+    4. Suppress all other items in the conflict cluster
+    """
+    # Collect all items from all stances
+    all_items = []
     for stance, members in stance_map.items():
-        candidate, score = _select_best_item(members, recency_bias=recency_bias, authority_bias=authority_bias)
-        if score > best_score:
-            if best_item is not None:
-                suppressed_ids.append(best_item.source_id)
-            best_item = candidate
-            winning_stance = stance
-            best_score = score
-        else:
-            suppressed_ids.extend(member.source_id for member in members)
+        all_items.extend(members)
+
+    if not all_items:
+        raise ValueError(f"No items to resolve for topic '{topic}'")
+
+    # Find the absolute best item across all stances
+    best_item, best_score = _select_best_item(all_items, recency_bias=recency_bias, authority_bias=authority_bias)
+
+    # Determine winning stance
+    winning_stance = _normalise_stance(best_item)
+    if not winning_stance:
+        # Fallback: use first available stance from the stance map
+        winning_stance = next(iter(stance_map.keys()))
+
+    # Suppress all other items in this conflict cluster
+    suppressed_ids = [item.source_id for item in all_items if item.source_id != best_item.source_id]
 
     rationale = (
-        f"topic '{topic}' resolved in favour of {winning_stance} stance; kept {best_item.source_id} "
-        f"with composite score {best_score:.4f}"
+        f"topic '{topic}' had conflicting stances {list(stance_map.keys())}; "
+        f"resolved in favour of {winning_stance} stance; kept {best_item.source_id} "
+        f"with composite score {best_score:.4f} (relevance={best_item.relevance_score:.3f}, "
+        f"recency_bias={recency_bias}, authority_bias={authority_bias})"
     )
+
     return best_item, winning_stance, suppressed_ids, rationale
 
 

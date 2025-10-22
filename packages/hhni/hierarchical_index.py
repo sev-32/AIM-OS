@@ -344,14 +344,28 @@ def _tokenize(sentence: str) -> List[str]:
     return [token for token in tokens if token.strip()]
 
 
+# Embedding cache: text -> embedding vector
+_embedding_cache: Dict[str, List[float]] = {}
+
+
 def _safe_embed(text: str) -> List[float]:
-    """Generate a lightweight embedding for text."""
+    """Generate a lightweight embedding for text with caching."""
+    # Check cache first
+    if text in _embedding_cache:
+        return _embedding_cache[text]
+    
+    # Generate embedding
     if encode_text is not None:  # pragma: no branch
         try:
-            return [float(x) for x in encode_text(text)]
+            embedding = [float(x) for x in encode_text(text)]
+            _embedding_cache[text] = embedding
+            return embedding
         except Exception:
             pass
-    return _fallback_embedding(text)
+    
+    embedding = _fallback_embedding(text)
+    _embedding_cache[text] = embedding
+    return embedding
 
 
 def _fallback_embedding(text: str) -> List[float]:

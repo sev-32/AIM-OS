@@ -19,6 +19,12 @@ from .retrieval import RetrievalConfig, RetrievalResult, TwoStageRetriever  # no
 from .models import HHNINode, TagPriorityVector  # noqa: F401
 from .deduplication import DeduplicationMetrics, deduplicate_candidates  # noqa: F401
 from .conflict_resolver import ConflictMetrics, ConflictRecord, detect_conflicts  # noqa: F401
+from .compressor import (  # noqa: F401
+    CompressionConfig,
+    CompressionLevel,
+    CompressionMetrics,
+    compress_candidates,
+)
 
 __all__ = [
     # Indexing & search
@@ -50,6 +56,11 @@ __all__ = [
     "ConflictMetrics",
     "ConflictRecord",
     "detect_conflicts",
+    # Compression
+    "CompressionConfig",
+    "CompressionLevel",
+    "CompressionMetrics",
+    "compress_candidates",
     # Legacy data models
     "HHNINode",
     "TagPriorityVector",
