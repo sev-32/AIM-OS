@@ -1,8 +1,8 @@
 # Integration Tests for Project Aether
 
 **Purpose:** Validate that multiple systems work together correctly  
-**Status:** 24 tests passing ✅  
-**Coverage:** HHNI + VIF + APOE + SDF-CVF integration  
+**Status:** 36 tests passing ✅  
+**Coverage:** CMC + HHNI + VIF + APOE + SDF-CVF integration  
 
 ---
 
@@ -28,9 +28,21 @@
 - Tests HHNI retrieval feeding APOE workflows
 - Validates dynamic parameter adjustment
 
-**4. Complete Workflows** (`test_complete_workflow.py`)
+**4. CMC + VIF** (`test_cmc_vif_integration.py`) 🌟 NEW
 - 6 tests passing ✅
-- Validates all 4 systems working together
+- Validates witness storage in memory
+- Tests confidence calibration from history
+- Validates self-improvement through pattern detection
+
+**5. CMC + APOE** (`test_cmc_apoe_integration.py`) 🌟 NEW
+- 6 tests passing ✅
+- Validates plan history storage and retrieval
+- Tests learning from past executions
+- Validates memory-aware orchestration
+
+**6. Complete Workflows** (`test_complete_workflow.py`)
+- 6 tests passing ✅
+- Validates all systems working together
 - Tests quality gates, provenance chains
 - Validates failure propagation
 
@@ -126,8 +138,10 @@ System Pairs:
   HHNI + VIF:      ✅ 6 tests
   VIF + SDF-CVF:   ✅ 6 tests
   APOE + HHNI:     ✅ 6 tests
+  CMC + VIF:       ✅ 6 tests 🌟
+  CMC + APOE:      ✅ 6 tests 🌟
   All Systems:     ✅ 6 tests
-  Total:           ✅ 24 tests
+  Total:           ✅ 36 tests
 
 Integration Patterns:
   Data flow:           ✅ Validated
@@ -186,7 +200,7 @@ Pass Rate: 100% (24/24) ✅
 - [APOE Tests](../packages/apoe/tests/) - 40 tests ✅
 - [SDF-CVF Tests](../packages/sdfcvf/tests/) - 71 tests ✅
 
-**Total Project Tests:** 365 passing ✅
+**Total Project Tests:** 476 passing ✅
 
 ---
 
