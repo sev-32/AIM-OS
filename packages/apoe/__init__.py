@@ -46,6 +46,19 @@ from .depp import (
     low_confidence_adds_verification,
     timeout_increases_budget
 )
+from .budget_pooling import (
+    BudgetPool,
+    BudgetPoolManager,
+    PoolStrategy,
+    create_pool_from_steps
+)
+from .parallel_execution import (
+    ParallelExecutionConfig,
+    ExecutionBatch,
+    DependencyAnalyzer,
+    ParallelExecutor,
+    execute_plan_parallel
+)
 
 __all__ = [
     # Core
@@ -95,5 +108,16 @@ __all__ = [
     "PlanModification",
     "low_confidence_adds_verification",
     "timeout_increases_budget",
+    # Budget Pooling
+    "BudgetPool",
+    "BudgetPoolManager",
+    "PoolStrategy",
+    "create_pool_from_steps",
+    # Parallel Execution
+    "ParallelExecutionConfig",
+    "ExecutionBatch",
+    "DependencyAnalyzer",
+    "ParallelExecutor",
+    "execute_plan_parallel",
 ]
 
