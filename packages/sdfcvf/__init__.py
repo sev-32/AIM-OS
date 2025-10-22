@@ -19,6 +19,15 @@ from .gates import (
     create_deployment_gate,
     create_pr_gate,
 )
+from .blast_radius import DependencyAnalyzer, BlastRadiusResult, analyze_blast_radius
+from .dora import (
+    DORAMetricsCollector,
+    DORAMetrics,
+    ParityDORACorrelator,
+    CorrelationAnalysis,
+    initialize_dora_db,
+    report_dora_metrics,
+)
 
 __all__ = [
     # Quartet detection
@@ -39,5 +48,16 @@ __all__ = [
     "create_pre_commit_gate",
     "create_deployment_gate",
     "create_pr_gate",
+    # Blast radius
+    "DependencyAnalyzer",
+    "BlastRadiusResult",
+    "analyze_blast_radius",
+    # DORA metrics
+    "DORAMetricsCollector",
+    "DORAMetrics",
+    "ParityDORACorrelator",
+    "CorrelationAnalysis",
+    "initialize_dora_db",
+    "report_dora_metrics",
 ]
 
