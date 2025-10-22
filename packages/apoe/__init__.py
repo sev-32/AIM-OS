@@ -14,6 +14,7 @@ from .acl_parser import ACLParser, ExecutionPlan, RoleConfig
 from .roles import RoleType
 from .models import Step, StepStatus, Budget, Gate
 from .executor import PlanExecutor, ExecutionResult
+from .vif_integration import create_plan_witness, create_step_witness, create_witnesses_for_plan
 
 __all__ = [
     "ACLParser",
@@ -26,5 +27,8 @@ __all__ = [
     "Gate",
     "PlanExecutor",
     "ExecutionResult",
+    "create_plan_witness",
+    "create_step_witness",
+    "create_witnesses_for_plan",
 ]
 
