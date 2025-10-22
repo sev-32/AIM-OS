@@ -15,8 +15,18 @@ from .roles import RoleType
 from .models import Step, StepStatus, Budget, Gate
 from .executor import PlanExecutor, ExecutionResult
 from .vif_integration import create_plan_witness, create_step_witness, create_witnesses_for_plan
+from .role_dispatcher import RoleDispatcher, RoleCapability, ROLE_CAPABILITIES
+from .advanced_gates import (
+    CompoundGate,
+    GateAction,
+    GateChain,
+    create_quality_gate,
+    create_performance_gate,
+    create_completeness_gate
+)
 
 __all__ = [
+    # Core
     "ACLParser",
     "ExecutionPlan",
     "RoleConfig",
@@ -27,8 +37,19 @@ __all__ = [
     "Gate",
     "PlanExecutor",
     "ExecutionResult",
+    # VIF Integration
     "create_plan_witness",
     "create_step_witness",
     "create_witnesses_for_plan",
+    # Advanced Features
+    "RoleDispatcher",
+    "RoleCapability",
+    "ROLE_CAPABILITIES",
+    "CompoundGate",
+    "GateAction",
+    "GateChain",
+    "create_quality_gate",
+    "create_performance_gate",
+    "create_completeness_gate",
 ]
 
