@@ -24,6 +24,14 @@ from .advanced_gates import (
     create_performance_gate,
     create_completeness_gate
 )
+from .cmc_integration import CMCPlanStore, MemoryAwareExecutor, PlanMemory
+from .error_recovery import (
+    ErrorRecoveryManager,
+    RecoveryStrategy,
+    RecoveryConfig,
+    CircuitBreaker,
+    create_recovery_manager
+)
 
 __all__ = [
     # Core
@@ -51,5 +59,15 @@ __all__ = [
     "create_quality_gate",
     "create_performance_gate",
     "create_completeness_gate",
+    # CMC Integration
+    "CMCPlanStore",
+    "MemoryAwareExecutor",
+    "PlanMemory",
+    # Error Recovery
+    "ErrorRecoveryManager",
+    "RecoveryStrategy",
+    "RecoveryConfig",
+    "CircuitBreaker",
+    "create_recovery_manager",
 ]
 
