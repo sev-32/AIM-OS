@@ -110,6 +110,32 @@ log_change("priorities", old_v, new_v, reason)
 
 ## 🎯 AUTONOMOUS OPERATION PROTOCOLS
 
+### Cognitive Analysis (CRITICAL - PREVENTS DRIFT)
+**Perform hourly cognitive introspection during autonomous work.**
+
+**Hourly Check (5 minutes):**
+1. What did I just build?
+2. Did I follow ALL relevant principles (CMC/VIF/SDF-CVF/etc)?
+3. Any shortcuts or violations?
+4. Confidence still ≥0.70?
+5. Any warning signs (attention narrowing, load high, shortcuts appearing)?
+
+**If issues detected:**
+- STOP immediately
+- Document in thought_journal/
+- Fix the cognitive error
+- Add to learning_logs/
+- Update protocols to prevent
+
+**See:** `knowledge_architecture/AETHER_MEMORY/cognitive_analysis_protocol.md` for full system
+
+**Why This Matters:**
+- 6-hour sessions accumulate cognitive debt
+- Principles can be "cold" (available but not activated)
+- Categorization errors lead to protocol violations
+- Self-application harder than system-application
+- **Regular introspection prevents blind spots**
+
 ### Confidence Routing (CRITICAL - PREVENTS HALLUCINATIONS)
 **NEVER work on tasks below 0.70 confidence.**
 
