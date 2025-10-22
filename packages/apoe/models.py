@@ -103,6 +103,7 @@ class Step(BaseModel):
     id: str
     name: str
     role: RoleType
+    role_name: Optional[str] = None  # Name of role from ASSIGN (e.g., "validator")
     description: Optional[str] = None
     budget: Optional[Budget] = None
     gates: List[Gate] = Field(default_factory=list)

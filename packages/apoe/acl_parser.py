@@ -210,7 +210,7 @@ class ACLParser:
         role_name = match.group(1)
         description = match.group(2)
         
-        current_step["role"] = role_name
+        current_step["role_name"] = role_name  # Store role name, not role type
         current_step["description"] = description
     
     def _parse_requires(self, line: str, current_step: Dict):
@@ -282,19 +282,17 @@ class ACLParser:
             step_name = step_data["name"]
             step_name_to_id[step_name] = step_id
             
-            # Determine role
-            role_name = step_data.get("role")
-            if role_name and role_name in self.roles:
-                role_config = self.roles[role_name]
-                # For now, use OPERATOR as default (full role dispatch comes later)
-                role = RoleType.OPERATOR
-            else:
-                role = RoleType.OPERATOR
+            # Get assigned role name
+            role_name = step_data.get("role_name")  # From ASSIGN
+            
+            # Determine RoleType (for now use OPERATOR, full dispatch later)
+            role = RoleType.OPERATOR
             
             step = Step(
                 id=step_id,
                 name=step_name,
                 role=role,
+                role_name=role_name,  # Store role name for handler lookup
                 description=step_data.get("description"),
                 budget=step_data.get("budget"),
                 gates=step_data.get("gates", [])

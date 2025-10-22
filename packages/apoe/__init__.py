@@ -13,6 +13,7 @@ Key Concepts:
 from .acl_parser import ACLParser, ExecutionPlan, RoleConfig
 from .roles import RoleType
 from .models import Step, StepStatus, Budget, Gate
+from .executor import PlanExecutor, ExecutionResult
 
 __all__ = [
     "ACLParser",
@@ -23,5 +24,7 @@ __all__ = [
     "StepStatus",
     "Budget",
     "Gate",
+    "PlanExecutor",
+    "ExecutionResult",
 ]
 
