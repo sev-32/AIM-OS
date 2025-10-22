@@ -51,6 +51,12 @@ from .confidence_bands import (
     BandDefinition,
     STANDARD_BANDS,
 )
+from .cmc_integration import (
+    vif_to_atom_payload,
+    atom_to_vif,
+    VIFStore,
+    create_witness_and_store,
+)
 
 __all__ = [
     # Witness schema
@@ -91,5 +97,10 @@ __all__ = [
     "BandRouter",
     "BandDefinition",
     "STANDARD_BANDS",
+    # CMC integration
+    "vif_to_atom_payload",
+    "atom_to_vif",
+    "VIFStore",
+    "create_witness_and_store",
 ]
 
