@@ -59,6 +59,13 @@ from .parallel_execution import (
     ParallelExecutor,
     execute_plan_parallel
 )
+from .streaming import (
+    StreamEventType,
+    StreamEvent,
+    StreamingExecutor,
+    stream_plan_execution,
+    ProgressTracker
+)
 
 __all__ = [
     # Core
@@ -119,5 +126,11 @@ __all__ = [
     "DependencyAnalyzer",
     "ParallelExecutor",
     "execute_plan_parallel",
+    # Streaming
+    "StreamEventType",
+    "StreamEvent",
+    "StreamingExecutor",
+    "stream_plan_execution",
+    "ProgressTracker",
 ]
 
