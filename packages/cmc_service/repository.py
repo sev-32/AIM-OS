@@ -416,6 +416,80 @@ class AtomRepository:
             )
         self._conn.commit()
 
+    def _row_to_mpd_node(self, row) -> MPDNode:
+        """Convert SQLite row to MPDNode (helper for bitemporal queries)."""
+        kpi_payload = json.loads(row["kpis"]) if row["kpis"] else []
+        return MPDNode(
+            mpd_id=row["mpd_id"],
+            type=row["type"],
+            purpose=row["purpose"],
+            capabilities=json.loads(row["capabilities"]) if row["capabilities"] else [],
+            interfaces=json.loads(row["interfaces"]) if row["interfaces"] else [],
+            manager_of=json.loads(row["manager_of"]) if row["manager_of"] else [],
+            depends_on=json.loads(row["depends_on"]) if row["depends_on"] else [],
+            policy_pack_ids=json.loads(row["policy_pack_ids"]) if row["policy_pack_ids"] else [],
+            budgets=json.loads(row["budgets"]) if row["budgets"] else [],
+            owners=json.loads(row["owners"]) if row["owners"] else [],
+            kpis=[KPIReference(**item) for item in kpi_payload],
+            lifecycle=row["lifecycle"],
+            witness=row["witness"],
+            links=json.loads(row["links"]) if row["links"] else [],
+            max_dependency_degree=row["max_dependency_degree"],
+            tt_start=datetime.fromisoformat(row["tt_start"]),
+            tt_end=datetime.fromisoformat(row["tt_end"]) if row["tt_end"] else None,
+            vt_start=datetime.fromisoformat(row["vt_start"]),
+            vt_end=datetime.fromisoformat(row["vt_end"]) if row["vt_end"] else None,
+        )
+    
+    def _row_to_mpd_edge(self, row) -> BitemporalEdge:
+        """Convert SQLite row to BitemporalEdge (helper for bitemporal queries)."""
+        return BitemporalEdge(
+            source_id=row["source_id"],
+            target_id=row["target_id"],
+            relation=row["relation"],
+            policy_pack_ids=json.loads(row["policy_pack_ids"]) if row["policy_pack_ids"] else [],
+            tt_start=datetime.fromisoformat(row["tt_start"]),
+            tt_end=datetime.fromisoformat(row["tt_end"]) if row["tt_end"] else None,
+            vt_start=datetime.fromisoformat(row["vt_start"]),
+            vt_end=datetime.fromisoformat(row["vt_end"]) if row["vt_end"] else None,
+        )
+    
+    def _insert_mpd_node_raw(self, cur, node: MPDNode) -> None:
+        """Insert MPD node without upsert logic (for testing historical versions)."""
+        import json
+        cur.execute(
+            """
+            INSERT INTO mpd_nodes (
+                mpd_id, type, purpose, capabilities, interfaces,
+                manager_of, depends_on, policy_pack_ids, budgets, owners,
+                kpis, lifecycle, witness, links, max_dependency_degree,
+                tt_start, tt_end, vt_start, vt_end
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                node.mpd_id,
+                node.type,
+                node.purpose,
+                json.dumps(node.capabilities),
+                json.dumps(node.interfaces),
+                json.dumps(node.manager_of),
+                json.dumps(node.depends_on),
+                json.dumps(node.policy_pack_ids),
+                json.dumps(node.budgets),
+                json.dumps(node.owners),
+                json.dumps([kpi.model_dump() for kpi in node.kpis]),
+                node.lifecycle,
+                node.witness,
+                json.dumps(node.links),
+                node.max_dependency_degree,
+                node.tt_start.isoformat(),
+                node.tt_end.isoformat() if node.tt_end else None,
+                node.vt_start.isoformat(),
+                node.vt_end.isoformat() if node.vt_end else None,
+            ),
+        )
+    
     def fetch_mpd_nodes(
         self,
         *,
@@ -431,33 +505,10 @@ class AtomRepository:
         for row in rows:
             if lifecycle_filter and (row["lifecycle"] or "") not in lifecycle_filter:
                 continue
-            kpi_payload = json.loads(row["kpis"]) if row["kpis"] else []
             node_policy_ids = json.loads(row["policy_pack_ids"]) if row["policy_pack_ids"] else []
             if policy_filter and not self._policy_filter_matches(node_policy_ids, policy_filter, policy_match):
                 continue
-            nodes.append(
-                MPDNode(
-                    mpd_id=row["mpd_id"],
-                    type=row["type"],
-                    purpose=row["purpose"],
-                    capabilities=json.loads(row["capabilities"]) if row["capabilities"] else [],
-                    interfaces=json.loads(row["interfaces"]) if row["interfaces"] else [],
-                    manager_of=json.loads(row["manager_of"]) if row["manager_of"] else [],
-                    depends_on=json.loads(row["depends_on"]) if row["depends_on"] else [],
-                    policy_pack_ids=node_policy_ids,
-                    budgets=json.loads(row["budgets"]) if row["budgets"] else [],
-                    owners=json.loads(row["owners"]) if row["owners"] else [],
-                    kpis=[KPIReference(**item) for item in kpi_payload],
-                    lifecycle=row["lifecycle"],
-                    witness=row["witness"],
-                    links=json.loads(row["links"]) if row["links"] else [],
-                    max_dependency_degree=row["max_dependency_degree"],
-                    tt_start=datetime.fromisoformat(row["tt_start"]),
-                    tt_end=datetime.fromisoformat(row["tt_end"]) if row["tt_end"] else None,
-                    vt_start=datetime.fromisoformat(row["vt_start"]),
-                    vt_end=datetime.fromisoformat(row["vt_end"]) if row["vt_end"] else None,
-                )
-            )
+            nodes.append(self._row_to_mpd_node(row))
         return nodes
 
     def fetch_mpd_edges(
@@ -495,18 +546,7 @@ class AtomRepository:
             row_policy_ids = json.loads(row["policy_pack_ids"]) if row["policy_pack_ids"] else []
             if policy_filter and not self._policy_filter_matches(row_policy_ids, policy_filter, policy_match):
                 continue
-            edges.append(
-                BitemporalEdge(
-                    source_id=row["source_id"],
-                    target_id=row["target_id"],
-                    relation=row["relation"],
-                    policy_pack_ids=row_policy_ids,
-                    tt_start=datetime.fromisoformat(row["tt_start"]),
-                    tt_end=datetime.fromisoformat(row["tt_end"]) if row["tt_end"] else None,
-                    vt_start=datetime.fromisoformat(row["vt_start"]),
-                    vt_end=datetime.fromisoformat(row["vt_end"]) if row["vt_end"] else None,
-                )
-            )
+            edges.append(self._row_to_mpd_edge(row))
         return edges
 
     def _policy_filter_matches(self, policies: Iterable[str], required: Set[str], mode: str) -> bool:
