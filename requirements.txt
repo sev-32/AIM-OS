@@ -10,5 +10,6 @@ pydgraph>=21.3.0
 google-generativeai>=0.3.0  # Gemini
 anthropic>=0.8.0            # Claude
 python-dotenv>=1.0.0        # Environment variables
+requests>=2.31.0            # HTTP client for Cerebras and other APIs
 # cerebras-cloud-sdk>=1.0.0   # Cerebras (install separately if needed)
 # openai>=1.0.0               # DeepInfra/OpenAI (install separately if needed)

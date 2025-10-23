@@ -23,6 +23,7 @@ from .base import (
     ModelNotFoundError,
 )
 from .gemini import GeminiClient
+from .cerebras import CerebrasClient
 
 __all__ = [
     # Base classes
@@ -36,6 +37,7 @@ __all__ = [
     "ModelNotFoundError",
     # Providers
     "GeminiClient",
+    "CerebrasClient",
 ]
 
 __version__ = "1.0.0"
