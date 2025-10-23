@@ -227,12 +227,12 @@ class CerebrasClient(LLMClient):
                 provider="cerebras",
                 context_window=8192,
                 max_output_tokens=4096,
-                pricing_input_1k=0.00010,  # $0.10 per 1M tokens
-                pricing_output_1k=0.00010,
-                capabilities={
-                    "speed": "ultra-fast (70-100 tokens/sec)",
-                    "streaming": True,
-                    "function_calling": False
+                supports_streaming=True,
+                supports_function_calling=False,
+                metadata={
+                    "pricing_input_1k": 0.00010,  # $0.10 per 1M tokens
+                    "pricing_output_1k": 0.00010,
+                    "speed": "ultra-fast (70-100 tokens/sec)"
                 }
             )
         elif "70b" in self.model_name.lower():
@@ -241,12 +241,12 @@ class CerebrasClient(LLMClient):
                 provider="cerebras",
                 context_window=8192,
                 max_output_tokens=4096,
-                pricing_input_1k=0.00060,  # $0.60 per 1M tokens
-                pricing_output_1k=0.00060,
-                capabilities={
-                    "speed": "very-fast (40-60 tokens/sec)",
-                    "streaming": True,
-                    "function_calling": False
+                supports_streaming=True,
+                supports_function_calling=False,
+                metadata={
+                    "pricing_input_1k": 0.00060,  # $0.60 per 1M tokens
+                    "pricing_output_1k": 0.00060,
+                    "speed": "very-fast (40-60 tokens/sec)"
                 }
             )
         else:
@@ -256,11 +256,12 @@ class CerebrasClient(LLMClient):
                 provider="cerebras",
                 context_window=8192,
                 max_output_tokens=4096,
-                pricing_input_1k=0.00010,
-                pricing_output_1k=0.00010,
-                capabilities={
-                    "speed": "fast",
-                    "streaming": True
+                supports_streaming=True,
+                supports_function_calling=False,
+                metadata={
+                    "pricing_input_1k": 0.00010,
+                    "pricing_output_1k": 0.00010,
+                    "speed": "fast"
                 }
             )
 

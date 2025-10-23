@@ -6,6 +6,13 @@ sys.path.insert(0, 'packages')
 from llm_client import CerebrasClient, LLMError, RateLimitError, AuthenticationError
 import os
 
+# Load .env file if available
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv not installed, will use environment variables directly
+
 # Test with direct API key or env var
 CEREBRAS_API_KEY = os.getenv("CEREBRAS_API_KEY")
 
@@ -36,7 +43,7 @@ try:
     print(f"   [OK] Provider: {info.provider}")
     print(f"   [OK] Context window: {info.context_window:,} tokens")
     print(f"   [OK] Max output: {info.max_output_tokens:,} tokens")
-    print(f"   [OK] Speed: {info.capabilities.get('speed')}")
+    print(f"   [OK] Speed: {info.metadata.get('speed', 'N/A')}")
     
     # Test ultra-fast generation
     print("\n3. Testing ULTRA-FAST generation...")
