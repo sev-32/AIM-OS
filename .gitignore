@@ -27,6 +27,13 @@ ENV/
 env/
 .venv
 
+# Environment variables (API keys)
+.env
+.env.*
+!.env.example
+*.key
+secrets/
+
 # IDEs
 .vscode/
 .idea/

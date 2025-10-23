@@ -5,3 +5,10 @@ prometheus-client>=0.20.0
 sentence-transformers==5.1.1
 qdrant-client==1.15.1
 pydgraph>=21.3.0
+
+# LLM Provider SDKs (v1.1 - Real API Integration)
+google-generativeai>=0.3.0  # Gemini
+anthropic>=0.8.0            # Claude
+python-dotenv>=1.0.0        # Environment variables
+# cerebras-cloud-sdk>=1.0.0   # Cerebras (install separately if needed)
+# openai>=1.0.0               # DeepInfra/OpenAI (install separately if needed)
