@@ -51,9 +51,9 @@ def agent(gemini_client):
         
         yield agent
         
-        # Cleanup
+        # Cleanup - close memory store to release Windows SQLite lock
         try:
-            memory.repository.conn.close()
+            memory.close()
         except:
             pass
 
@@ -76,7 +76,8 @@ def test_agent_initialization(gemini_client):
         assert agent.agent_id == "aether"
         assert agent.total_operations == 0
         
-        memory.repository.conn.close()
+        # Close memory store to release Windows SQLite lock
+        memory.close()
 
 
 def test_agent_processes_simple_input(agent):

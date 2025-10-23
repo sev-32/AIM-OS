@@ -13,7 +13,7 @@ from datetime import datetime, timezone
 from llm_client import LLMClient, LLMResponse
 from cmc_service import MemoryStore, AtomCreate, AtomContent
 from hhni import HierarchicalIndex
-from vif import VIF, ECETracker, create_witness_and_store
+from vif import VIF, ECETracker, create_witness_and_store, ConfidenceBand
 from seg import SEGraph, Entity, Relation, RelationType
 
 from .models import AgentResponse, AgentMemoryState
@@ -128,9 +128,9 @@ class AetherAgent:
             )
             
             # Step 5: INDEX - Add to HHNI for future retrieval
-            self.index.add_text(
-                text_id=atom_id,
-                text=llm_response.text,
+            self.index.index_document(
+                content=llm_response.text,
+                doc_id=atom_id,
                 metadata={"confidence": llm_response.confidence or 0.85}
             )
         
@@ -145,7 +145,7 @@ class AetherAgent:
         return AgentResponse(
             text=llm_response.text,
             confidence=llm_response.confidence or 0.85,
-            witness_id=witness.witness_id,
+            witness_id=witness.id,  # VIF uses 'id' not 'witness_id'
             atom_id=atom_id or "not_stored",
             context_used=len(context_results),
             tokens_used=llm_response.tokens_used,
@@ -176,7 +176,9 @@ class AetherAgent:
             # Rough estimate: 100 tokens per result
             top_k = min(budget_tokens // 100, 20)
             
-            results = self.index.search(query=query, top_k=top_k)
+            # Use HHNI query API
+            from hhni import IndexLevel
+            results = self.index.query(query=query, max_results=top_k, target_level=IndexLevel.PARAGRAPH)
             return results
         except Exception:
             # If HHNI search fails, return empty (graceful degradation)
@@ -196,8 +198,8 @@ class AetherAgent:
         
         context_parts = []
         for i, result in enumerate(results, 1):
-            # Extract text from result (depends on HHNI result format)
-            text = getattr(result, 'text', str(result))
+            # Extract content from HHNI IndexNode
+            text = getattr(result, 'content', str(result))
             context_parts.append(f"{i}. {text}")
         
         return "\n".join(context_parts)
@@ -253,7 +255,7 @@ Please respond. This will be stored in your memory for future reference."""
         
         # Create witness
         witness = VIF(
-            witness_id=f"{self.agent_id}_{operation}_{int(time.time() * 1000)}",
+            id=f"vif_{self.agent_id}_{operation}_{int(time.time() * 1000)}",
             timestamp=datetime.now(timezone.utc).isoformat(),
             operation=operation,
             agent_id=self.agent_id,
@@ -263,7 +265,7 @@ Please respond. This will be stored in your memory for future reference."""
             outputs=outputs,
             confidence=confidence,
             confidence_score=confidence,
-            confidence_band="HIGH" if confidence >= 0.85 else "MEDIUM" if confidence >= 0.70 else "LOW",
+            confidence_band=ConfidenceBand.A if confidence >= 0.90 else ConfidenceBand.B if confidence >= 0.70 else ConfidenceBand.C,
             provenance={
                 "llm_latency_ms": llm_response.latency_ms,
                 "llm_tokens": llm_response.tokens_used
