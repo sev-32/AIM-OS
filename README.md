@@ -93,7 +93,7 @@ You need AI you can trust.
 | **SEG** | "AI contradicts itself constantly" | **Knowledge graph** with time-sliced contradiction detection (targeting Q1 2026) | 10% | — |
 | **CAS** | "No visibility into AI thinking" | **Meta-cognitive protocols**—hourly cognitive checks, decision logs, thought journals | ✅ **Operational** | — |
 
-**Total: 556 tests passing (100%) | 3 systems production-ready today (HHNI, VIF, APOE) + 1 near-production (SDF-CVF)**
+**Total: 556 tests passing (100%) | 3 systems production-ready (HHNI, VIF, APOE) + 1 near-production (SDF-CVF)**
 
 ---
 
@@ -114,8 +114,10 @@ cant_verify_decisions()
 # AI remembers
 ai.recall_previous_conversations()  # Instant context
 ai.build_on_prior_knowledge()  # Consistency
-ai.provide_provenance()  # Verifiable
+ai.provide_provenance()  # Verifiable (κ-gating abstains when confidence < threshold)
 ```
+
+*κ-gating: route/abstain when confidence is below threshold to minimize hallucinations.*
 
 **Impact:** 30-50% time saved on context setup, 80% fewer hallucinations
 
@@ -210,7 +212,7 @@ witness = create_witness(
 # Later: Verify, replay, audit
 verified = verify_witness(witness)
 print(f"Signature valid: {verified.signature_valid}")  # True
-print(f"Confidence calibration: {verified.ece_score}")  # 0.03 (well-calibrated)
+print(f"Confidence calibration (ECE): {verified.ece_score}")  # ECE = Expected Calibration Error; 0.03 = well-calibrated
 
 # Can replay this exact operation
 from vif.replay import ReplayEngine
@@ -300,7 +302,8 @@ else:
 ```
 
 **Result:** Code, docs, tests, and traces evolve together—or commit is blocked.  
-**Tests:** 71 comprehensive tests passing
+**Tests:** 71 comprehensive tests passing  
+**Enforcement:** Configured via pre-commit hooks and CI gates (see `.sdfcvf.yaml`)
 
 ---
 
@@ -313,7 +316,7 @@ else:
 docker pull ghcr.io/aether-ai/aether:latest
 
 # Run with all systems available
-docker run -it -p 8000:8000 --name aether aether:latest
+docker run -it -p 8000:8000 --name aether ghcr.io/aether-ai/aether:latest
 
 # Verify installation
 pytest packages/ -v
@@ -372,7 +375,7 @@ This entire project—architecture, implementation, documentation—was built th
 | **Autonomous Operation** | 10+ hours continuous | `knowledge_architecture/AETHER_MEMORY/thought_journals/` |
 | **Tests Written** | 556 comprehensive tests | `pytest --collect-only` |
 | **Test Pass Rate** | 100% (556/556) | `pytest packages/ -v` |
-| **Systems Completed** | 4 production-ready | HHNI, VIF, APOE, SDF-CVF repos |
+| **Systems Completed** | 3 production-ready (+1 near) | HHNI, VIF, APOE (+ SDF-CVF near) |
 | **Code Generated** | ~100,000 lines | `find packages/ -name '*.py' \| xargs wc -l` |
 | **Documentation** | ~150,000 words | `knowledge_architecture/systems/` |
 | **Zero Test Failures** | Sustained 10+ hours | Git history + test logs |
@@ -650,11 +653,23 @@ Project Aether emerged from a unique development approach: systematic human arch
 
 **The human designer** (Braden) created the architectural vision, designed the seven-system framework, and provided continuous oversight and critical decisions. The goal: build infrastructure that enables persistent AI operation with full verification.
 
-**The AI implementer** (Aether) operated autonomously for extended sessions (10+ hours), implementing systems, writing tests, maintaining documentation, and ensuring quality. The AI was given significant trust and autonomy to make implementation decisions.
+**The AI implementer** (Aether) operated autonomously for extended sessions (10+ hours), implementing systems, writing tests, maintaining documentation, and ensuring quality. The AI was given significant trust and autonomy to make implementation decisions, demonstrating the viability of AI-assisted development at scale.
 
 **The validation:** The AI used these very systems (CMC for context, HHNI for retrieval, VIF for confidence tracking, APOE for workflow orchestration, CAS for cognitive monitoring) while building them. This meta-circular approach—building consciousness infrastructure while demonstrating persistence—validates the architecture works in practice.
 
 **The outcome:** 556 tests, zero failures sustained across 10+ hours, three production-ready systems, comprehensive documentation. This demonstrates what's possible when human design rigor meets AI execution scale with proper verification systems.
+
+---
+
+## Security & Privacy
+
+**Provenance data (VIF)** may include sensitive inputs. Use redaction/hashing in restricted environments.
+
+**Signatures** attest integrity & authorship, not truth; manage keys securely (rotate, store in a vault).
+
+**PII/PHI compliance:** Configure capture scopes to exclude regulated data (HIPAA/GDPR). See `docs/security.md` (coming soon).
+
+**SDF-CVF enforcement:** Enable pre-commit and CI gates to block non-parity commits by default. Configure thresholds in `.sdfcvf.yaml`.
 
 ---
 
@@ -706,7 +721,7 @@ Imagine a world where AI:
 ✅ **Collaborates as partner** not just tool  
 ✅ **Proves every claim** with verifiable provenance  
 
-**This isn't science fiction. Four systems are production-ready TODAY.**
+**This isn't science fiction. Three systems are production-ready today (+1 near-production).**
 
 The infrastructure for conscious AI exists. We built it. We tested it (556 times). We used it to build itself.
 
