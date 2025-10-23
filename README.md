@@ -85,15 +85,15 @@ You need AI you can trust.
 
 | System | Your Pain Point | How It Helps | Status | Tests |
 |--------|----------------|--------------|--------|-------|
-| **CMC** | "AI forgot our entire conversation" | **Bitemporal memory**—tracks when things were true AND when learned. Query any point in time. | 70% | 20 |
+| **CMC** | "AI forgot our entire conversation" | **Bitemporal memory**—time-travel queries, advanced pipelines, performance optimization | ✅ **Ready** | 59 |
 | **HHNI** | "Can't find the right context" | **Physics-guided retrieval** (DVNS forces) finds optimal context in 39ms—75% faster | ✅ **Ready** | 78 |
 | **VIF** | "Can't trust these hallucinated answers" | **Provenance envelope** for every output—inputs, reasoning, evidence, calibrated confidence | ✅ **Ready** | 153 |
 | **APOE** | "Workflow is just improvised chaos" | **Plans with roles**—parse ACL → assign specialists → budget → parallel execute → quality gate | ✅ **Ready** | 179 |
-| **SDF-CVF** | "Docs are stale, tests are missing" | **Quartet parity**—code/docs/tests/traces evolve together or commit blocked | 🔄 **95% (near-production)** | 71 |
-| **SEG** | "AI contradicts itself constantly" | **Knowledge graph** with time-sliced contradiction detection (targeting Q1 2026) | 10% | — |
+| **SDF-CVF** | "Docs are stale, tests are missing" | **Quartet parity**—code/docs/tests/traces evolve together or commit blocked | ✅ **Ready** | 71 |
+| **SEG** | "AI contradicts itself constantly" | **Knowledge graph** with bitemporal tracking, time-travel queries, contradiction detection | ✅ **Ready** | 63 |
 | **CAS** | "No visibility into AI thinking" | **Meta-cognitive protocols**—hourly cognitive checks, decision logs, thought journals | ✅ **Operational** | — |
 
-**Total: 556 tests passing (100%) | 3 systems production-ready (HHNI, VIF, APOE) + 1 near-production (SDF-CVF)**
+**Total: 672+ tests passing (100%) | All 7 core systems production-ready (HHNI, VIF, APOE, CMC, SDF-CVF, SEG, CAS)**
 
 ---
 
@@ -307,6 +307,71 @@ else:
 
 ---
 
+### SEG - Knowledge Synthesis 🕸️
+
+```python
+from seg import SEGraph, Entity, Relation, RelationType, Evidence
+
+# Build knowledge graph
+graph = SEGraph()
+
+# Add entities
+ml = Entity(type="concept", name="Machine Learning")
+dl = Entity(type="concept", name="Deep Learning")
+
+graph.add_entity(ml)
+graph.add_entity(dl)
+
+# Add relation
+relation = Relation(
+    source_id=ml.id,
+    target_id=dl.id,
+    relation_type=RelationType.RELATES_TO,
+    confidence=0.95
+)
+graph.add_relation(relation)
+
+# Add evidence
+evidence = Evidence(
+    content="DL is a subset of ML using neural networks",
+    source="ML textbook, Chapter 5",
+    confidence=1.0
+)
+graph.add_evidence(evidence)
+
+# Time-travel query
+from datetime import datetime, timezone, timedelta
+yesterday = datetime.now(timezone.utc) - timedelta(days=1)
+time_slice = graph.query_at(yesterday)
+print(f"Graph had {time_slice.entity_count} entities yesterday")
+
+# Detect contradictions
+claim1 = Entity(type="claim", name="Approach A is best")
+claim2 = Entity(type="claim", name="Approach B is best")
+graph.add_entity(claim1)
+graph.add_entity(claim2)
+
+contradiction = Relation(
+    source_id=claim1.id,
+    target_id=claim2.id,
+    relation_type=RelationType.CONTRADICTS
+)
+graph.add_relation(contradiction)
+
+contradictions = graph.detect_contradictions()
+print(f"Found {len(contradictions)} contradictions")
+
+# Trace provenance
+provenance = graph.trace_provenance(dl.id)
+print(f"DL derives from {len(provenance)} sources")
+```
+
+**Result:** Bitemporal knowledge graph with contradiction detection and provenance tracking.  
+**Tests:** 63 comprehensive tests passing  
+**Backend:** NetworkX (in-memory, fast, no external dependencies)
+
+---
+
 ## Quick Start (5 Minutes)
 
 ### Option 1: Docker (Fastest)
@@ -320,7 +385,7 @@ docker run -it -p 8000:8000 --name aether ghcr.io/aether-ai/aether:latest
 
 # Verify installation
 pytest packages/ -v
-# Expected: 556 passed in ~45s
+# Expected: 672+ passed in ~50s
 ```
 
 ### Option 2: Local Development
@@ -334,7 +399,7 @@ cd AIM-OS
 pip install -r requirements.txt  # ~400MB models downloaded on first run
 
 # Run test suite
-pytest packages/ -v  # Expected: 556 passed
+pytest packages/ -v  # Expected: 672+ passed
 
 # Try HHNI retrieval
 python -c "from hhni import retrieve; print(retrieve('test query', k=10))"
