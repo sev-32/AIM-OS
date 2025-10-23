@@ -1,46 +1,121 @@
-version: "3.8"
+version: '3.8'
 
 services:
-  dgraph-zero:
-    image: dgraph/dgraph:latest
-    command: dgraph zero --my=dgraph-zero:5080
-    container_name: dgraph-zero
-    restart: unless-stopped
+  # Main AIM-OS application
+  aether:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    container_name: aether-main
     ports:
-      - "5080:5080"
-      - "6080:6080"
+      - "8000:8000"
     volumes:
-      - ./data/dgraph/zero:/dgraph
-
-  dgraph-alpha:
-    image: dgraph/dgraph:latest
-    command: >
-      dgraph alpha --my=dgraph-alpha:7080 --zero dgraph-zero:5080
-                   --security whitelist=127.0.0.1,172.18.0.0/16
-                   --graphql_port 8080 --lru_mb 1024
-    container_name: dgraph-alpha
-    restart: unless-stopped
-    depends_on:
-      - dgraph-zero
-    ports:
-      - "8080:8080"   # GraphQL endpoint
-      - "9080:9080"   # gRPC internal
-    volumes:
-      - ./data/dgraph/alpha:/dgraph
+      - ../data:/app/data
+      - ../logs:/app/logs
     environment:
-      - DGRAPH_URL=http://dgraph-alpha:8080
-
-  qdrant:
-    image: qdrant/qdrant:latest
-    container_name: qdrant
+      # CMC Configuration
+      - CMC_DATA_DIR=/app/data/cmc
+      - CMC_DB_PATH=/app/data/cmc/cmc.db
+      - CMC_WAL_MODE=true
+      - CMC_CACHE_SIZE_MB=128
+      
+      # HHNI Configuration
+      - HHNI_EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2
+      - HHNI_CACHE_DIR=/app/data/hhni/cache
+      - HHNI_ENABLE_DVNS=true
+      
+      # VIF Configuration
+      - VIF_AGENT_ID=aether-production
+      - VIF_KAPPA_THRESHOLD=0.80
+      
+      # APOE Configuration
+      - APOE_MAX_WORKERS=4
+      - APOE_DEFAULT_BUDGET=10000
+      
+      # SEG Configuration
+      - SEG_BACKEND=networkx
+      - SEG_PERSIST_DIR=/app/data/seg
+      
+      # Logging
+      - LOG_LEVEL=INFO
+      - LOG_FORMAT=json
+      - PYTHONUNBUFFERED=1
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "from cmc_service import MemoryStore; from hhni import HierarchicalIndex; from seg import SEGraph; print('Healthy')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - aether-network
+
+  # Optional: Neo4j for SEG persistence (production)
+  neo4j:
+    image: neo4j:5.11
+    container_name: aether-neo4j
     ports:
-      - "6333:6333"   # REST / gRPC auto
-    volumes:
-      - ./data/qdrant:/qdrant/storage
+      - "7474:7474"  # HTTP
+      - "7687:7687"  # Bolt
     environment:
-      - QDRANT_URL=http://qdrant:6333
+      - NEO4J_AUTH=neo4j/aether-production-password
+      - NEO4J_PLUGINS=["apoc"]
+      - NEO4J_dbms_memory_heap_max__size=2G
+      - NEO4J_dbms_memory_pagecache_size=1G
+    volumes:
+      - neo4j-data:/data
+      - neo4j-logs:/logs
+    restart: unless-stopped
+    networks:
+      - aether-network
+    profiles:
+      - production  # Only start with --profile production
+
+  # Optional: Monitoring with Prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: aether-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    restart: unless-stopped
+    networks:
+      - aether-network
+    profiles:
+      - monitoring
+
+  # Optional: Grafana for visualization
+  grafana:
+    image: grafana/grafana:latest
+    container_name: aether-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=aether-admin-change-me
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana-data:/var/lib/grafana
+    restart: unless-stopped
+    networks:
+      - aether-network
+    profiles:
+      - monitoring
+
+volumes:
+  neo4j-data:
+    driver: local
+  neo4j-logs:
+    driver: local
+  prometheus-data:
+    driver: local
+  grafana-data:
+    driver: local
 
 networks:
-  default:
-    name: aimos-net
+  aether-network:
+    driver: bridge

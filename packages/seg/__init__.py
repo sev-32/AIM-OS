@@ -20,6 +20,7 @@ from .models import (
     RelationType,
 )
 from .seg_graph import SEGraph
+from .witness import write_witness  # Legacy function for compatibility
 
 __all__ = [
     # Core models
@@ -33,4 +34,6 @@ __all__ = [
     "RelationType",
     # Graph
     "SEGraph",
+    # Legacy
+    "write_witness",
 ]
