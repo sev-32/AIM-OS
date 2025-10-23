@@ -1,0 +1,14 @@
+{
+  "mcp": {
+    "servers": {
+      "aimos": {
+        "command": "python",
+        "args": ["-u", "run_mcp_stdio_clean.py"],
+        "cwd": "C:\\Users\\bombe\\OneDrive\\Desktop\\AIM-OS",
+        "env": {
+          "GEMINI_API_KEY": "AIzaSyA9S1wxLNlvpx5g8A9UVS_TIJJVzngV_xY"
+        }
+      }
+    }
+  }
+}

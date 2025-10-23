@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-AIM-OS MCP Server - STDIO Mode for Cursor
+AIM-OS MCP Server - STDIO Mode for Cursor (Clean Version)
 Communicates via stdin/stdout using MCP protocol
 
 USAGE:
-  python -u run_mcp_stdio.py
+  python -u run_mcp_stdio_clean.py
   
 The -u flag ensures unbuffered I/O which is critical for MCP protocol.
 """
@@ -12,23 +12,49 @@ import sys
 import json
 import os
 from pathlib import Path
+from contextlib import redirect_stdout
+import io
 
 # Load environment variables from .env file
 try:
     from dotenv import load_dotenv
     load_dotenv()
 except ImportError:
-    # dotenv not available, continue anyway (env vars might be set already)
     pass
+
+# CRITICAL: Redirect any stdout from libraries to stderr
+# This prevents CMC logs from interfering with MCP protocol
+class StdoutToStderr:
+    def __init__(self):
+        self.original_stdout = sys.stdout
+        self.original_stderr = sys.stderr
+        
+    def write(self, text):
+        # Write to stderr instead of stdout
+        self.original_stderr.write(text)
+        self.original_stderr.flush()
+        
+    def flush(self):
+        self.original_stderr.flush()
+        
+    def __getattr__(self, name):
+        return getattr(self.original_stdout, name)
+
+# Redirect stdout to stderr for library imports
+sys.stdout = StdoutToStderr()
 
 # Add packages to path
 sys.path.insert(0, str(Path(__file__).parent / "packages"))
 
+# Import with stdout redirected
 from llm_client import GeminiClient, CerebrasClient
 from agent import AetherAgent
 from cmc_service import MemoryStore
 from hhni import HierarchicalIndex
 from seg import SEGraph
+
+# Restore stdout for MCP protocol
+sys.stdout = sys.__stdout__
 
 class StdioMCPServer:
     """MCP Server using stdio for Cursor integration"""
@@ -65,10 +91,11 @@ class StdioMCPServer:
         if not self.llm:
             raise ValueError("No LLM client available! Set GEMINI_API_KEY or CEREBRAS_API_KEY")
         
-        # Initialize AIM-OS systems
-        self.memory = MemoryStore("./mcp_memory")
-        self.hhni = HierarchicalIndex()
-        self.seg = SEGraph()
+        # Initialize AIM-OS systems (with stdout redirected)
+        with redirect_stdout(io.StringIO()):
+            self.memory = MemoryStore("./mcp_memory")
+            self.hhni = HierarchicalIndex()
+            self.seg = SEGraph()
         
         # Create agent
         self.agent = AetherAgent(
@@ -178,14 +205,15 @@ class StdioMCPServer:
             question = args.get("question")
             context = args.get("context", "")
             
-            # Process with agent
-            response = self.agent.process(question, context)
+            # Process with agent (redirect stdout to prevent interference)
+            with redirect_stdout(io.StringIO()):
+                response = self.agent.process(question, context)
             
             return {
                 "content": [
                     {
                         "type": "text",
-                        "text": response.response
+                        "text": response.text
                     }
                 ],
                 "isError": False
@@ -195,9 +223,10 @@ class StdioMCPServer:
             query = args.get("query")
             limit = args.get("limit", 5)
             
-            # Search HHNI
-            from hhni.models import IndexLevel
-            results = self.hhni.query(query, target_level=IndexLevel.PARAGRAPH, max_results=limit)
+            # Search HHNI (redirect stdout)
+            with redirect_stdout(io.StringIO()):
+                from hhni.models import IndexLevel
+                results = self.hhni.query(query, target_level=IndexLevel.PARAGRAPH, max_results=limit)
             
             memories = [getattr(r, 'content', str(r)) for r in results[:limit]]
             
@@ -212,8 +241,9 @@ class StdioMCPServer:
             }
         
         elif tool_name == "get_agent_stats":
-            # Get memory stats
-            atoms = self.memory.list_atoms()
+            # Get memory stats (redirect stdout)
+            with redirect_stdout(io.StringIO()):
+                atoms = self.memory.list_atoms()
             
             stats = {
                 "total_memories": len(atoms),
@@ -291,4 +321,3 @@ if __name__ == "__main__":
         import traceback
         traceback.print_exc(file=sys.stderr)
         sys.exit(1)
-
