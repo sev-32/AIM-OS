@@ -1,5 +1,36 @@
-"""SEG helper utilities."""
+"""SEG: Shared Evidence Graph (Production-Ready)
 
-from .witness import write_witness  # noqa: F401
+Bitemporal knowledge graph with contradiction detection and provenance tracking.
 
-__all__ = ["write_witness"]
+Components:
+- Entity, Relation, Evidence nodes (bitemporal)
+- SEGraph (NetworkX-based graph with time-travel)
+- Contradiction detection
+- Provenance tracing
+- CMC integration
+"""
+
+from .models import (
+    Entity,
+    Relation,
+    Evidence,
+    Contradiction,
+    TimeSlice,
+    NodeType,
+    RelationType,
+)
+from .seg_graph import SEGraph
+
+__all__ = [
+    # Core models
+    "Entity",
+    "Relation",
+    "Evidence",
+    "Contradiction",
+    "TimeSlice",
+    # Enums
+    "NodeType",
+    "RelationType",
+    # Graph
+    "SEGraph",
+]
