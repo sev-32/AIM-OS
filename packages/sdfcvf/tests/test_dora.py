@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 import pytest
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import os
 import tempfile
 
@@ -71,7 +71,7 @@ def test_record_incident(temp_db):
     )
     
     # Record incident
-    resolved_at = datetime.utcnow() + timedelta(minutes=30)
+    resolved_at = datetime.now(timezone.utc) + timedelta(minutes=30)
     collector.record_incident(deployment_id, resolved_at)
     
     # Should not raise exception
@@ -115,7 +115,7 @@ def test_calculate_dora_metrics_with_data(temp_db):
     )
     
     # Record incident for failure
-    collector.record_incident(failed_id, datetime.utcnow() + timedelta(minutes=45))
+    collector.record_incident(failed_id, datetime.now(timezone.utc) + timedelta(minutes=45))
     
     # Calculate metrics
     metrics = collector.calculate_dora_metrics(days=30)

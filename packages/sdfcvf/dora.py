@@ -12,7 +12,7 @@ Correlates parity scores with deployment outcomes.
 from __future__ import annotations
 import sqlite3
 from dataclasses import dataclass
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Optional, List, Tuple
 import statistics
@@ -122,7 +122,7 @@ class DORAMetricsCollector:
         cursor.execute("""
             INSERT INTO deployments (timestamp, version, commit_sha, parity_score, success, lead_time_minutes)
             VALUES (?, ?, ?, ?, ?, ?)
-        """, (datetime.utcnow(), version, commit_sha, parity_score, success, lead_time_minutes))
+            """, (datetime.now(timezone.utc), version, commit_sha, parity_score, success, lead_time_minutes))
         
         deployment_id = cursor.lastrowid
         conn.commit()
@@ -184,7 +184,7 @@ class DORAMetricsCollector:
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         
-        since = datetime.utcnow() - timedelta(days=days)
+        since = datetime.now(timezone.utc) - timedelta(days=days)
         
         # 1. Deployment Frequency
         cursor.execute("""
@@ -298,7 +298,7 @@ class ParityDORACorrelator:
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         
-        since = datetime.utcnow() - timedelta(days=days)
+        since = datetime.now(timezone.utc) - timedelta(days=days)
         
         # Get all deployments with parity scores
         cursor.execute("""
