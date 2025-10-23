@@ -13,3 +13,7 @@ python-dotenv>=1.0.0        # Environment variables
 requests>=2.31.0            # HTTP client for Cerebras and other APIs
 # cerebras-cloud-sdk>=1.0.0   # Cerebras (install separately if needed)
 # openai>=1.0.0               # DeepInfra/OpenAI (install separately if needed)
+
+# MCP Server (v1.1 - Cursor Integration)
+fastapi>=0.104.0            # Web framework for MCP server
+uvicorn[standard]>=0.24.0   # ASGI server
