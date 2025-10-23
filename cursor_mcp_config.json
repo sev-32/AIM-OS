@@ -1,13 +1,12 @@
 {
-  "mcp": {
-    "servers": {
-      "aimos": {
-        "command": "python",
-        "args": ["-u", "run_mcp_stdio_clean.py"],
-        "cwd": "C:\\Users\\bombe\\OneDrive\\Desktop\\AIM-OS",
-        "env": {
-          "GEMINI_API_KEY": "AIzaSyA9S1wxLNlvpx5g8A9UVS_TIJJVzngV_xY"
-        }
+  "mcpServers": {
+    "aimos": {
+      "command": "python",
+      "args": ["-u", "run_mcp_stdio_clean.py"],
+      "cwd": "C:\\Users\\bombe\\OneDrive\\Desktop\\AIM-OS",
+      "env": {
+        "GEMINI_API_KEY": "AIzaSyA9S1wxLNlvpx5g8A9UVS_TIJJVzngV_xY",
+        "CEREBRAS_API_KEY": "csk-xv6x26revypveycj6vffvf3yc4fhvx3mxwt9dy6de4xct5ty"
       }
     }
   }
