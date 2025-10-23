@@ -1,0 +1,275 @@
+#!/usr/bin/env python3
+"""
+AIM-OS MCP Server - STDIO Mode for Cursor
+Communicates via stdin/stdout using MCP protocol
+"""
+import sys
+import json
+import os
+from pathlib import Path
+
+# Add packages to path
+sys.path.insert(0, str(Path(__file__).parent / "packages"))
+
+from llm_client import GeminiClient, CerebrasClient
+from agent import AetherAgent
+from cmc_service import MemoryStore
+from hhni import HierarchicalIndex
+from seg import SEGraph
+
+class StdioMCPServer:
+    """MCP Server using stdio for Cursor integration"""
+    
+    def __init__(self):
+        """Initialize the server"""
+        # Setup logging to stderr (stdout is for MCP messages)
+        def log(msg: str):
+            print(f"[MCP-STDIO] {msg}", file=sys.stderr, flush=True)
+        
+        self.log = log
+        self.log("Initializing AIM-OS MCP Server (stdio mode)...")
+        
+        # Initialize LLM clients
+        gemini_key = os.getenv("GEMINI_API_KEY")
+        cerebras_key = os.getenv("CEREBRAS_API_KEY")
+        
+        if not gemini_key:
+            self.log("WARNING: GEMINI_API_KEY not set!")
+        
+        self.gemini = GeminiClient(api_key=gemini_key) if gemini_key else None
+        
+        # Cerebras optional
+        self.cerebras = None
+        if cerebras_key:
+            try:
+                self.cerebras = CerebrasClient(api_key=cerebras_key)
+                self.log("Cerebras client initialized")
+            except Exception as e:
+                self.log(f"Cerebras init failed: {e}")
+        
+        # Select LLM
+        self.llm = self.gemini or self.cerebras
+        if not self.llm:
+            raise ValueError("No LLM client available! Set GEMINI_API_KEY or CEREBRAS_API_KEY")
+        
+        # Initialize AIM-OS systems
+        self.memory = MemoryStore("./mcp_memory")
+        self.hhni = HierarchicalIndex()
+        self.seg = SEGraph()
+        
+        # Create agent
+        self.agent = AetherAgent(
+            llm_client=self.llm,
+            memory=self.memory,
+            index=self.hhni,
+            seg=self.seg
+        )
+        
+        self.log(f"Agent initialized with {self.llm.__class__.__name__}")
+        self.log("Ready to receive MCP requests")
+    
+    def handle_request(self, request: dict) -> dict:
+        """Handle an MCP request"""
+        method = request.get("method")
+        params = request.get("params", {})
+        
+        try:
+            if method == "tools/list":
+                return self.list_tools()
+            elif method == "tools/call":
+                return self.call_tool(params)
+            elif method == "resources/list":
+                return self.list_resources()
+            elif method == "prompts/list":
+                return self.list_prompts()
+            else:
+                return {
+                    "error": {
+                        "code": -32601,
+                        "message": f"Method not found: {method}"
+                    }
+                }
+        except Exception as e:
+            self.log(f"Error handling {method}: {e}")
+            return {
+                "error": {
+                    "code": -32603,
+                    "message": str(e)
+                }
+            }
+    
+    def list_tools(self) -> dict:
+        """List available MCP tools"""
+        return {
+            "tools": [
+                {
+                    "name": "ask_agent",
+                    "description": "Ask the conscious AI agent a question with full memory and learning",
+                    "inputSchema": {
+                        "type": "object",
+                        "properties": {
+                            "question": {
+                                "type": "string",
+                                "description": "The question to ask"
+                            },
+                            "context": {
+                                "type": "string",
+                                "description": "Optional additional context"
+                            }
+                        },
+                        "required": ["question"]
+                    }
+                },
+                {
+                    "name": "retrieve_memory",
+                    "description": "Search the agent's memory for relevant past interactions",
+                    "inputSchema": {
+                        "type": "object",
+                        "properties": {
+                            "query": {
+                                "type": "string",
+                                "description": "What to search for"
+                            },
+                            "limit": {
+                                "type": "integer",
+                                "description": "Max results to return"
+                            }
+                        },
+                        "required": ["query"]
+                    }
+                },
+                {
+                    "name": "get_agent_stats",
+                    "description": "Get statistics about the agent's memory and learning",
+                    "inputSchema": {
+                        "type": "object",
+                        "properties": {}
+                    }
+                }
+            ]
+        }
+    
+    def list_resources(self) -> dict:
+        """List available resources"""
+        return {"resources": []}
+    
+    def list_prompts(self) -> dict:
+        """List available prompts"""
+        return {"prompts": []}
+    
+    def call_tool(self, params: dict) -> dict:
+        """Call a tool"""
+        tool_name = params.get("name")
+        args = params.get("arguments", {})
+        
+        if tool_name == "ask_agent":
+            question = args.get("question")
+            context = args.get("context", "")
+            
+            # Process with agent
+            response = self.agent.process(question, context)
+            
+            return {
+                "content": [
+                    {
+                        "type": "text",
+                        "text": response.response
+                    }
+                ],
+                "isError": False
+            }
+        
+        elif tool_name == "retrieve_memory":
+            query = args.get("query")
+            limit = args.get("limit", 5)
+            
+            # Search HHNI
+            from hhni.models import IndexLevel
+            results = self.hhni.query(query, target_level=IndexLevel.PARAGRAPH, max_results=limit)
+            
+            memories = [getattr(r, 'content', str(r)) for r in results[:limit]]
+            
+            return {
+                "content": [
+                    {
+                        "type": "text",
+                        "text": "\n\n".join(f"Memory {i+1}:\n{m}" for i, m in enumerate(memories))
+                    }
+                ],
+                "isError": False
+            }
+        
+        elif tool_name == "get_agent_stats":
+            # Get memory stats
+            from cmc_service.models import AtomType
+            atoms = self.memory.list_atoms(atom_type=AtomType.MEMORY)
+            
+            stats = {
+                "total_memories": len(atoms),
+                "llm_provider": self.llm.__class__.__name__,
+                "systems_active": ["CMC", "HHNI", "VIF", "SEG"]
+            }
+            
+            return {
+                "content": [
+                    {
+                        "type": "text",
+                        "text": json.dumps(stats, indent=2)
+                    }
+                ],
+                "isError": False
+            }
+        
+        else:
+            return {
+                "content": [
+                    {
+                        "type": "text",
+                        "text": f"Unknown tool: {tool_name}"
+                    }
+                ],
+                "isError": True
+            }
+    
+    def run(self):
+        """Run the server loop (stdio)"""
+        self.log("Starting stdio loop...")
+        
+        for line in sys.stdin:
+            try:
+                request = json.loads(line.strip())
+                self.log(f"Received: {request.get('method')}")
+                
+                response = self.handle_request(request)
+                
+                # Add request ID if present
+                if "id" in request:
+                    response["id"] = request["id"]
+                
+                # Send response to stdout
+                print(json.dumps(response), flush=True)
+                
+            except json.JSONDecodeError as e:
+                self.log(f"Invalid JSON: {e}")
+                error_response = {
+                    "error": {
+                        "code": -32700,
+                        "message": "Parse error"
+                    }
+                }
+                print(json.dumps(error_response), flush=True)
+            except Exception as e:
+                self.log(f"Error: {e}")
+                import traceback
+                traceback.print_exc(file=sys.stderr)
+
+if __name__ == "__main__":
+    try:
+        server = StdioMCPServer()
+        server.run()
+    except Exception as e:
+        print(f"[MCP-STDIO] FATAL: {e}", file=sys.stderr)
+        import traceback
+        traceback.print_exc(file=sys.stderr)
+        sys.exit(1)
+
