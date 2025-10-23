@@ -62,12 +62,22 @@ class MCPServer:
         self.gemini = GeminiClient(
             api_key=gemini_api_key or os.getenv("GEMINI_API_KEY")
         )
-        self.cerebras = CerebrasClient(
-            api_key=cerebras_api_key or os.getenv("CEREBRAS_API_KEY")
-        )
+        
+        # Cerebras is optional (only if API key provided)
+        cerebras_key = cerebras_api_key or os.getenv("CEREBRAS_API_KEY")
+        self.cerebras = None
+        if cerebras_key:
+            try:
+                self.cerebras = CerebrasClient(api_key=cerebras_key)
+            except Exception as e:
+                print(f"[WARN] Cerebras initialization failed: {e}")
+                print("[WARN] Server will use Gemini only")
         
         # Select default LLM
-        self.llm = self.gemini if default_llm == "gemini" else self.cerebras
+        if default_llm == "cerebras" and self.cerebras:
+            self.llm = self.cerebras
+        else:
+            self.llm = self.gemini
         
         # Initialize AIM-OS systems
         self.memory = MemoryStore(memory_path)
