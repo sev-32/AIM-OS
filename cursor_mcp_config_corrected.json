@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "aether": {
+      "command": "node",
+      "args": ["mcp-aether/server.mjs"],
+      "cwd": "C:\\Users\\bombe\\OneDrive\\Desktop\\AIM-OS"
+    }
+  }
+}
