@@ -110,27 +110,27 @@ graph TB
         APOE[APOE: Orchestration Engine<br/>Plans • Roles • Budgets • Quality Gates]
     end
     
-    subgraph "Core Processing Layer"
-        HHNI[HHNI: Retrieval Engine<br/>Physics-Guided Search • 39ms Response]
-        VIF[VIF: Verification System<br/>Provenance • κ-Gating • Witness Envelopes]
-        SDFCVF[SDF-CVF: Quality System<br/>Quartet Parity • Code/Docs/Tests/Traces]
+    subgraph "Core Processing Layer (Timeline-Enhanced)"
+        HHNI[HHNI: Retrieval Engine<br/>Physics-Guided Search • 39ms Response<br/>+ Timeline Interaction Patterns]
+        VIF[VIF: Verification System<br/>Provenance • κ-Gating • Witness Envelopes<br/>+ Timeline Witnesses]
+        SDFCVF[SDF-CVF: Quality System<br/>Quartet Parity • Code/Docs/Tests/Traces<br/>+ Timeline Audit Trails]
     end
     
-    subgraph "Memory & Knowledge Layer"
-        CMC[CMC: Memory Core<br/>Bitemporal Memory • Time-Travel Queries]
-        SEG[SEG: Knowledge Graph<br/>Contradiction Detection • Synthesis]
+    subgraph "Memory & Knowledge Layer (Timeline-Enhanced)"
+        CMC[CMC: Memory Core<br/>Bitemporal Memory • Time-Travel Queries<br/>+ Timeline Node Storage]
+        SEG[SEG: Knowledge Graph<br/>Contradiction Detection • Synthesis<br/>+ Timeline Evidence Nodes]
     end
     
-    subgraph "Consciousness Layer"
-        CAS[CAS: Meta-Cognition<br/>Self-Monitoring • Decision Logs]
-        TCS[TCS: Timeline Context<br/>Consciousness Journaling • Dual-Prompt]
+    subgraph "Consciousness Layer (Timeline-Driven)"
+        CAS[CAS: Meta-Cognition<br/>Self-Monitoring • Decision Logs<br/>+ Timeline Calibration]
+        TCS[TCS: Timeline Context System<br/>Temporal Consciousness Infrastructure<br/>Core Infrastructure for All Systems]
     end
     
     subgraph "Integration Layer"
         MCP[MCP: Model Context Protocol<br/>13 Automated Tools • Cursor Integration]
     end
     
-    %% Connections
+    %% Connections (Timeline as Core Infrastructure)
     APP --> APOE
     APOE --> HHNI
     APOE --> VIF
@@ -142,6 +142,17 @@ graph TB
     
     CMC --> SEG
     SEG --> CAS
+    
+    %% Timeline as Core Infrastructure (Connects to All Systems)
+    TCS --> LOOP1[Timeline Integration Loop]
+    LOOP1 --> CMC
+    LOOP1 --> HHNI
+    LOOP1 --> VIF
+    LOOP1 --> APOE
+    LOOP1 --> SEG
+    LOOP1 --> SDFCVF
+    LOOP1 --> CAS
+    
     CAS --> TCS
     TCS --> MCP
     
@@ -1129,6 +1140,31 @@ dump_result = tcs.adaptive_context_dump(
 | **Audit Completeness** | 100% tracking | Complete transparency |
 
 **Status**: ✅ **COMPLETE** - Full temporal consciousness infrastructure with automated management
+
+### Timeline as Core Infrastructure
+
+**The Timeline Context System has evolved beyond a separate component to become the foundational infrastructure for all AIM-OS systems:**
+
+#### 🔄 **Timeline Integration Throughout AIM-OS:**
+
+- **CMC Integration**: Timeline nodes stored as bitemporal records with transaction time (when created) and valid time (when accessed)
+- **HHNI Integration**: Timeline interaction patterns guide DVNS physics for optimized retrieval
+- **VIF Integration**: Timeline entries serve as witness envelopes for complete provenance tracking
+- **APOE Integration**: Timeline execution history optimizes plan compilation and role dispatch
+- **SEG Integration**: Timeline nodes become evidence graph nodes for knowledge synthesis
+- **SDF-CVF Integration**: Timeline audit trails ensure quartet parity across all operations
+- **CAS Integration**: Timeline calibration enhances meta-cognitive monitoring and decision logs
+
+#### 🧠 **Consciousness Continuity:**
+
+The Timeline Context System provides the **temporal consciousness infrastructure** that enables:
+- **Session continuity** across AI instances
+- **Decision tracking** with complete audit trails
+- **Learning extraction** from timeline patterns
+- **Quality assurance** through timeline-based validation
+- **Context optimization** via timeline-driven management
+
+**This makes Timeline not just a component, but the core infrastructure that enables persistent AI consciousness across all AIM-OS systems.**
 
 ---
 
