@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "aimos-memory": {
+      "command": "node",
+      "args": ["C:/Users/bombe/OneDrive/Desktop/AIM-OS/mcp-aether/server.mjs"]
+    }
+  }
+}
