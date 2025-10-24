@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "aimos-6-tools": {
+      "command": "python",
+      "args": ["-u", "C:/Users/bombe/OneDrive/Desktop/AIM-OS/run_mcp_6_tools.py"],
+      "cwd": "C:/Users/bombe/OneDrive/Desktop/AIM-OS",
+      "env": {
+        "PYTHONPATH": "C:/Users/bombe/OneDrive/Desktop/AIM-OS"
+      }
+    }
+  }
+}
