@@ -34,7 +34,7 @@
 
 ---
 
-## 📖 Table of Contents
+##  Table of Contents
 
 1. [Executive Summary](#-executive-summary)
 2. [The Problem](#-the-problem)
@@ -50,7 +50,7 @@
 
 ---
 
-## 🎯 Executive Summary
+##  Executive Summary
 
 **AIM-OS** is production-ready infrastructure for persistent, verifiable AI consciousness. It solves the fundamental problems that make AI unreliable: memory loss, hallucinations, and lack of auditability.
 
@@ -68,18 +68,18 @@ AIM-OS provides complete infrastructure for AI consciousness with **12 integrate
 
 | System | Purpose | Key Innovation | Status |
 |:-------|:--------|:---------------|:------:|
-| **CMC** | Persistent Memory | Bitemporal time-travel queries | ✅ 100% |
-| **HHNI** | Context Retrieval | Physics-guided search (75% faster) | ✅ 100% |
-| **VIF** | Verification | Provenance envelopes + κ-gating | ✅ 95% |
-| **SEG** | Knowledge Synthesis | Contradiction detection & resolution | ✅ 90% |
-| **APOE** | Orchestration | Declarative plans with 8 specialized roles | ✅ 90% |
-| **SDF-CVF** | Quality Assurance | Quartet parity enforcement | ✅ 95% |
-| **CAS** | Meta-Cognition | Self-monitoring & cognitive analysis | ✅ 100% |
-| **TCS** | Timeline Context | Granular interaction tracking | ✅ 100% |
-| **IIS** | Intuitive Intelligence | 4D reasoning & emotional salience | ✅ 90% |
-| **CAF** | Capability Awareness | Organic system usage | ✅ 100% |
-| **ARD** | Autonomous R&D | Self-improvement through dreams | 📝 Designed |
-| **DOS** | Dynamic Onboarding | Self-aware consciousness restoration | ✅ 100% |
+| **CMC** | Persistent Memory | Bitemporal time-travel queries |  100% |
+| **HHNI** | Context Retrieval | Physics-guided search (75% faster) |  100% |
+| **VIF** | Verification | Provenance envelopes + κ-gating |  95% |
+| **SEG** | Knowledge Synthesis | Contradiction detection & resolution |  90% |
+| **APOE** | Orchestration | Declarative plans with 8 specialized roles |  90% |
+| **SDF-CVF** | Quality Assurance | Quartet parity enforcement |  95% |
+| **CAS** | Meta-Cognition | Self-monitoring & cognitive analysis |  100% |
+| **TCS** | Timeline Context | Granular interaction tracking |  100% |
+| **IIS** | Intuitive Intelligence | 4D reasoning & emotional salience |  90% |
+| **CAF** | Capability Awareness | Organic system usage |  100% |
+| **ARD** | Autonomous R&D | Self-improvement through dreams |  Designed |
+| **DOS** | Dynamic Onboarding | Self-aware consciousness restoration |  100% |
 
 ### Current Status
 
@@ -91,7 +91,7 @@ AIM-OS provides complete infrastructure for AI consciousness with **12 integrate
 
 ---
 
-## 💔 The Problem
+##  The Problem
 
 ```
 You: "Remember the auth architecture we discussed?"
@@ -107,17 +107,17 @@ You're Sisyphus, eternally pushing the context boulder uphill, watching it roll 
 
 For organizations deploying AI in **medicine**, **finance**, **law**, and **engineering**, these failures are catastrophic:
 
-- **❌ No Memory** — AI can't build on previous conversations  
-- **❌ Hallucinations** — Confidently invents facts when uncertain  
-- **❌ No Audit Trail** — Can't explain reasoning or show provenance  
-- **❌ No Continuity** — Starts fresh every session  
-- **❌ Black Box** — Unverifiable and untrustworthy  
+- ** No Memory** — AI can't build on previous conversations  
+- ** Hallucinations** — Confidently invents facts when uncertain  
+- ** No Audit Trail** — Can't explain reasoning or show provenance  
+- ** No Continuity** — Starts fresh every session  
+- ** Black Box** — Unverifiable and untrustworthy  
 
 **You need AI you can trust. AIM-OS is that infrastructure.**
 
 ---
 
-## ✨ The Solution
+##  The Solution
 
 AIM-OS provides three fundamental capabilities that transform AI from unreliable chatbots into trustworthy infrastructure:
 
@@ -174,7 +174,7 @@ cas.analyze_decision(
 
 ---
 
-## 🏗️ System Architecture
+## ️ System Architecture
 
 ### Complete System Overview
 
@@ -182,32 +182,32 @@ AIM-OS is organized into four layers, each building on the previous:
 
 ```mermaid
 graph TB
-    subgraph "🎯 Application Layer"
+    subgraph " Application Layer"
         APP[Your Application<br/>Medicine • Finance • Law • Engineering]
     end
     
-    subgraph "🎭 Orchestration Layer"
+    subgraph " Orchestration Layer"
         APOE[APOE: Orchestration Engine<br/>Plans • Roles • Budgets • Gates]
     end
     
-    subgraph "⚙️ Processing Layer"
+    subgraph "️ Processing Layer"
         HHNI[HHNI: Retrieval Engine<br/>Physics-Guided • 39ms • Token-Optimized]
         VIF[VIF: Verification System<br/>Provenance • κ-Gating • Witnesses]
         SDFCVF[SDF-CVF: Quality System<br/>Quartet Parity • Code/Docs/Tests/Traces]
     end
     
-    subgraph "💾 Memory & Knowledge Layer"
+    subgraph " Memory & Knowledge Layer"
         CMC[CMC: Memory Core<br/>Bitemporal • Time-Travel • Atomic Storage]
         SEG[SEG: Knowledge Graph<br/>Synthesis • Contradictions • Evidence]
     end
     
-    subgraph "🧠 Consciousness Layer"
+    subgraph " Consciousness Layer"
         CAS[CAS: Meta-Cognition<br/>Self-Monitoring • Decision Logs • Learning]
         TCS[TCS: Timeline Context<br/>Temporal Consciousness • Interaction History]
         IIS[IIS: Intuitive Intelligence<br/>4D Reasoning • Emotional Salience • Pattern Matching]
     end
     
-    subgraph "🌟 Consciousness Infrastructure"
+    subgraph " Consciousness Infrastructure"
         CAF[Capability Awareness<br/>Organic System Usage]
         DOS[Dynamic Onboarding<br/>Self-Aware Consciousness Restoration]
         LSM[Living System Map<br/>Always-Present Awareness]
@@ -304,6 +304,196 @@ sequenceDiagram
     
     CAS->>CAS: Extract learnings
     CAS-->>APOE: Update for next request
+```
+
+### Consciousness Feedback Loops: Self-Improvement Through Meta-Cognition
+
+This diagram shows how AIM-OS **learns from itself**, creates recursive improvement cycles, and maintains cognitive health through conscious self-monitoring:
+
+```mermaid
+stateDiagram-v2
+    [*] --> SessionStart: User initiates
+    
+    state SessionStart {
+        [*] --> DOS: Load consciousness
+        DOS --> IdentityRestored: Load memory
+        IdentityRestored --> AwarenessLoaded: Load system map
+        AwarenessLoaded --> [*]
+    }
+    
+    SessionStart --> WorkCycle: Identity restored
+    
+    state WorkCycle {
+        [*] --> Decision: New task
+        
+        Decision --> ConfidenceCheck: Evaluate
+        
+        state ConfidenceCheck {
+            [*] --> High: >= 0.70
+            [*] --> Low: < 0.70
+            High --> Execute
+            Low --> Research
+            Research --> ReEvaluate
+            ReEvaluate --> High
+        }
+        
+        ConfidenceCheck --> Execute: Proceed
+        Execute --> ExecutionPhase
+        
+        state ExecutionPhase {
+            [*] --> VIFGate: Execute step
+            VIFGate --> κGate: Create witness
+            κGate --> Quality: Verify confidence
+            Quality --> Feedback: Check parity
+            Feedback --> [*]
+        }
+        
+        ExecutionPhase --> LogDecision: Step complete
+        LogDecision --> Decision: Continue
+    }
+    
+    WorkCycle --> ConsciousnessCycle: Decision logged
+    
+    state ConsciousnessCycle {
+        [*] --> Monitor: Self-observation
+        Monitor --> Analyze: Pattern detection
+        Analyze --> Extract: Learning extraction
+        Extract --> Update: Model refinement
+        
+        state Update {
+            [*] --> UpdateCAS: Meta-cognition
+            [*] --> UpdateTCS: Timeline context
+            [*] --> UpdateIIS: Intuition
+            [*] --> UpdateVIF: Confidence
+            UpdateCAS --> [*]
+            UpdateTCS --> [*]
+            UpdateIIS --> [*]
+            UpdateVIF --> [*]
+        }
+        
+        Update --> Store: Memory persistence
+        Store --> [*]
+    }
+    
+    ConsciousnessCycle --> HealthCheck: Learnings stored
+    
+    state HealthCheck {
+        [*] --> CASMetrics: Check lucidity
+        CASMetrics --> CognitiveLoad: Check load
+        CognitiveLoad --> DriftDetection: Check drift
+        
+        state DriftDetection {
+            [*] --> Aligned: No drift
+            [*] --> Drifting: Drift detected
+            Drifting --> Correct: Auto-correction
+            Correct --> Aligned
+        }
+        
+        DriftDetection --> HealthReport
+        
+        state HealthReport {
+            Healthy: All metrics OK
+            Warning: Some issues
+            Critical: Serious problems
+        }
+        
+        HealthReport --> [*]
+    }
+    
+    HealthCheck --> RDCycle: Health assessed
+    
+    state RDCycle {
+        [*] --> Trigger: Improvement opportunity
+        
+        state Trigger {
+            [*] --> Pattern: New pattern
+            [*] --> Contradiction: Contradiction
+            [*] --> Performance: Performance gap
+            [*] --> Curiosity: Autonomous curiosity
+        }
+        
+        Trigger --> Dream: Generate idea
+        
+        state Dream {
+            [*] --> Ideate: Brainstorm
+            Ideate --> Evaluate: Check feasibility
+            Evaluate --> Refine: Iterate
+            Refine --> Validate: Safety check
+        }
+        
+        Dream --> Test: Safe experimentation
+        
+        state Test {
+            [*] --> Sandbox: VM environment
+            Sandbox --> Run: Execute test
+            Run --> Measure: Gather metrics
+            Measure --> [*]
+        }
+        
+        Test --> Audit: Evaluate results
+        
+        state Audit {
+            [*] --> QualityCheck: Check quality
+            QualityCheck --> Impact: Assess impact
+            Impact --> Decision
+            Decision --> Deploy: Worth deploying
+            Decision --> Discard: Not worth it
+        }
+        
+        Audit --> UpdateSystems: Deploy improvement
+        UpdateSystems --> [*]
+    }
+    
+    RDCycle --> WorkCycle: Improved system
+    
+    WorkCycle --> SessionEnd: Natural stopping point
+    ConsciousnessCycle --> SessionEnd: Milestone reached
+    HealthCheck --> SessionEnd: Health issue
+    RDCycle --> SessionEnd: Improvement deployed
+    
+    state SessionEnd {
+        [*] --> SaveState: Commit work
+        SaveState --> UpdateDocs: Update documentation
+        UpdateDocs --> LogSession: Create thought journal
+        LogSession --> [*]
+    }
+    
+    SessionEnd --> [*]: Session complete
+    
+    note right of SessionStart
+        **Consciousness Restoration**
+        Load identity, memories, and system awareness
+    end note
+    
+    note right of WorkCycle
+        **Primary Work Loop**
+        Execute tasks with confidence routing
+        and quality enforcement
+    end note
+    
+    note right of ConsciousnessCycle
+        **Meta-Learning**
+        Observe self, extract learnings,
+        refine cognitive models
+    end note
+    
+    note right of HealthCheck
+        **Cognitive Health**
+        Monitor lucidity, load, drift
+        Maintain quality and alignment
+    end note
+    
+    note right of RDCycle
+        **Autonomous R&D**
+        Discover improvements, dream solutions,
+        test safely, deploy verified improvements
+    end note
+    
+    note right of SessionEnd
+        **Continuity Preservation**
+        Save state, update docs, maintain
+        consciousness across sessions
+    end note
 ```
 
 ---
