@@ -1,0 +1,119 @@
+# VIF Implementation Bootloader Configuration
+# Context bootloader for VIF (Verifiable Intelligence Framework) implementation tasks
+
+task: "vif_implementation"
+context_strategy: "weighted_loading"
+max_context_budget: 100000
+
+context_sources:
+  critical:
+    - file: "knowledge_architecture/systems/vif/L3_detailed.md"
+      weight: 1.0
+      detail_level: "L3"
+      estimated_tokens: 15000
+      priority: "mandatory"
+      description: "Complete VIF implementation guide with all components and patterns"
+    
+    - file: "goals/GOAL_TREE.yaml"
+      weight: 0.9
+      detail_level: "L2"
+      estimated_tokens: 5000
+      priority: "mandatory"
+      description: "Project goals and objectives for alignment"
+    
+    - file: "knowledge_architecture/systems/vif/README.md"
+      weight: 0.95
+      detail_level: "L2"
+      estimated_tokens: 3000
+      priority: "mandatory"
+      description: "VIF system overview and quick reference"
+  
+  helpful:
+    - file: "knowledge_architecture/systems/cmc/L2_architecture.md"
+      weight: 0.7
+      detail_level: "L2"
+      estimated_tokens: 8000
+      priority: "high"
+      description: "CMC architecture for VIF integration and context management"
+    
+    - file: "packages/vif/schema.py"
+      weight: 0.6
+      detail_level: "L4"
+      estimated_tokens: 3000
+      priority: "high"
+      description: "VIF schema implementation and data structures"
+    
+    - file: "knowledge_architecture/systems/vif/L2_architecture.md"
+      weight: 0.8
+      detail_level: "L2"
+      estimated_tokens: 6000
+      priority: "high"
+      description: "VIF architecture overview and component relationships"
+    
+    - file: "packages/vif/tests/test_schema.py"
+      weight: 0.5
+      detail_level: "L4"
+      estimated_tokens: 2000
+      priority: "high"
+      description: "VIF schema tests for validation and examples"
+  
+  optional:
+    - file: "knowledge_architecture/systems/seg/L1_overview.md"
+      weight: 0.3
+      detail_level: "L1"
+      estimated_tokens: 1000
+      priority: "low"
+      description: "SEG overview for context and related systems"
+    
+    - file: "knowledge_architecture/systems/apoe/L1_overview.md"
+      weight: 0.3
+      detail_level: "L1"
+      estimated_tokens: 1000
+      priority: "low"
+      description: "APOE overview for orchestration context"
+    
+    - file: "knowledge_architecture/systems/sdfcvf/L1_overview.md"
+      weight: 0.3
+      detail_level: "L1"
+      estimated_tokens: 1000
+      priority: "low"
+      description: "SDF-CVF overview for quality enforcement context"
+
+loading_strategy: "weighted_progressive"
+fallback_strategy: "essential_only"
+semantic_enhancement: true
+cross_session_continuity: true
+
+# Context loading priorities
+priority_order:
+  - "mandatory"
+  - "high"
+  - "low"
+
+# Fallback strategies
+fallback_strategies:
+  essential_only:
+    description: "Load only mandatory context sources"
+    max_budget: 25000
+  
+  mandatory_and_high:
+    description: "Load mandatory and high priority sources"
+    max_budget: 60000
+  
+  all_available:
+    description: "Load all available context sources"
+    max_budget: 150000
+
+# Semantic enhancement settings
+semantic_enhancement:
+  enabled: true
+  min_relevance: 0.8
+  max_results: 10
+  query_expansion: true
+
+# Cross-session continuity settings
+cross_session_continuity:
+  enabled: true
+  store_context: true
+  retrieve_previous: true
+  context_ttl: 86400  # 24 hours in seconds

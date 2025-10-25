@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "aimos-memory": {
+      "command": "python",
+      "args": ["-u", "run_mcp_cross_model.py"],
+      "cwd": "C:\\Users\\bombe\\OneDrive\\Desktop\\AIM-OS",
+      "env": {
+        "GEMINI_API_KEY": "AIzaSyA9S1wxLNlvpx5g8A9UVS_TIJJVzngV_xY",
+        "CEREBRAS_API_KEY": "csk-xv6x26revypveycj6vffvf3yc4fhvx3mxwt9dy6de4xct5ty",
+        "PYTHONPATH": "C:\\Users\\bombe\\OneDrive\\Desktop\\AIM-OS"
+      }
+    }
+  }
+}

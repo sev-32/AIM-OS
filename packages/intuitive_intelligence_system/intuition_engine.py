@@ -14,6 +14,7 @@ import logging
 
 from .models import IntuitionTrace, IntuitionFeatures, EmotionalDetails
 from .emotional_salience import EmotionalSalienceTracker
+from .ccs_integration import ccs_integration
 
 logger = logging.getLogger(__name__)
 
@@ -57,6 +58,49 @@ class IntuitionEngine:
         
         logger.info("IntuitionEngine initialized with 7 features")
     
+    def compute_intuition_score_with_ccs(
+        self, 
+        action_id: str, 
+        query: str, 
+        context: Dict[str, Any],
+        emotional_context: Dict[str, Any]
+    ) -> Tuple[float, IntuitionTrace]:
+        """
+        Compute IntuitionScore using real CCS data.
+        
+        Args:
+            action_id: ID of the action/decision
+            query: Query string for retrieval
+            context: General context for decision
+            emotional_context: Emotional context for EST
+            
+        Returns:
+            Tuple[float, IntuitionTrace]: IntuitionScore and complete trace
+        """
+        # Get real features from CCS systems
+        C_prime = ccs_integration.get_calibrated_confidence(action_id, context)
+        RS = ccs_integration.get_retrieval_strength(query, context.get("embedding", []))
+        M = ccs_integration.get_meta_pattern_similarity(context)
+        
+        # Get emotional context from TCS
+        tcs_emotional_context = ccs_integration.get_emotional_context(action_id)
+        
+        # Merge emotional contexts
+        merged_emotional_context = {**emotional_context, **tcs_emotional_context}
+        
+        # Create features with real CCS data
+        features = IntuitionFeatures(
+            C_prime=C_prime,
+            RS=RS,
+            M=M,
+            E=0.0,  # Will be computed by EST
+            F=0.0,  # MVP - no 4D predictor yet
+            U=0.1   # Mock miscalibration penalty for now
+        )
+        
+        # Compute intuition score with enhanced emotional context
+        return self.compute_intuition_score(features, merged_emotional_context)
+
     def compute_intuition_score(
         self, 
         features: IntuitionFeatures,
@@ -104,7 +148,19 @@ class IntuitionEngine:
         logger.debug(f"Computed IntuitionScore: {intuition_score:.4f} for decision {trace.decision_id}")
         
         return intuition_score, trace
-    
+
+    def store_trace_in_cmc(self, trace: IntuitionTrace) -> str:
+        """
+        Store IntuitionTrace in CMC for persistent memory.
+        
+        Args:
+            trace: The IntuitionTrace to store
+            
+        Returns:
+            str: The CMC atom ID where the trace was stored
+        """
+        return ccs_integration.store_intuition_trace(trace)
+
     def update_from_outcome(
         self, 
         trace: IntuitionTrace, 

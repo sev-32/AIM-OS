@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "aimos": {
+      "command": "python",
+      "args": ["-u", "run_mcp_stdio_clean.py"],
+      "cwd": "C:\\Users\\bombe\\OneDrive\\Desktop\\AIM-OS"
+    }
+  }
+}
+

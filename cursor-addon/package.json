@@ -1,0 +1,184 @@
+{
+  "name": "aimos-cursor-addon",
+  "displayName": "AIM-OS Cursor Add-on",
+  "description": "UI elements and automation for AIM-OS MCP server integration",
+  "version": "1.0.0",
+  "publisher": "aimos",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other",
+    "Machine Learning",
+    "Productivity"
+  ],
+  "keywords": [
+    "ai",
+    "consciousness",
+    "memory",
+    "mcp",
+    "cross-model",
+    "aimos"
+  ],
+  "activationEvents": [
+    "onCommand:aimos.showDashboard",
+    "onCommand:aimos.toggleCrossModel",
+    "onCommand:aimos.showMemoryStats",
+    "onCommand:aimos.showModelSelector"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "aimos.showDashboard",
+        "title": "Show AIM-OS Dashboard",
+        "category": "AIM-OS"
+      },
+      {
+        "command": "aimos.toggleCrossModel",
+        "title": "Toggle Cross-Model Consciousness",
+        "category": "AIM-OS"
+      },
+      {
+        "command": "aimos.showMemoryStats",
+        "title": "Show Memory Statistics",
+        "category": "AIM-OS"
+      },
+      {
+        "command": "aimos.showModelSelector",
+        "title": "Show Model Selector",
+        "category": "AIM-OS"
+      },
+      {
+        "command": "aimos.storeMemory",
+        "title": "Store Memory",
+        "category": "AIM-OS"
+      },
+      {
+        "command": "aimos.retrieveMemory",
+        "title": "Retrieve Memory",
+        "category": "AIM-OS"
+      },
+      {
+        "command": "aimos.createPlan",
+        "title": "Create Execution Plan",
+        "category": "AIM-OS"
+      },
+      {
+        "command": "aimos.trackConfidence",
+        "title": "Track Confidence",
+        "category": "AIM-OS"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "aimos.showDashboard",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "aimos.toggleCrossModel",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "aimos.showMemoryStats",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "aimos.showModelSelector",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "aimos.storeMemory",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "aimos.retrieveMemory",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "aimos.createPlan",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "aimos.trackConfidence",
+          "when": "editorTextFocus"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "aimos.storeMemory",
+          "when": "editorHasSelection",
+          "group": "aimos"
+        },
+        {
+          "command": "aimos.retrieveMemory",
+          "when": "editorHasSelection",
+          "group": "aimos"
+        }
+      ]
+    },
+    "views": {
+      "explorer": [
+        {
+          "id": "aimosDashboard",
+          "name": "AIM-OS Dashboard",
+          "when": "workspaceFolderCount > 0"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "aimos",
+          "title": "AIM-OS",
+          "icon": "$(brain)"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "AIM-OS",
+      "properties": {
+        "aimos.mcpServerPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to the AIM-OS MCP server executable"
+        },
+        "aimos.crossModelEnabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable cross-model consciousness features"
+        },
+        "aimos.autoModelSelection": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable automatic model selection based on task complexity"
+        },
+        "aimos.memoryAutoStore": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically store important context in memory"
+        },
+        "aimos.confidenceTracking": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable automatic confidence tracking"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.74.0",
+    "@types/node": "16.x",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "ws": "^8.14.0"
+  }
+}

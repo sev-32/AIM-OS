@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "test": {
+      "command": "python",
+      "args": ["-c", "print('hello')"]
+    }
+  }
+}
+

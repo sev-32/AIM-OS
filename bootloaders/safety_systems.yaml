@@ -1,0 +1,133 @@
+# Safety Systems Bootloader Configuration
+# Context bootloader for safety systems implementation and management tasks
+
+task: "safety_systems"
+context_strategy: "weighted_loading"
+max_context_budget: 120000
+
+context_sources:
+  critical:
+    - file: "packages/safety_systems/line_removal_detector.py"
+      weight: 1.0
+      detail_level: "L4"
+      estimated_tokens: 8000
+      priority: "mandatory"
+      description: "Line removal detection system implementation"
+    
+    - file: "packages/safety_systems/manager_ai.py"
+      weight: 0.95
+      detail_level: "L4"
+      estimated_tokens: 10000
+      priority: "mandatory"
+      description: "Manager AI system for oversight and safety enforcement"
+    
+    - file: "packages/safety_systems/protocol_educator.py"
+      weight: 0.9
+      detail_level: "L4"
+      estimated_tokens: 6000
+      priority: "mandatory"
+      description: "Protocol educator for AI guidance and reminders"
+    
+    - file: "packages/safety_systems/safety_orchestrator.py"
+      weight: 0.9
+      detail_level: "L4"
+      estimated_tokens: 8000
+      priority: "mandatory"
+      description: "Safety orchestrator coordinating all safety systems"
+  
+  helpful:
+    - file: "packages/safety_systems/tests/test_line_removal_detector.py"
+      weight: 0.7
+      detail_level: "L4"
+      estimated_tokens: 3000
+      priority: "high"
+      description: "Tests for line removal detector with examples"
+    
+    - file: "packages/safety_systems/tests/test_manager_ai.py"
+      weight: 0.7
+      detail_level: "L4"
+      estimated_tokens: 4000
+      priority: "high"
+      description: "Tests for manager AI system"
+    
+    - file: "packages/safety_systems/tests/test_protocol_educator.py"
+      weight: 0.7
+      detail_level: "L4"
+      estimated_tokens: 3000
+      priority: "high"
+      description: "Tests for protocol educator system"
+    
+    - file: "packages/safety_systems/integration_demo.py"
+      weight: 0.6
+      detail_level: "L4"
+      estimated_tokens: 5000
+      priority: "high"
+      description: "Integration demo showing how all safety systems work together"
+    
+    - file: "COMPREHENSIVE_SAFETY_SYSTEMS_IMPLEMENTATION_COMPLETE.md"
+      weight: 0.8
+      detail_level: "L2"
+      estimated_tokens: 4000
+      priority: "high"
+      description: "Complete documentation of safety systems implementation"
+  
+  optional:
+    - file: "knowledge_architecture/systems/vif/L2_architecture.md"
+      weight: 0.3
+      detail_level: "L2"
+      estimated_tokens: 6000
+      priority: "low"
+      description: "VIF architecture for verification context"
+    
+    - file: "knowledge_architecture/systems/cmc/L2_architecture.md"
+      weight: 0.3
+      detail_level: "L2"
+      estimated_tokens: 8000
+      priority: "low"
+      description: "CMC architecture for memory context"
+    
+    - file: "knowledge_architecture/systems/apoe/L1_overview.md"
+      weight: 0.3
+      detail_level: "L1"
+      estimated_tokens: 1000
+      priority: "low"
+      description: "APOE overview for orchestration context"
+
+loading_strategy: "weighted_progressive"
+fallback_strategy: "essential_only"
+semantic_enhancement: true
+cross_session_continuity: true
+
+# Context loading priorities
+priority_order:
+  - "mandatory"
+  - "high"
+  - "low"
+
+# Fallback strategies
+fallback_strategies:
+  essential_only:
+    description: "Load only mandatory safety system components"
+    max_budget: 35000
+  
+  mandatory_and_high:
+    description: "Load mandatory and high priority safety components"
+    max_budget: 80000
+  
+  all_available:
+    description: "Load all available safety system context"
+    max_budget: 150000
+
+# Semantic enhancement settings
+semantic_enhancement:
+  enabled: true
+  min_relevance: 0.8
+  max_results: 15
+  query_expansion: true
+
+# Cross-session continuity settings
+cross_session_continuity:
+  enabled: true
+  store_context: true
+  retrieve_previous: true
+  context_ttl: 86400  # 24 hours in seconds

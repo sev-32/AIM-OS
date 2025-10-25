@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "aimos-simple": {
+      "command": "python",
+      "args": ["-u", "run_mcp_aimos_simple.py"],
+      "cwd": "C:\\Users\\bombe\\OneDrive\\Desktop\\AIM-OS",
+      "env": {
+        "PYTHONPATH": "C:\\Users\\bombe\\OneDrive\\Desktop\\AIM-OS"
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "aimos-minimal": {
+      "command": "python",
+      "args": ["-u", "minimal_mcp_server.py"],
+      "cwd": "C:\\Users\\bombe\\OneDrive\\Desktop\\AIM-OS",
+      "env": {
+        "PYTHONPATH": "C:\\Users\\bombe\\OneDrive\\Desktop\\AIM-OS"
+      }
+    }
+  }
+}
+
