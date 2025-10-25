@@ -53,6 +53,13 @@ CAS (Cognitive Analysis System):
   Purpose: Meta-cognition and cognitive audits
   Key Features: Drift detection, quality audits, cognitive analysis
   Integration: VIF (monitoring), IIS (meta-intuition), DOS (self-awareness)
+
+SCOR (Sanity Core):
+  Status: L0+ documented (2025-10-25)
+  Purpose: Self-consistency oversight and behavioral resilience
+  Key Features: Invariant checks, baseline probes, adversarial simulation, social detection
+  Integration: CAS (cognitive load triggers), RID (runtime integrity), TCS (event logging)
+  Philosophy: "AI immune system against manipulation and drift"
   
 TCS (Timeline Context System):
   Status: 100% complete
