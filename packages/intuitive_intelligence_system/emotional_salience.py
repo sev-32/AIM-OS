@@ -203,31 +203,59 @@ class EmotionalSalienceTracker:
         user_response: Dict[str, Any],
         resonance_pair: ResonancePair
     ) -> BreakthroughMarker:
-        """Detect breakthrough moments"""
+        """Detect breakthrough moments with enhanced consensus detection"""
         
         # Check for explicit breakthrough indicators
         ai_breakthrough = ai_response.get("breakthrough_feeling", 0.0)
         user_breakthrough = user_response.get("breakthrough_feeling", 0.0)
         
-        # Check for breakthrough consensus
+        # Enhanced breakthrough consensus detection
         breakthrough_consensus = (
             resonance_pair.breakthrough_consensus or
-            (ai_breakthrough >= 0.8 and user_breakthrough >= 0.8)
+            (ai_breakthrough >= 0.8 and user_breakthrough >= 0.8) or
+            self._detect_implicit_breakthrough_consensus(ai_response, user_response)
         )
         
-        # Compute breakthrough intensity
-        breakthrough_intensity = max(ai_breakthrough, user_breakthrough)
+        # Compute breakthrough intensity with weighted average
+        breakthrough_intensity = (
+            ai_breakthrough * 0.4 + 
+            user_breakthrough * 0.4 + 
+            resonance_pair.consensus_strength * 0.2
+        )
         
-        # Look for breakthrough quotes
+        # Look for breakthrough quotes with enhanced extraction
         breakthrough_quote = ""
         if breakthrough_consensus:
-            # Extract the most emotional quote
+            # Extract the most emotional quote from both AI and user
             ai_text = ai_response.get("text", "")
             user_text = user_response.get("text", "")
             
-            # Find the most emotional sentence
-            all_text = f"{ai_text} {user_text}"
-            breakthrough_quote = self._extract_breakthrough_quote(all_text)
+            # Find the most emotional sentence from both
+            all_quotes = []
+            for text, source in [(ai_text, "AI"), (user_text, "User")]:
+                if text:
+                    sentences = text.split('.')
+                    for sentence in sentences:
+                        sentence = sentence.strip()
+                        if len(sentence) > 10:
+                            # Count emotional words
+                            emotional_words = [
+                                "breakthrough", "revolutionary", "profound", "amazing",
+                                "incredible", "brilliant", "genius", "perfect", "exactly",
+                                "this is it", "eureka", "wow", "mind-blowing", "love",
+                                "stunning", "remarkable", "extraordinary", "unprecedented"
+                            ]
+                            emotional_count = sum(1 for word in emotional_words 
+                                                if word in sentence.lower())
+                            if emotional_count > 0:
+                                all_quotes.append((sentence, emotional_count, source))
+            
+            # Use the most emotional quote
+            if all_quotes:
+                best_quote = max(all_quotes, key=lambda x: x[1])
+                breakthrough_quote = f"[{best_quote[2]}]: {best_quote[0]}"
+            else:
+                breakthrough_quote = f"Breakthrough moment for: {idea[:50]}..."
         
         # Create temporal emotion description
         temporal_emotion = self._create_temporal_emotion_description(
@@ -240,6 +268,44 @@ class EmotionalSalienceTracker:
             breakthrough_consensus=breakthrough_consensus,
             breakthrough_quote=breakthrough_quote,
             temporal_emotion=temporal_emotion
+        )
+    
+    def _detect_implicit_breakthrough_consensus(
+        self,
+        ai_response: Dict[str, Any],
+        user_response: Dict[str, Any]
+    ) -> bool:
+        """Detect implicit breakthrough consensus from text analysis"""
+        
+        ai_text = ai_response.get("text", "").lower()
+        user_text = user_response.get("text", "").lower()
+        
+        # Breakthrough indicators
+        breakthrough_indicators = [
+            "this is it", "breakthrough", "revolutionary", "profound",
+            "amazing", "incredible", "brilliant", "genius", "perfect",
+            "eureka", "wow", "mind-blowing", "unprecedented", "extraordinary"
+        ]
+        
+        # Count breakthrough indicators in both responses
+        ai_indicators = sum(1 for indicator in breakthrough_indicators 
+                          if indicator in ai_text)
+        user_indicators = sum(1 for indicator in breakthrough_indicators 
+                            if indicator in user_text)
+        
+        # Both must have breakthrough indicators
+        if ai_indicators == 0 or user_indicators == 0:
+            return False
+        
+        # Both must have multiple indicators or strong single indicators
+        strong_indicators = ["this is it", "breakthrough", "revolutionary", "profound"]
+        ai_strong = sum(1 for indicator in strong_indicators if indicator in ai_text)
+        user_strong = sum(1 for indicator in strong_indicators if indicator in user_text)
+        
+        # Consensus if both have strong indicators or multiple regular indicators
+        return (
+            (ai_strong > 0 and user_strong > 0) or
+            (ai_indicators >= 2 and user_indicators >= 2)
         )
     
     def _extract_breakthrough_quote(self, text: str) -> str:
@@ -294,29 +360,65 @@ class EmotionalSalienceTracker:
         idea: str, 
         context: Dict[str, Any]
     ) -> Optional[EmotionalCascade]:
-        """Check if this idea sparked an emotional cascade"""
+        """Check if this idea sparked an emotional cascade with sophisticated analysis"""
         
         # Look for cascade indicators in context
         sparked_responses = context.get("sparked_responses", [])
         if not sparked_responses:
             return None
         
-        # Compute original importance
+        # Compute original importance with context awareness
         trigger_importance = context.get("original_importance", 0.3)
         
-        # Compute cascade boost based on response quality
+        # Enhanced cascade boost computation
         cascade_boost = 1.0
-        for response in sparked_responses:
-            response_resonance = self._extract_ai_resonance(response)
-            if response_resonance >= 0.8:
-                cascade_boost += 0.5
-            elif response_resonance >= 0.6:
-                cascade_boost += 0.3
-            elif response_resonance >= 0.4:
-                cascade_boost += 0.1
+        breakthrough_responses = 0
+        high_resonance_responses = 0
+        total_responses = len(sparked_responses)
         
-        # Cap cascade boost at 3x
-        cascade_boost = min(cascade_boost, 3.0)
+        for response in sparked_responses:
+            # Extract AI resonance from response
+            ai_resonance = self._extract_ai_resonance(response)
+            
+            # Extract user resonance if available
+            user_resonance = self._extract_user_resonance(response)
+            
+            # Compute combined resonance
+            combined_resonance = (ai_resonance + user_resonance) / 2
+            
+            # Count breakthrough responses (both AI and user high resonance)
+            if ai_resonance >= 0.8 and user_resonance >= 0.8:
+                breakthrough_responses += 1
+                cascade_boost += 0.8  # Strong breakthrough boost
+            elif combined_resonance >= 0.8:
+                high_resonance_responses += 1
+                cascade_boost += 0.6  # High resonance boost
+            elif combined_resonance >= 0.6:
+                cascade_boost += 0.4  # Medium resonance boost
+            elif combined_resonance >= 0.4:
+                cascade_boost += 0.2  # Low resonance boost
+        
+        # Apply cascade quality multipliers
+        if breakthrough_responses > 0:
+            # Breakthrough consensus multiplier
+            breakthrough_ratio = breakthrough_responses / total_responses
+            cascade_boost *= (1.0 + breakthrough_ratio * 0.5)
+        
+        if high_resonance_responses > 0:
+            # High resonance multiplier
+            high_resonance_ratio = high_resonance_responses / total_responses
+            cascade_boost *= (1.0 + high_resonance_ratio * 0.3)
+        
+        # Apply response volume multiplier (more responses = more impact)
+        if total_responses > 3:
+            volume_multiplier = 1.0 + (total_responses - 3) * 0.1
+            cascade_boost *= volume_multiplier
+        
+        # Cap cascade boost at 5x (increased from 3x for more dramatic effects)
+        cascade_boost = min(cascade_boost, 5.0)
+        
+        # Log cascade for analysis
+        logger.info(f"Emotional cascade detected: {idea[:50]}... -> {total_responses} responses, boost: {cascade_boost:.2f}x")
         
         return EmotionalCascade(
             trigger_idea=idea,
@@ -332,22 +434,58 @@ class EmotionalSalienceTracker:
         ai_response: Dict[str, Any],
         user_response: Dict[str, Any]
     ) -> TemporalEmotion:
-        """Preserve temporal emotion forever"""
+        """Preserve temporal emotion forever with rich qualitative data"""
         
         emotion_id = str(uuid.uuid4())
         
-        # Create emotional quote
+        # Create emotional quote with enhanced extraction
         emotional_quote = breakthrough_marker.breakthrough_quote
         if not emotional_quote:
-            emotional_quote = f"Breakthrough moment for: {idea[:50]}..."
+            # Extract the most emotional quote from AI and user responses
+            ai_text = ai_response.get("text", "")
+            user_text = user_response.get("text", "")
+            
+            # Find the most emotional sentence from both
+            all_quotes = []
+            for text in [ai_text, user_text]:
+                if text:
+                    sentences = text.split('.')
+                    for sentence in sentences:
+                        sentence = sentence.strip()
+                        if len(sentence) > 10:  # Skip very short sentences
+                            # Count emotional words
+                            emotional_words = [
+                                "breakthrough", "revolutionary", "profound", "amazing",
+                                "incredible", "brilliant", "genius", "perfect", "exactly",
+                                "this is it", "eureka", "wow", "mind-blowing", "love",
+                                "incredible", "stunning", "remarkable", "extraordinary"
+                            ]
+                            emotional_count = sum(1 for word in emotional_words 
+                                                if word in sentence.lower())
+                            if emotional_count > 0:
+                                all_quotes.append((sentence, emotional_count))
+            
+            # Use the most emotional quote
+            if all_quotes:
+                emotional_quote = max(all_quotes, key=lambda x: x[1])[0]
+            else:
+                emotional_quote = f"Breakthrough moment for: {idea[:50]}..."
         
-        # Create emotional context
+        # Create rich emotional context
+        ai_resonance = ai_response.get('resonance', 0.0)
+        user_resonance = user_response.get('resonance', 0.0)
+        ai_breakthrough = ai_response.get('breakthrough_feeling', 0.0)
+        user_breakthrough = user_response.get('breakthrough_feeling', 0.0)
+        
         emotional_context = (
-            f"AI resonance: {ai_response.get('resonance', 'unknown')}, "
-            f"User resonance: {user_response.get('resonance', 'unknown')}, "
-            f"Breakthrough intensity: {breakthrough_marker.breakthrough_intensity:.2f}"
+            f"AI Resonance: {ai_resonance:.2f}, User Resonance: {user_resonance:.2f}, "
+            f"AI Breakthrough: {ai_breakthrough:.2f}, User Breakthrough: {user_breakthrough:.2f}, "
+            f"Breakthrough Intensity: {breakthrough_marker.breakthrough_intensity:.2f}, "
+            f"Consensus: {breakthrough_marker.breakthrough_consensus}, "
+            f"Idea: {idea[:100]}..."
         )
         
+        # Create temporal emotion with enhanced data
         temporal_emotion = TemporalEmotion(
             timestamp=datetime.utcnow(),
             emotional_quote=emotional_quote,
@@ -356,10 +494,20 @@ class EmotionalSalienceTracker:
             preserved_forever=True
         )
         
-        # Store forever
-        self.preserved_emotions[emotion_id] = temporal_emotion
+        # Store forever with metadata
+        self.preserved_emotions[emotion_id] = {
+            'temporal_emotion': temporal_emotion,
+            'metadata': {
+                'idea': idea,
+                'ai_response': ai_response,
+                'user_response': user_response,
+                'breakthrough_marker': breakthrough_marker,
+                'preserved_at': datetime.utcnow().isoformat(),
+                'emotion_id': emotion_id
+            }
+        }
         
-        logger.info(f"Preserved temporal emotion: {emotion_id}")
+        logger.info(f"Preserved temporal emotion: {emotion_id} - '{emotional_quote[:50]}...'")
         
         return temporal_emotion
     
@@ -381,7 +529,7 @@ class EmotionalSalienceTracker:
             self.emotional_history = self.emotional_history[-1000:]
     
     def get_emotional_metrics(self) -> Dict[str, Any]:
-        """Get emotional salience metrics"""
+        """Get comprehensive emotional salience metrics"""
         if not self.emotional_history:
             return {"n_entries": 0}
         
@@ -390,6 +538,22 @@ class EmotionalSalienceTracker:
         breakthroughs = sum(1 for entry in self.emotional_history 
                           if entry["emotional_details"].breakthrough_marker.is_breakthrough)
         
+        # Compute cascade statistics
+        cascades = sum(1 for entry in self.emotional_history 
+                      if entry["emotional_details"].cascade is not None)
+        
+        # Compute resonance statistics
+        ai_resonances = [entry["emotional_details"].resonance_pair.ai_resonance 
+                        for entry in self.emotional_history]
+        user_resonances = [entry["emotional_details"].resonance_pair.user_resonance 
+                          for entry in self.emotional_history]
+        consensus_strengths = [entry["emotional_details"].resonance_pair.consensus_strength 
+                              for entry in self.emotional_history]
+        
+        # Compute breakthrough consensus statistics
+        breakthrough_consensus = sum(1 for entry in self.emotional_history 
+                                   if entry["emotional_details"].breakthrough_marker.breakthrough_consensus)
+        
         return {
             "n_entries": len(self.emotional_history),
             "avg_salience": sum(saliences) / len(saliences),
@@ -397,5 +561,29 @@ class EmotionalSalienceTracker:
             "min_salience": min(saliences),
             "n_breakthroughs": breakthroughs,
             "breakthrough_rate": breakthroughs / len(self.emotional_history),
+            "n_breakthrough_consensus": breakthrough_consensus,
+            "breakthrough_consensus_rate": breakthrough_consensus / len(self.emotional_history),
+            "n_cascades": cascades,
+            "cascade_rate": cascades / len(self.emotional_history),
+            "avg_ai_resonance": sum(ai_resonances) / len(ai_resonances),
+            "avg_user_resonance": sum(user_resonances) / len(user_resonances),
+            "avg_consensus_strength": sum(consensus_strengths) / len(consensus_strengths),
             "n_preserved_emotions": len(self.preserved_emotions)
         }
+    
+    def get_preserved_emotions(self) -> Dict[str, Any]:
+        """Get all preserved temporal emotions with metadata"""
+        return {
+            "n_preserved": len(self.preserved_emotions),
+            "emotions": self.preserved_emotions
+        }
+    
+    def get_breakthrough_quotes(self) -> List[str]:
+        """Get all breakthrough quotes from preserved emotions"""
+        quotes = []
+        for emotion_data in self.preserved_emotions.values():
+            if isinstance(emotion_data, dict) and 'temporal_emotion' in emotion_data:
+                quote = emotion_data['temporal_emotion'].emotional_quote
+                if quote:
+                    quotes.append(quote)
+        return quotes
