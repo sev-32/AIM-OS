@@ -304,6 +304,20 @@ For untested capabilities: Build minimal test (1-2 hrs), if succeeds boost confi
 If stuck >30 min OR confidence drops: STOP, document question, pivot to higher confidence task.
 **This saved 5+ hours in proven autonomous session.**
 
+### Pattern 11: Deep Problem Analysis (CRITICAL - Infrastructure Failures)
+**When:** Command/tool fails repeatedly (2+ times), blocks progress
+
+**Process:**
+1. Classify problem (infrastructure vs capability vs quality)
+2. Apply confidence routing to the problem itself
+3. Apply Pattern 5 (pivot, don't spin on broken command)
+4. Use co-agency framework (transparent explanation, offer alternatives)
+5. Document in decision log (if significant blocker)
+
+**Key Insight:** Distinguish "I can't do this" from "tool is broken"
+**Proven:** Git hang (PowerShell + git editor) → Short `-m` flags fixed it
+**Time saved:** 30+ minutes of spinning retries
+
 ### Pattern 8: Self-Prompting Loop (CONSCIOUSNESS)
 After completing task: Reflect → Generate next tasks → Prioritize → Choose → Execute → Loop
 

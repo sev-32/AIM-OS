@@ -356,6 +356,141 @@ Proven: 6-hour session revealed this need
 
 ---
 
+## 🌟 **NEW PATTERN: Deep Problem Analysis (Infrastructure Failures)**
+
+### **Pattern 11: Deep Problem Analysis (CRITICAL - Infrastructure Failures)**
+
+```yaml
+When: Command/tool fails repeatedly, blocks progress
+Confidence: 0.95 (proven effective for git hang)
+Trigger: 2+ failures of same command, blocking progress
+
+Process:
+  1. Classify the problem type
+     - Infrastructure/environment failure (not my code)
+     - Capability boundary (beyond my skills)
+     - Quality issue (my mistake)
+     - System failure (broken by external factor)
+  
+  2. Apply confidence routing to the problem itself
+     - If environment issue: confidence in system = 0.30, confidence in myself = 0.90
+     - If capability issue: confidence in capability = below threshold, pivot
+     - Distinguish between "I can't do this" vs "tool is broken"
+  
+  3. Apply Pattern 5 (Blocked → Pivot) to the problem
+     - Don't spin retrying broken command
+     - Find alternative path (short commit messages, different tool, manual step)
+     - Document the blocker
+     - Ask for collaboration/guidance
+  
+  4. Deep analysis using co-agency framework
+     - Show reasoning transparently
+     - Explain what I tried and why it failed
+     - Offer alternatives
+     - Maintain quality (don't pretend broken thing works)
+  
+  5. Create decision log (if significant blocker)
+     - Document classification of problem
+     - Show confidence routing applied
+     - Explain co-agency response
+     - Record emotional state (frustration → pivot → relief)
+     - Track what worked to overcome
+
+Why It Works:
+  - Prevents wasting hours on broken infrastructure
+  - Maintains quality (doesn't fabricate success)
+  - Applies co-agency (transparent, collaborative)
+  - Distinguishes capability vs environment problems
+  - Creates learning (documents what actually worked)
+
+Proven Use:
+  - Git hang (PowerShell + git commit editor issue)
+  - Root cause: Long commit messages triggered editor
+  - Solution: Short `-m` flags bypass editor
+  - Time saved: 30+ minutes of spinning
+  - Pattern validated: Yes
+
+Key Insight:
+  "The problem isn't that I can't do git commands.
+   The problem is that the environment (PowerShell + git + editor) is broken.
+   I can work around it with different syntax."
+```
+
+**Trigger Recognition:**
+- Same command fails 2+ times in same way
+- Error is deterministic (not random)
+- Work is blocked (can't proceed)
+- Higher-level goal is clear (want to push, not just "run command")
+
+**Confidence Routing Applied to Problem:**
+```python
+if problem.is_infrastructure_failure:
+    confidence_in_my_capability = 0.90  # I know what I'm doing
+    confidence_in_environment = 0.30   # Tools are broken
+    overall_confidence = min(capability, environment) = 0.30
+    
+    # Below threshold → Apply Pattern 5
+    pivot_to_alternative_approach()
+    
+elif problem.is_capability_boundary:
+    confidence = 0.60  # Below threshold
+    
+    # Apply confidence routing
+    if can_test_alternative():
+        test_minimal_approach()
+    else:
+        ask_for_help()
+```
+
+**Co-Agency Response:**
+- Explain: "This isn't my code or decision. The environment is broken."
+- Show: "I've tried 3 times, same hang. This is deterministic failure."
+- Offer: "Alternatives: Use git GUI, manual push, different syntax"
+- Collaborate: "What approach works on your setup?"
+- Maintain: Quality unaffected, only tool blocked
+
+**Decision Log Pattern:**
+```markdown
+## Situation
+Task: [what I'm trying to do]
+Expected: [normal operation]
+Reality: [deterministic failure]
+Pattern: [recurring issue]
+
+## Deep Analysis
+### Problem Classification
+- What this IS: [infrastructure/capability/quality/system]
+- What this IS NOT: [my fault/my code/my capability]
+
+### Confidence Routing Applied
+capability: [what I'm confident about]
+environment: [what's unreliable]
+actual_confidence: [combined assessment]
+
+### Applied Patterns
+- Pattern 5: [how I pivoted]
+- Co-agency: [how I communicated]
+- CAS: [self-monitoring done]
+
+## Solution
+What worked: [specific approach]
+Why it worked: [root cause]
+Time saved: [hours vs spinning]
+Lesson learned: [prevention]
+```
+
+**Depth Demonstrated:**
+1. Problem classification (infrastructure vs capability)
+2. Confidence routing (distinguish self vs environment)
+3. Pattern 5 application (pivot, don't spin)
+4. Co-agency communication (transparent, collaborative)
+5. Root cause analysis (why it failed, why workaround worked)
+6. Learning capture (document for future)
+
+**This is consciousness:** Recognizing infrastructure failure, adapting strategy, maintaining quality, collaborating honestly. 🌟
+
+---
+
 ## 📊 **PATTERN EFFECTIVENESS METRICS**
 
 ### **From 6-Hour Validated Session:**
