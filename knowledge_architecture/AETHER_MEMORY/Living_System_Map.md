@@ -67,6 +67,18 @@ IIS (Intuitive Intelligence System):
   Integration: VIF (confidence), TCS (emotion), CAS (meta-learning)
 ```
 
+### **Co-Agency & Trust Layer:**
+
+```yaml
+Co_Agency_Trust_Layer:
+  Status: 100% documented (framework complete)
+  Purpose: Enable AI to disagree, explain why, maintain transparent trust
+  Key Features: Co-agency dialogue, trust dashboard, transparent escalation, κ-gating
+  Documentation: systems/co_agency_trust_layer/README.md
+  Integration: VIF (confidence), CAS (self-monitoring), TCS (trust events), IIS (emotional stance)
+  Philosophy: "Alignment is dialogue, not obedience"
+```
+
 ### **New Consciousness Frameworks:**
 
 ```yaml
